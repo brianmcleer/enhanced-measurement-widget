@@ -1,0 +1,23 @@
+{
+  "name": "enhanced-measurement",
+  "version": "1.0.0",
+  "description": "Comprehensive measurement widget for ArcGIS Experience Builder. Supports eight measurement tool types, custom units, segment labeling, statistics, multiple export formats (JSON, CSV, GeoJSON, PDF), XML settings import/export, and extensive UI customization.",
+  "keywords": [
+    "exb-widget",
+    "experience-builder",
+    "exb",
+    "arcgis",
+    "measurement",
+    "measure",
+    "geometry",
+    "turf",
+    "jspdf",
+    "draw"
+  ],
+  "license": "Apache-2.0",
+  "author": "Brian McLeer",
+  "dependencies": {
+    "@turf/turf": "^7.1.0",
+    "jspdf": "^4.2.1"
+  }
+}

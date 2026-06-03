@@ -1,0 +1,25 @@
+{
+  "name": "enhanced-measurement",
+  "type": "widget",
+  "version": "1.0.0",
+  "exbVersion": "1.20.0",
+  "author": "Brian McLeer",
+  "label": "Enhanced Measurement",
+  "description": "Comprehensive measurement widget with eight tool types, custom units, segment labeling, statistics, multiple export formats, and XML settings import/export.",
+  "copyright": "Copyright (c) 2026 City of Grand Junction, CO",
+  "license": "Apache-2.0",
+  "properties": {
+    "hasStyle": true,
+    "hasConfig": true,
+    "hasUIConfig": true,
+    "hasLocale": true,
+    "hasIcon": true
+  },
+  "translatedLocales": [
+    "en"
+  ],
+  "defaultSize": {
+    "width": 350,
+    "height": 500
+  }
+}

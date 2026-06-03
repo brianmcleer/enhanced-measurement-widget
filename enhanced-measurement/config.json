@@ -1,0 +1,63 @@
+{
+  "defaultLinearUnit": "meters",
+  "defaultAreaUnit": "square-meters",
+  "enableStorage": true,
+  "maxStoredMeasurements": 50,
+  "enableSegmentLabeling": true,
+  "autoSaveSegments": true,
+  "showTotalDistance": true,
+  "enableExport": true,
+  "snappingEnabled": false,
+  "customLinearUnits": [
+    {
+      "name": "chains",
+      "label": "Chains",
+      "toMeters": 20.1168,
+      "addToDropdown": true
+    },
+    {
+      "name": "rods",
+      "label": "Rods",
+      "toMeters": 5.0292,
+      "addToDropdown": true
+    },
+    {
+      "name": "links",
+      "label": "Links",
+      "toMeters": 0.201168,
+      "addToDropdown": false
+    },
+    {
+      "name": "furlongs",
+      "label": "Furlongs",
+      "toMeters": 201.168,
+      "addToDropdown": false
+    }
+  ],
+  "customAreaUnits": [
+    {
+      "name": "square-chains",
+      "label": "Square Chains",
+      "toSquareMeters": 404.6856,
+      "addToDropdown": true
+    },
+    {
+      "name": "square-rods",
+      "label": "Square Rods",
+      "toSquareMeters": 25.29285264,
+      "addToDropdown": true
+    },
+    {
+      "name": "roods",
+      "label": "Roods",
+      "toSquareMeters": 1011.7141,
+      "addToDropdown": false
+    },
+    {
+      "name": "square-links",
+      "label": "Square Links",
+      "toSquareMeters": 0.040468564,
+      "addToDropdown": false
+    }
+  ]
+}
