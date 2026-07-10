@@ -2,7 +2,7 @@
 
 Comprehensive measurement widget for ArcGIS Experience Builder, by Brian McLeer (GIS Administrator/Developer, City of Grand Junction, CO).
 
-The widget supports eight measurement tool types (point, distance, area, circle, rectangle, triangle, freehand polyline, freehand polygon), with custom units, segment labeling, statistics, multiple export formats (JSON, CSV, GeoJSON, PDF), XML import/export of widget settings, undo/redo, vertex editing, and extensive UI customization.
+The widget supports eight measurement tool types (point, distance, area, circle, rectangle, triangle, freehand polyline, freehand polygon), with session persistence, multi-select bulk operations, a sortable and searchable measurement list, live measurement readout while drawing, copy-to-clipboard on every stat, custom units, segment labeling, statistics, multiple export formats (JSON, CSV, GeoJSON, PDF), XML import/export of widget settings, undo/redo, vertex editing, optional dark mode, and extensive UI customization.
 
 ## Download
 
@@ -10,6 +10,15 @@ Latest release: https://github.com/brianmcleer/enhanced-measurement-widget/relea
 
 You can also browse the post on Esri Community:
 https://community.esri.com/t5/experience-builder-custom-widgets/enhanced-measurement-widget/ba-p/1664211
+
+## What's new in v1.1.0
+
+- Session persistence: measurements can be saved in the browser and restored after a page reload (opt-in, configured by the developer in settings)
+- Live measurement readout in the drawing banner
+- Multi-select mode with bulk delete (one-click undo for the whole batch) and bulk GeoJSON export
+- Sortable measurement list (newest, oldest, name, type)
+- Copy-to-clipboard button on every value in the measurement detail view
+- New Power Features section in settings to toggle each of the above
 
 ## Repository layout
 

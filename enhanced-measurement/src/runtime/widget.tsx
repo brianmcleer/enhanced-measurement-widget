@@ -286,7 +286,7 @@ interface WidgetState {
     /** UI-only: which measurement's color picker popover is open */
     colorPickerForId: string | null;
     /** Transient toast for undoable actions (delete) */
-    undoToast: { message: string; action: HistoryAction | null } | null;
+    undoToast: { message: string; action: HistoryAction | null; bulkCount?: number } | null;
     /** Filter text typed in the measurements list */
     measurementFilter: string;
     /** How many measurements to render (paged list for perf with large counts) */
@@ -303,6 +303,16 @@ interface WidgetState {
     detailViewMeasurementId: string | null;
     /** Captured scroll position of the list so we can restore it on exiting detail view. */
     listScrollTop: number;
+    /** Number of measurements found in localStorage from a prior session, or null when no banner should show. */
+    restoreBannerCount: number | null;
+    /** Multi-select mode: cards show checkboxes and bulk actions replace the header. */
+    selectMode: boolean;
+    /** IDs currently checked while in select mode. */
+    selectedIds: Set<string>;
+    /** List sort order. */
+    sortOrder: 'newest' | 'oldest' | 'name' | 'type';
+    /** Detail-stat key that was just copied to clipboard, for the transient "Copied" flash. */
+    copiedStatKey: string | null;
 }
 
 interface MeasurementRecord {
@@ -383,6 +393,10 @@ export default class EnhancedMeasurement extends React.PureComponent<AllWidgetPr
     private deleteToastTimer: any = null;
     /** Ref to the scrollable list container so we can capture/restore scrollTop when drilling in/out of detail view. */
     private listScrollRef: HTMLDivElement | null = null;
+    /** Debounce timer for localStorage persistence. */
+    private persistTimer: any = null;
+    /** Timer for the transient "Copied" flash in the detail view. */
+    private copiedFlashTimer: any = null;
 
     constructor(props) {
         super(props);
@@ -437,7 +451,12 @@ export default class EnhancedMeasurement extends React.PureComponent<AllWidgetPr
             showPDFExportDialog: false,
             pendingPDFExport: null,
             detailViewMeasurementId: null,
-            listScrollTop: 0
+            listScrollTop: 0,
+            restoreBannerCount: null,
+            selectMode: false,
+            selectedIds: new Set(),
+            sortOrder: 'newest',
+            copiedStatKey: null
         };
     }
 
@@ -469,7 +488,12 @@ export default class EnhancedMeasurement extends React.PureComponent<AllWidgetPr
         }
     }
 
-    componentDidUpdate(prevProps) {
+    componentDidUpdate(prevProps, prevState) {
+        // Persist to localStorage whenever measurements change (debounced, config-gated)
+        if (prevState && prevState.measurements !== this.state.measurements) {
+            this.schedulePersist();
+        }
+
         // Check if widget was closed - deactivate any active measurement tool
         if (prevProps.state !== this.props.state && this.props.state === JimuWidgetState.Closed) {
             if (this.state.currentTool) {
@@ -566,11 +590,29 @@ export default class EnhancedMeasurement extends React.PureComponent<AllWidgetPr
         document.addEventListener('click', this.handleClickOutside);
         // Add keyboard shortcuts for undo/redo
         document.addEventListener('keydown', this.handleKeyDown);
+        // Surface the restore banner if a saved session exists (config-gated)
+        this.checkForSavedSession();
     }
 
     componentWillUnmount() {
         this._isMounted = false;
         if (this.deleteToastTimer) { clearTimeout(this.deleteToastTimer); this.deleteToastTimer = null; }
+        if (this.persistTimer) {
+            // Flush the pending save synchronously so a fast page close never loses data
+            clearTimeout(this.persistTimer);
+            this.persistTimer = null;
+            if (this.persistenceEnabled()) {
+                try {
+                    if (this.state.measurements.length === 0) {
+                        window.localStorage.removeItem(this.persistenceKey);
+                    } else {
+                        const fc = this.buildGeoJSONFeatureCollection(this.state.measurements);
+                        window.localStorage.setItem(this.persistenceKey, JSON.stringify(fc));
+                    }
+                } catch (err) { /* non-fatal */ }
+            }
+        }
+        if (this.copiedFlashTimer) { clearTimeout(this.copiedFlashTimer); this.copiedFlashTimer = null; }
         this.cleanup();
         document.removeEventListener('click', this.handleDocumentClick);
         document.removeEventListener('click', this.handleClickOutside);
@@ -3575,7 +3617,15 @@ export default class EnhancedMeasurement extends React.PureComponent<AllWidgetPr
     /** Undo the most recent delete (called from the undo-toast button). */
     undoLastDelete() {
         const toast = this.state.undoToast;
-        if (!toast || !toast.action || toast.action.type !== 'DELETE') return;
+        if (!toast) return;
+        // Bulk delete: each deletion pushed its own DELETE action, so undo() once per item.
+        if (toast.bulkCount && toast.bulkCount > 0) {
+            for (let i = 0; i < toast.bulkCount; i++) this.undo();
+            if (this.deleteToastTimer) { clearTimeout(this.deleteToastTimer); this.deleteToastTimer = null; }
+            this.setState({ undoToast: null });
+            return;
+        }
+        if (!toast.action || toast.action.type !== 'DELETE') return;
         // The unified undo() handler already knows how to revert a DELETE action,
         // but since we've already pushed it to the undo stack via recordAction,
         // just call undo() — it'll pop our action and restore.
@@ -3845,8 +3895,140 @@ export default class EnhancedMeasurement extends React.PureComponent<AllWidgetPr
         });
     }
 
+    // ==================== Multi-select mode ====================
+
+    /** Toggle select mode on/off. Entering clears any prior selection. */
+    toggleSelectMode() {
+        this.setState(prev => ({
+            selectMode: !prev.selectMode,
+            selectedIds: new Set<string>(),
+            // Close transient UI so checkboxes render cleanly
+            colorPickerForId: null,
+            renamingMeasurementId: null,
+            exportDropdownOpen: {},
+            overflowDropdownOpen: {}
+        }));
+    }
+
+    /** Toggle one measurement's checkbox. */
+    toggleSelected(id: string) {
+        this.setState(prev => {
+            const next = new Set(prev.selectedIds);
+            if (next.has(id)) next.delete(id);
+            else next.add(id);
+            return { selectedIds: next };
+        });
+    }
+
+    /** Select every currently visible (filtered) measurement, or clear if all are selected. */
+    toggleSelectAll(visibleIds: string[]) {
+        this.setState(prev => {
+            const allSelected = visibleIds.length > 0 && visibleIds.every(id => prev.selectedIds.has(id));
+            return { selectedIds: allSelected ? new Set<string>() : new Set(visibleIds) };
+        });
+    }
+
+    /** Delete every selected measurement. Each delete goes through the normal path
+     *  so undo history stays intact; the per-delete toasts are suppressed in favor
+     *  of one summary toast. */
+    deleteSelected() {
+        const ids = Array.from(this.state.selectedIds);
+        if (ids.length === 0) return;
+        ids.forEach(id => this.deleteMeasurement(id, { showToast: false }));
+        this.setState({
+            selectMode: false,
+            selectedIds: new Set<string>(),
+            undoToast: {
+                message: `Deleted ${ids.length} measurement${ids.length === 1 ? '' : 's'}`,
+                action: null,
+                bulkCount: ids.length
+            }
+        });
+        if (this.deleteToastTimer) clearTimeout(this.deleteToastTimer);
+        this.deleteToastTimer = setTimeout(() => {
+            this.deleteToastTimer = null;
+            this.safeSetState({ undoToast: null });
+        }, 6000);
+    }
+
+    /** Export the selected measurements as one GeoJSON file. */
+    exportSelectedToGeoJSON() {
+        const selected = this.state.measurements.filter(m => this.state.selectedIds.has(m.id));
+        if (selected.length === 0) return;
+        const config = this.props.config || {};
+        const includeTimestamp = config.includeTimestampInExport !== false;
+        const geoJSON = this.buildGeoJSONFeatureCollection(selected);
+        const dataStr = JSON.stringify(geoJSON, null, 2);
+        const dataUri = 'data:application/geo+json;charset=utf-8,' + encodeURIComponent(dataStr);
+        const timestamp = includeTimestamp ? `_${new Date().toISOString().split('T')[0]}` : '';
+        const linkElement = document.createElement('a');
+        linkElement.setAttribute('href', dataUri);
+        linkElement.setAttribute('download', `measurements_selected${timestamp}.geojson`);
+        linkElement.click();
+        this.setState({ selectMode: false, selectedIds: new Set<string>() });
+    }
+
+    // ==================== Sorting ====================
+
+    /** Sort a measurements array per the current sortOrder. Non-mutating. */
+    sortMeasurements(list: MeasurementRecord[]): MeasurementRecord[] {
+        const order = this.state.sortOrder;
+        const sorted = [...list];
+        switch (order) {
+            case 'oldest':
+                sorted.sort((a, b) => a.timestamp.getTime() - b.timestamp.getTime());
+                break;
+            case 'name':
+                sorted.sort((a, b) => a.label.localeCompare(b.label, undefined, { numeric: true, sensitivity: 'base' }));
+                break;
+            case 'type':
+                sorted.sort((a, b) => a.type.localeCompare(b.type) || a.timestamp.getTime() - b.timestamp.getTime());
+                break;
+            case 'newest':
+            default:
+                sorted.sort((a, b) => b.timestamp.getTime() - a.timestamp.getTime());
+                break;
+        }
+        return sorted;
+    }
+
+    // ==================== Clipboard ====================
+
+    /** Copy text to the clipboard and flash a "Copied" indicator keyed to the stat. */
+    copyStatToClipboard(key: string, text: string) {
+        const flash = () => {
+            this.setState({ copiedStatKey: key });
+            if (this.copiedFlashTimer) clearTimeout(this.copiedFlashTimer);
+            this.copiedFlashTimer = setTimeout(() => {
+                this.copiedFlashTimer = null;
+                this.safeSetState({ copiedStatKey: null });
+            }, 1500);
+        };
+        if (navigator?.clipboard?.writeText) {
+            navigator.clipboard.writeText(text).then(flash).catch(() => { /* clipboard denied; no flash */ });
+        } else {
+            // Legacy fallback
+            try {
+                const ta = document.createElement('textarea');
+                ta.value = text;
+                ta.style.position = 'fixed';
+                ta.style.opacity = '0';
+                document.body.appendChild(ta);
+                ta.select();
+                document.execCommand('copy');
+                document.body.removeChild(ta);
+                flash();
+            } catch (err) { /* give up quietly */ }
+        }
+    }
+
     /** Open the full-pane detail view for one measurement; captures list scroll position so we can restore it on exit. */
     openDetailView(id: string) {
+        // In select mode a card click toggles selection instead of drilling in
+        if (this.state.selectMode) {
+            this.toggleSelected(id);
+            return;
+        }
         const scrollTop = this.listScrollRef ? this.listScrollRef.scrollTop : 0;
         this.setState({
             detailViewMeasurementId: id,
@@ -4021,13 +4203,12 @@ export default class EnhancedMeasurement extends React.PureComponent<AllWidgetPr
         return symbology;
     }
 
-    exportAllToGeoJSON() {
-        const config = this.props.config || {};
-        const includeTimestamp = config.includeTimestampInExport !== false;
-
-        const features = this.state.measurements.map(measurement => {
+    /** Build the GeoJSON FeatureCollection for the given measurements.
+     *  Shared by file export and session persistence so the two formats never drift. */
+    buildGeoJSONFeatureCollection(measurements: MeasurementRecord[]) {
+        const features = measurements.map(measurement => {
             const symbologyProps = this.getSymbologyProperties(measurement);
-            const feature = {
+            return {
                 type: "Feature",
                 properties: {
                     id: measurement.id,
@@ -4051,10 +4232,8 @@ export default class EnhancedMeasurement extends React.PureComponent<AllWidgetPr
                 },
                 geometry: measurement.geojson.geometry
             };
-            return feature;
         });
-
-        const geoJSON = {
+        return {
             type: "FeatureCollection",
             features: features,
             crs: {
@@ -4064,6 +4243,92 @@ export default class EnhancedMeasurement extends React.PureComponent<AllWidgetPr
                 }
             }
         };
+    }
+
+    // ==================== Session persistence (localStorage) ====================
+    // Gated behind config.enablePersistence. Measurements are stored as the same
+    // GeoJSON FeatureCollection the export/import round trip already uses, under
+    // a key scoped to this widget instance, so multiple widgets never collide.
+
+    private get persistenceKey(): string {
+        return `enhanced-measurement-session-${this.props.id}`;
+    }
+
+    private persistenceEnabled(): boolean {
+        const config = this.props.config || {};
+        return config.enablePersistence === true && typeof window !== 'undefined' && !!window.localStorage;
+    }
+
+    /** Debounced save. Called from componentDidUpdate whenever measurements change. */
+    schedulePersist() {
+        if (!this.persistenceEnabled()) return;
+        if (this.persistTimer) clearTimeout(this.persistTimer);
+        this.persistTimer = setTimeout(() => {
+            this.persistTimer = null;
+            try {
+                if (this.state.measurements.length === 0) {
+                    window.localStorage.removeItem(this.persistenceKey);
+                    return;
+                }
+                const fc = this.buildGeoJSONFeatureCollection(this.state.measurements);
+                window.localStorage.setItem(this.persistenceKey, JSON.stringify(fc));
+            } catch (err) {
+                // Quota errors and private-browsing failures are non-fatal; persistence
+                // silently degrades to session-only behavior.
+                console.warn('Session persistence save failed:', err);
+            }
+        }, 800);
+    }
+
+    /** Check storage for a saved session; if found, surface the restore banner. */
+    checkForSavedSession() {
+        if (!this.persistenceEnabled()) return;
+        try {
+            const raw = window.localStorage.getItem(this.persistenceKey);
+            if (!raw) return;
+            const fc = JSON.parse(raw);
+            const count = Array.isArray(fc?.features) ? fc.features.length : 0;
+            if (count > 0) {
+                this.safeSetState({ restoreBannerCount: count });
+            }
+        } catch (err) {
+            console.warn('Session persistence read failed:', err);
+        }
+    }
+
+    /** Restore the saved session through the normal GeoJSON import path (silently). */
+    restoreSavedSession() {
+        try {
+            const raw = window.localStorage.getItem(this.persistenceKey);
+            if (!raw) {
+                this.setState({ restoreBannerCount: null });
+                return;
+            }
+            const fc = JSON.parse(raw);
+            this.setState({ restoreBannerCount: null }, () => {
+                this.importGeoJSON(fc, { silent: true });
+            });
+        } catch (err) {
+            console.warn('Session restore failed:', err);
+            this.setState({ restoreBannerCount: null });
+        }
+    }
+
+    /** Dismiss the banner and clear the stored session so it never re-prompts. */
+    dismissSavedSession() {
+        try {
+            window.localStorage.removeItem(this.persistenceKey);
+        } catch (err) { /* non-fatal */ }
+        this.setState({ restoreBannerCount: null });
+    }
+
+    // ==================== End session persistence ====================
+
+    exportAllToGeoJSON() {
+        const config = this.props.config || {};
+        const includeTimestamp = config.includeTimestampInExport !== false;
+
+        const geoJSON = this.buildGeoJSONFeatureCollection(this.state.measurements);
 
         const dataStr = JSON.stringify(geoJSON, null, 2);
         const dataUri = 'data:application/geo+json;charset=utf-8,' + encodeURIComponent(dataStr);
@@ -4105,7 +4370,7 @@ export default class EnhancedMeasurement extends React.PureComponent<AllWidgetPr
         event.target.value = '';
     }
 
-    async importGeoJSON(geoJSON: any) {
+    async importGeoJSON(geoJSON: any, opts: { silent?: boolean } = {}) {
         try {
             let features = [];
 
@@ -4222,10 +4487,12 @@ export default class EnhancedMeasurement extends React.PureComponent<AllWidgetPr
                 }
             });
 
-            this.setState({
-                showImportSuccessDialog: true,
-                importSuccessMessage: `Successfully imported ${importedMeasurements.length} measurement(s)`
-            });
+            if (!opts.silent) {
+                this.setState({
+                    showImportSuccessDialog: true,
+                    importSuccessMessage: `Successfully imported ${importedMeasurements.length} measurement(s)`
+                });
+            }
 
         } catch (error) {
             console.error('Error importing GeoJSON:', error);
@@ -5078,85 +5345,97 @@ export default class EnhancedMeasurement extends React.PureComponent<AllWidgetPr
                 </div>
 
                 <div className="detail-view-body">
-                    {/* Primary stats card — large readable values */}
-                    <div className="detail-stats">
-                        {m.type === 'point' && m.coordinates && (
-                            <>
-                                <div className="detail-stat">
-                                    <div className="detail-stat-label">Latitude</div>
-                                    <div className="detail-stat-value mono">{fmtCoord(m.coordinates.lat, m.coordinates.lon, this.state.coordinateFormat).lat}</div>
-                                </div>
-                                <div className="detail-stat">
-                                    <div className="detail-stat-label">Longitude</div>
-                                    <div className="detail-stat-value mono">{fmtCoord(m.coordinates.lat, m.coordinates.lon, this.state.coordinateFormat).lon}</div>
-                                </div>
-                                <div className="detail-stat">
-                                    <div className="detail-stat-label">X · {srLabel}</div>
-                                    <div className="detail-stat-value mono">{m.coordinates.x.toFixed(2)}</div>
-                                </div>
-                                <div className="detail-stat">
-                                    <div className="detail-stat-label">Y · {srLabel}</div>
-                                    <div className="detail-stat-value mono">{m.coordinates.y.toFixed(2)}</div>
-                                </div>
-                            </>
-                        )}
-                        {m.type === 'distance' && config.showTotalDistance !== false && (
-                            <div className="detail-stat detail-stat-primary">
-                                <div className="detail-stat-label">Total Distance</div>
-                                <div className="detail-stat-value">{this.formatValue(m.totalDistance)} <span className="detail-stat-unit">{m.linearUnit}</span></div>
+                    {/* Primary stats card — large readable values, each copyable */}
+                    {(() => {
+                        // Local helper: renders one stat card with a copy-to-clipboard button.
+                        // key must be unique within this measurement's stats.
+                        const stat = (key: string, label: React.ReactNode, valueNode: React.ReactNode, copyText: string, extraClass = '') => (
+                            <div className={`detail-stat ${extraClass}`} key={key}>
+                                <div className="detail-stat-label">{label}</div>
+                                <div className={`detail-stat-value ${extraClass.includes('mono') ? 'mono' : ''}`}>{valueNode}</div>
+                                <button
+                                    type="button"
+                                    className={`stat-copy-button ${this.state.copiedStatKey === key ? 'is-copied' : ''}`}
+                                    onClick={() => this.copyStatToClipboard(key, copyText)}
+                                    title={this.state.copiedStatKey === key ? 'Copied' : 'Copy value'}
+                                    aria-label={`Copy ${typeof label === 'string' ? label : 'value'} to clipboard`}
+                                >
+                                    {this.state.copiedStatKey === key ? (
+                                        <svg fill="none" stroke="currentColor" viewBox="0 0 24 24" width="12" height="12" aria-hidden="true">
+                                            <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2.5} d="M5 13l4 4L19 7" />
+                                        </svg>
+                                    ) : (
+                                        <svg fill="none" stroke="currentColor" viewBox="0 0 24 24" width="12" height="12" aria-hidden="true">
+                                            <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M8 16H6a2 2 0 01-2-2V6a2 2 0 012-2h8a2 2 0 012 2v2m-6 12h8a2 2 0 002-2v-8a2 2 0 00-2-2h-8a2 2 0 00-2 2v8a2 2 0 002 2z" />
+                                        </svg>
+                                    )}
+                                </button>
                             </div>
-                        )}
-                        {m.type === 'area' && (
-                            <>
-                                <div className="detail-stat detail-stat-primary">
-                                    <div className="detail-stat-label">Area</div>
-                                    <div className="detail-stat-value">{this.formatValue(m.totalArea)} <span className="detail-stat-unit">{m.areaUnit}</span></div>
-                                </div>
-                                <div className="detail-stat">
-                                    <div className="detail-stat-label">Perimeter</div>
-                                    <div className="detail-stat-value">{this.formatValue(m.perimeter)} <span className="detail-stat-unit">{m.linearUnit}</span></div>
-                                </div>
-                            </>
-                        )}
-                        {m.type === 'circle' && m.coordinates && (
-                            <>
-                                <div className="detail-stat detail-stat-primary">
-                                    <div className="detail-stat-label">Area</div>
-                                    <div className="detail-stat-value">{this.formatValue(m.totalArea)} <span className="detail-stat-unit">{m.areaUnit}</span></div>
-                                </div>
-                                <div className="detail-stat">
-                                    <div className="detail-stat-label">Radius</div>
-                                    <div className="detail-stat-value">{this.formatValue(m.radius)} <span className="detail-stat-unit">{m.linearUnit}</span></div>
-                                </div>
-                                <div className="detail-stat">
-                                    <div className="detail-stat-label">Circumference</div>
-                                    <div className="detail-stat-value">{this.formatValue(m.perimeter)} <span className="detail-stat-unit">{m.linearUnit}</span></div>
-                                </div>
-                                <div className="detail-stat">
-                                    <div className="detail-stat-label">Center · {srLabel}</div>
-                                    <div className="detail-stat-value mono detail-stat-value-sm">
-                                        {fmtCoord(m.coordinates.lat, m.coordinates.lon, this.state.coordinateFormat).lat}, {fmtCoord(m.coordinates.lat, m.coordinates.lon, this.state.coordinateFormat).lon}
-                                    </div>
-                                </div>
-                            </>
-                        )}
-                        {m.type === 'triangle' && (
-                            <>
-                                <div className="detail-stat detail-stat-primary">
-                                    <div className="detail-stat-label">Area</div>
-                                    <div className="detail-stat-value">{this.formatValue(m.totalArea)} <span className="detail-stat-unit">{m.areaUnit}</span></div>
-                                </div>
-                                <div className="detail-stat">
-                                    <div className="detail-stat-label">Side Length</div>
-                                    <div className="detail-stat-value">{this.formatValue(m.sideLength)} <span className="detail-stat-unit">{m.linearUnit}</span></div>
-                                </div>
-                                <div className="detail-stat">
-                                    <div className="detail-stat-label">Perimeter</div>
-                                    <div className="detail-stat-value">{this.formatValue(m.perimeter)} <span className="detail-stat-unit">{m.linearUnit}</span></div>
-                                </div>
-                            </>
-                        )}
-                    </div>
+                        );
+                        const cards: React.ReactNode[] = [];
+                        if (m.type === 'point' && m.coordinates) {
+                            const c = fmtCoord(m.coordinates.lat, m.coordinates.lon, this.state.coordinateFormat);
+                            cards.push(
+                                stat(`${m.id}-lat`, 'Latitude', c.lat, String(c.lat), 'mono'),
+                                stat(`${m.id}-lon`, 'Longitude', c.lon, String(c.lon), 'mono'),
+                                stat(`${m.id}-x`, <>X · {srLabel}</>, m.coordinates.x.toFixed(2), m.coordinates.x.toFixed(2), 'mono'),
+                                stat(`${m.id}-y`, <>Y · {srLabel}</>, m.coordinates.y.toFixed(2), m.coordinates.y.toFixed(2), 'mono')
+                            );
+                        }
+                        if (m.type === 'distance' && config.showTotalDistance !== false) {
+                            cards.push(
+                                stat(`${m.id}-dist`, 'Total Distance',
+                                    <>{this.formatValue(m.totalDistance)} <span className="detail-stat-unit">{m.linearUnit}</span></>,
+                                    `${this.formatValue(m.totalDistance)} ${m.linearUnit}`,
+                                    'detail-stat-primary')
+                            );
+                        }
+                        if (m.type === 'area') {
+                            cards.push(
+                                stat(`${m.id}-area`, 'Area',
+                                    <>{this.formatValue(m.totalArea)} <span className="detail-stat-unit">{m.areaUnit}</span></>,
+                                    `${this.formatValue(m.totalArea)} ${m.areaUnit}`,
+                                    'detail-stat-primary'),
+                                stat(`${m.id}-perim`, 'Perimeter',
+                                    <>{this.formatValue(m.perimeter)} <span className="detail-stat-unit">{m.linearUnit}</span></>,
+                                    `${this.formatValue(m.perimeter)} ${m.linearUnit}`)
+                            );
+                        }
+                        if (m.type === 'circle' && m.coordinates) {
+                            const c = fmtCoord(m.coordinates.lat, m.coordinates.lon, this.state.coordinateFormat);
+                            cards.push(
+                                stat(`${m.id}-area`, 'Area',
+                                    <>{this.formatValue(m.totalArea)} <span className="detail-stat-unit">{m.areaUnit}</span></>,
+                                    `${this.formatValue(m.totalArea)} ${m.areaUnit}`,
+                                    'detail-stat-primary'),
+                                stat(`${m.id}-radius`, 'Radius',
+                                    <>{this.formatValue(m.radius)} <span className="detail-stat-unit">{m.linearUnit}</span></>,
+                                    `${this.formatValue(m.radius)} ${m.linearUnit}`),
+                                stat(`${m.id}-circ`, 'Circumference',
+                                    <>{this.formatValue(m.perimeter)} <span className="detail-stat-unit">{m.linearUnit}</span></>,
+                                    `${this.formatValue(m.perimeter)} ${m.linearUnit}`),
+                                stat(`${m.id}-center`, <>Center · {srLabel}</>,
+                                    <>{c.lat}, {c.lon}</>,
+                                    `${c.lat}, ${c.lon}`,
+                                    'mono detail-stat-value-sm')
+                            );
+                        }
+                        if (m.type === 'triangle') {
+                            cards.push(
+                                stat(`${m.id}-area`, 'Area',
+                                    <>{this.formatValue(m.totalArea)} <span className="detail-stat-unit">{m.areaUnit}</span></>,
+                                    `${this.formatValue(m.totalArea)} ${m.areaUnit}`,
+                                    'detail-stat-primary'),
+                                stat(`${m.id}-side`, 'Side Length',
+                                    <>{this.formatValue(m.sideLength)} <span className="detail-stat-unit">{m.linearUnit}</span></>,
+                                    `${this.formatValue(m.sideLength)} ${m.linearUnit}`),
+                                stat(`${m.id}-perim`, 'Perimeter',
+                                    <>{this.formatValue(m.perimeter)} <span className="detail-stat-unit">{m.linearUnit}</span></>,
+                                    `${this.formatValue(m.perimeter)} ${m.linearUnit}`)
+                            );
+                        }
+                        return <div className="detail-stats">{cards}</div>;
+                    })()}
 
                     {/* Segments list */}
                     {m.segments && m.segments.length > 0 && (
@@ -5469,6 +5748,11 @@ export default class EnhancedMeasurement extends React.PureComponent<AllWidgetPr
                                     {this.getToolHint(currentTool)}
                                 </div>
                             </div>
+                            {config.showLiveMeasurement !== false && this.state.liveMeasurement && (
+                                <span className="live-readout" aria-live="polite">
+                                    {this.state.liveMeasurement.value}
+                                </span>
+                            )}
                             <button
                                 type="button"
                                 onClick={() => this.activateTool(currentTool as any)}
@@ -6113,6 +6397,35 @@ export default class EnhancedMeasurement extends React.PureComponent<AllWidgetPr
                         </div>
                     )}
 
+                    {this.state.restoreBannerCount !== null && (
+                        <div className="restore-banner" role="status">
+                            <svg fill="none" stroke="currentColor" viewBox="0 0 24 24" width="16" height="16" aria-hidden="true">
+                                <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M4 4v5h.582m15.356 2A8.001 8.001 0 004.582 9m0 0H9m11 11v-5h-.581m0 0a8.003 8.003 0 01-15.357-2m15.357 2H15" />
+                            </svg>
+                            <span className="restore-banner-text">
+                                {this.state.restoreBannerCount} measurement{this.state.restoreBannerCount === 1 ? '' : 's'} from your last session
+                            </span>
+                            <button
+                                type="button"
+                                className="restore-banner-action"
+                                onClick={() => this.restoreSavedSession()}
+                            >
+                                Restore
+                            </button>
+                            <button
+                                type="button"
+                                className="restore-banner-dismiss"
+                                onClick={() => this.dismissSavedSession()}
+                                title="Discard saved session"
+                                aria-label="Discard saved session"
+                            >
+                                <svg fill="none" stroke="currentColor" viewBox="0 0 24 24" width="13" height="13" aria-hidden="true">
+                                    <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M6 18L18 6M6 6l12 12" />
+                                </svg>
+                            </button>
+                        </div>
+                    )}
+
                     <div className="measurements-section">
                         {(() => {
                             const detailMeasurement = this.state.detailViewMeasurementId
@@ -6137,6 +6450,19 @@ export default class EnhancedMeasurement extends React.PureComponent<AllWidgetPr
                                     })()})
                                 </h3>
                                 <div className="header-actions" style={{ display: 'flex', gap: '6px' }}>
+                                    {config.enableMultiSelect !== false && measurements.length >= 2 && !this.state.selectMode && (
+                                        <button
+                                            type="button"
+                                            className="icon-button select-mode-button"
+                                            onClick={() => this.toggleSelectMode()}
+                                            title="Select multiple measurements"
+                                            aria-label="Enter multi-select mode"
+                                        >
+                                            <svg fill="none" stroke="currentColor" viewBox="0 0 24 24" width="16" height="16" aria-hidden="true">
+                                                <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M9 5H7a2 2 0 00-2 2v12a2 2 0 002 2h10a2 2 0 002-2V7a2 2 0 00-2-2h-2M9 5a2 2 0 002 2h2a2 2 0 002-2M9 5a2 2 0 012-2h2a2 2 0 012 2m-6 9l2 2 4-4" />
+                                            </svg>
+                                        </button>
+                                    )}
                                     <button
                                         type="button"
                                         className="icon-button shortcuts-help-button"
@@ -6311,6 +6637,59 @@ export default class EnhancedMeasurement extends React.PureComponent<AllWidgetPr
                                             </svg>
                                         </button>
                                     )}
+                                    {config.enableSortOptions !== false && (
+                                        <select
+                                            className="sort-select"
+                                            value={this.state.sortOrder}
+                                            onChange={(e) => this.setState({ sortOrder: e.target.value as any, visibleMeasurementCount: 50 })}
+                                            aria-label="Sort measurements"
+                                            title="Sort measurements"
+                                        >
+                                            <option value="newest">Newest</option>
+                                            <option value="oldest">Oldest</option>
+                                            <option value="name">Name</option>
+                                            <option value="type">Type</option>
+                                        </select>
+                                    )}
+                                </div>
+                            )}
+
+                            {this.state.selectMode && (
+                                <div className="select-action-bar" role="toolbar" aria-label="Bulk actions">
+                                    <span className="select-count">
+                                        {this.state.selectedIds.size} selected
+                                    </span>
+                                    <button
+                                        type="button"
+                                        className="select-bar-button"
+                                        disabled={this.state.selectedIds.size === 0}
+                                        onClick={() => this.exportSelectedToGeoJSON()}
+                                        title="Export selected as GeoJSON"
+                                    >
+                                        <svg fill="none" stroke="currentColor" viewBox="0 0 24 24" width="13" height="13" aria-hidden="true">
+                                            <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M12 10v6m0 0l-3-3m3 3l3-3m2 8H7a2 2 0 01-2-2V5a2 2 0 012-2h5.586a1 1 0 01.707.293l5.414 5.414a1 1 0 01.293.707V19a2 2 0 01-2 2z" />
+                                        </svg>
+                                        Export
+                                    </button>
+                                    <button
+                                        type="button"
+                                        className="select-bar-button select-bar-button-danger"
+                                        disabled={this.state.selectedIds.size === 0}
+                                        onClick={() => this.deleteSelected()}
+                                        title="Delete selected"
+                                    >
+                                        <svg fill="none" stroke="currentColor" viewBox="0 0 24 24" width="13" height="13" aria-hidden="true">
+                                            <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M19 7l-.867 12.142A2 2 0 0116.138 21H7.862a2 2 0 01-1.995-1.858L5 7m5 4v6m4-6v6m1-10V4a1 1 0 00-1-1h-4a1 1 0 00-1 1v3M4 7h16" />
+                                        </svg>
+                                        Delete
+                                    </button>
+                                    <button
+                                        type="button"
+                                        className="select-bar-button select-bar-cancel"
+                                        onClick={() => this.toggleSelectMode()}
+                                    >
+                                        Cancel
+                                    </button>
                                 </div>
                             )}
 
@@ -6332,7 +6711,7 @@ export default class EnhancedMeasurement extends React.PureComponent<AllWidgetPr
                                         <p className="empty-hint">{config.emptyStateHint || 'Pick a tool above to start drawing on the map'}</p>
                                     </div>
                                 ) : (() => {
-                                    // Filter + page the list — see #11 (paged list instead of virtualization) and #23 (search)
+                                    // Filter + sort + page the list — see #11 (paged list instead of virtualization) and #23 (search)
                                     const filterQuery = this.state.measurementFilter.trim().toLowerCase();
                                     const filtered = filterQuery
                                         ? measurements.filter(m => m.label.toLowerCase().includes(filterQuery) || m.type.toLowerCase().includes(filterQuery))
@@ -6348,16 +6727,31 @@ export default class EnhancedMeasurement extends React.PureComponent<AllWidgetPr
                                             </div>
                                         );
                                     }
-                                    const visible = filtered.slice(0, this.state.visibleMeasurementCount);
-                                    const hidden = filtered.length - visible.length;
+                                    const sorted = this.sortMeasurements(filtered);
+                                    const visible = sorted.slice(0, this.state.visibleMeasurementCount);
+                                    const hidden = sorted.length - visible.length;
+                                    const visibleIds = visible.map(m => m.id);
+                                    const allVisibleSelected = this.state.selectMode && visibleIds.length > 0 && visibleIds.every(id => this.state.selectedIds.has(id));
                                     return (
                                         <div className="measurements-list" role="list" aria-label="Measurements">
+                                            {this.state.selectMode && (
+                                                <label className="select-all-row">
+                                                    <input
+                                                        type="checkbox"
+                                                        checked={allVisibleSelected}
+                                                        onChange={() => this.toggleSelectAll(visibleIds)}
+                                                        aria-label="Select all visible measurements"
+                                                    />
+                                                    <span>Select all visible</span>
+                                                </label>
+                                            )}
                                             {visible.map(measurement => {
                                                 const canEditVertices = (config.enableVertexEditTool !== false) && measurement.type !== 'point' && measurement.type !== 'circle';
+                                                const isChecked = this.state.selectedIds.has(measurement.id);
                                                 return (
                                                     <div
                                                         key={measurement.id}
-                                                        className="measurement-card"
+                                                        className={`measurement-card ${this.state.selectMode && isChecked ? 'is-selected' : ''}`}
                                                         role="listitem"
                                                         style={{ borderLeftColor: measurement.color, borderLeftWidth: '4px', borderLeftStyle: 'solid' }}
                                                     >
@@ -6365,7 +6759,7 @@ export default class EnhancedMeasurement extends React.PureComponent<AllWidgetPr
                                                             className="card-header"
                                                             role="button"
                                                             tabIndex={0}
-                                                            aria-label={`Open details for ${measurement.label}`}
+                                                            aria-label={this.state.selectMode ? `${isChecked ? 'Deselect' : 'Select'} ${measurement.label}` : `Open details for ${measurement.label}`}
                                                             onClick={() => this.openDetailView(measurement.id)}
                                                             onKeyDown={(e) => {
                                                                 if (e.key === 'Enter' || e.key === ' ') {
@@ -6374,6 +6768,16 @@ export default class EnhancedMeasurement extends React.PureComponent<AllWidgetPr
                                                                 }
                                                             }}
                                                         >
+                                                            {this.state.selectMode && (
+                                                                <input
+                                                                    type="checkbox"
+                                                                    className="card-select-checkbox"
+                                                                    checked={isChecked}
+                                                                    onChange={() => this.toggleSelected(measurement.id)}
+                                                                    onClick={(e) => e.stopPropagation()}
+                                                                    aria-label={`Select ${measurement.label}`}
+                                                                />
+                                                            )}
                                                             <div className="card-title-row">
                                                                 <button
                                                                     type="button"

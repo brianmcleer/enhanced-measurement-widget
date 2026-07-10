@@ -2483,6 +2483,69 @@ export default class Setting extends React.PureComponent<AllWidgetSettingProps<a
                     </SettingRow>
                 </SettingSection>
 
+                <SettingSection title="Power Features">
+                    <SettingRow>
+                        <div style={{
+                            padding: '12px',
+                            backgroundColor: '#f8f9fa',
+                            borderRadius: '4px',
+                            marginBottom: '12px',
+                            fontSize: '13px',
+                            color: '#495057'
+                        }}>
+                            <strong>Note:</strong> Advanced end-user features. Session persistence stores measurements in the browser's local storage and offers a restore prompt on reload.
+                        </div>
+                    </SettingRow>
+
+                    <SettingRow flow="wrap" label="Session persistence (restore after reload)">
+                        <Switch
+                            checked={config.enablePersistence === true}
+                            onChange={(evt) => {
+                                this.props.onSettingChange({
+                                    id: this.props.id,
+                                    config: this.props.config.set('enablePersistence', evt.target.checked)
+                                });
+                            }}
+                        />
+                    </SettingRow>
+
+                    <SettingRow flow="wrap" label="Live measurement readout while drawing">
+                        <Switch
+                            checked={config.showLiveMeasurement !== false}
+                            onChange={(evt) => {
+                                this.props.onSettingChange({
+                                    id: this.props.id,
+                                    config: this.props.config.set('showLiveMeasurement', evt.target.checked)
+                                });
+                            }}
+                        />
+                    </SettingRow>
+
+                    <SettingRow flow="wrap" label="Multi-select mode (bulk delete/export)">
+                        <Switch
+                            checked={config.enableMultiSelect !== false}
+                            onChange={(evt) => {
+                                this.props.onSettingChange({
+                                    id: this.props.id,
+                                    config: this.props.config.set('enableMultiSelect', evt.target.checked)
+                                });
+                            }}
+                        />
+                    </SettingRow>
+
+                    <SettingRow flow="wrap" label="Sort options in measurement list">
+                        <Switch
+                            checked={config.enableSortOptions !== false}
+                            onChange={(evt) => {
+                                this.props.onSettingChange({
+                                    id: this.props.id,
+                                    config: this.props.config.set('enableSortOptions', evt.target.checked)
+                                });
+                            }}
+                        />
+                    </SettingRow>
+                </SettingSection>
+
                 <SettingSection title="Default Panel Expansion">
                     <SettingRow>
                         <div style={{

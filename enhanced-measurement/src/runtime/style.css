@@ -2967,3 +2967,296 @@
 .enhanced-measurement-widget .measurement-summary {
     display: none;
 }
+
+/* ===========================================================
+   MAX-OUT PASS: session persistence banner, live readout,
+   multi-select mode, sort control, stat copy buttons
+   =========================================================== */
+
+/* ----- Restore banner (session persistence) ----- */
+.enhanced-measurement-widget .restore-banner {
+    display: flex;
+    align-items: center;
+    gap: 8px;
+    padding: 7px 10px;
+    margin: 0 0 6px 0;
+    font-size: 12px;
+    color: var(--em-fg);
+    background: var(--em-accent-soft);
+    border: 1px solid var(--em-accent);
+    border-radius: 6px;
+    flex-shrink: 0;
+    animation: restore-banner-in 0.2s ease-out;
+}
+
+@keyframes restore-banner-in {
+    from {
+        transform: translateY(-4px);
+        opacity: 0;
+    }
+
+    to {
+        transform: translateY(0);
+        opacity: 1;
+    }
+}
+
+@media (prefers-reduced-motion: reduce) {
+    @keyframes restore-banner-in {
+        from {
+            transform: none;
+            opacity: 1;
+        }
+
+        to {
+            transform: none;
+            opacity: 1;
+        }
+    }
+}
+
+.enhanced-measurement-widget .restore-banner > svg {
+    color: var(--em-accent);
+    flex-shrink: 0;
+}
+
+.enhanced-measurement-widget .restore-banner-text {
+    flex: 1;
+    min-width: 0;
+    line-height: 1.3;
+}
+
+.enhanced-measurement-widget .restore-banner-action {
+    padding: 4px 12px;
+    font-size: 12px;
+    font-weight: 600;
+    color: var(--em-accent-fg);
+    background: var(--em-accent);
+    border: none;
+    border-radius: 5px;
+    cursor: pointer;
+    font-family: inherit;
+    flex-shrink: 0;
+    transition: filter 0.15s ease;
+}
+
+    .enhanced-measurement-widget .restore-banner-action:hover {
+        filter: brightness(0.92);
+    }
+
+.enhanced-measurement-widget .restore-banner-dismiss {
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+    width: 24px;
+    height: 24px;
+    background: transparent;
+    border: none;
+    color: var(--em-fg-muted);
+    cursor: pointer;
+    border-radius: 4px;
+    flex-shrink: 0;
+}
+
+    .enhanced-measurement-widget .restore-banner-dismiss:hover {
+        background: var(--em-hover);
+        color: var(--em-fg);
+    }
+
+/* ----- Live measurement readout in draw banner ----- */
+.enhanced-measurement-widget .live-readout {
+    font-size: 13px;
+    font-weight: 700;
+    font-variant-numeric: tabular-nums;
+    color: #1e3a8a;
+    background: #ffffff;
+    border: 1px solid #bfdbfe;
+    border-radius: 5px;
+    padding: 3px 8px;
+    white-space: nowrap;
+    flex-shrink: 0;
+}
+
+/* ----- Multi-select mode ----- */
+.enhanced-measurement-widget .select-mode-button {
+    width: 28px;
+    height: 28px;
+    padding: 4px;
+    color: var(--em-fg-muted);
+    background: transparent;
+    border: 1px solid transparent;
+    border-radius: 5px;
+    cursor: pointer;
+}
+
+    .enhanced-measurement-widget .select-mode-button:hover {
+        background: var(--em-hover);
+        color: var(--em-fg);
+    }
+
+.enhanced-measurement-widget .select-action-bar {
+    display: flex;
+    align-items: center;
+    gap: 6px;
+    padding: 6px 8px;
+    margin-bottom: 4px;
+    background: var(--em-bg-elev);
+    border: 1px solid var(--em-border);
+    border-radius: 6px;
+    flex-shrink: 0;
+}
+
+.enhanced-measurement-widget .select-count {
+    flex: 1;
+    font-size: 12px;
+    font-weight: 600;
+    color: var(--em-fg);
+}
+
+.enhanced-measurement-widget .select-bar-button {
+    display: inline-flex;
+    align-items: center;
+    gap: 4px;
+    padding: 4px 10px;
+    font-size: 12px;
+    font-weight: 500;
+    color: var(--em-fg-muted);
+    background: var(--em-bg);
+    border: 1px solid var(--em-border-strong);
+    border-radius: 5px;
+    cursor: pointer;
+    font-family: inherit;
+    transition: background-color 0.15s ease, color 0.15s ease;
+}
+
+    .enhanced-measurement-widget .select-bar-button:hover:not(:disabled) {
+        background: var(--em-hover);
+        color: var(--em-fg);
+    }
+
+    .enhanced-measurement-widget .select-bar-button:disabled {
+        opacity: 0.45;
+        cursor: not-allowed;
+    }
+
+.enhanced-measurement-widget .select-bar-button-danger {
+    color: var(--em-danger);
+    border-color: var(--em-danger-border);
+}
+
+    .enhanced-measurement-widget .select-bar-button-danger:hover:not(:disabled) {
+        background: var(--em-danger-soft);
+        color: var(--em-danger);
+    }
+
+.enhanced-measurement-widget .select-bar-cancel {
+    border-color: transparent;
+    background: transparent;
+}
+
+.enhanced-measurement-widget .select-all-row {
+    display: flex;
+    align-items: center;
+    gap: 8px;
+    padding: 6px 10px;
+    font-size: 12px;
+    color: var(--em-fg-muted);
+    cursor: pointer;
+    user-select: none;
+    border-bottom: 1px dashed var(--em-border);
+    margin-bottom: 4px;
+}
+
+    .enhanced-measurement-widget .select-all-row input[type="checkbox"],
+    .enhanced-measurement-widget .card-select-checkbox {
+        width: 15px;
+        height: 15px;
+        accent-color: var(--em-accent);
+        cursor: pointer;
+        flex-shrink: 0;
+        margin: 0;
+    }
+
+.enhanced-measurement-widget .card-select-checkbox {
+    margin-right: 2px;
+    margin-left: 6px;
+    align-self: center;
+}
+
+.enhanced-measurement-widget .measurement-card.is-selected {
+    background: var(--em-accent-soft);
+}
+
+    .enhanced-measurement-widget .measurement-card.is-selected .card-header {
+        background: transparent !important;
+    }
+
+/* ----- Sort dropdown in the search row ----- */
+.enhanced-measurement-widget .sort-select {
+    flex-shrink: 0;
+    max-width: 92px;
+    padding: 3px 4px;
+    font-size: 11.5px;
+    font-family: inherit;
+    color: var(--em-fg-muted);
+    background: transparent;
+    border: 1px solid var(--em-border);
+    border-radius: 5px;
+    cursor: pointer;
+    outline: none;
+}
+
+    .enhanced-measurement-widget .sort-select:hover {
+        border-color: var(--em-border-strong);
+        color: var(--em-fg);
+    }
+
+    .enhanced-measurement-widget .sort-select:focus-visible {
+        border-color: var(--em-accent);
+        box-shadow: 0 0 0 2px var(--em-accent-soft);
+    }
+
+/* ----- Stat copy buttons in detail view ----- */
+.enhanced-measurement-widget .detail-stat {
+    position: relative;
+}
+
+.enhanced-measurement-widget .stat-copy-button {
+    position: absolute;
+    top: 6px;
+    right: 6px;
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+    width: 22px;
+    height: 22px;
+    padding: 0;
+    background: transparent;
+    border: none;
+    border-radius: 4px;
+    color: var(--em-fg-faint);
+    cursor: pointer;
+    opacity: 0;
+    transition: opacity 0.12s ease, background-color 0.12s ease, color 0.12s ease;
+}
+
+    .enhanced-measurement-widget .detail-stat:hover .stat-copy-button,
+    .enhanced-measurement-widget .stat-copy-button:focus-visible,
+    .enhanced-measurement-widget .stat-copy-button.is-copied {
+        opacity: 1;
+    }
+
+    .enhanced-measurement-widget .stat-copy-button:hover {
+        background: var(--em-hover);
+        color: var(--em-fg);
+    }
+
+    .enhanced-measurement-widget .stat-copy-button.is-copied {
+        color: #16a34a;
+    }
+/* On touch devices there is no hover; keep copy buttons always visible */
+@media (hover: none) {
+    .enhanced-measurement-widget .stat-copy-button {
+        opacity: 0.6;
+    }
+}
