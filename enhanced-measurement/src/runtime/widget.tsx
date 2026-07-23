@@ -90,13 +90,13 @@ const DropdownMenuContent = React.forwardRef<HTMLDivElement, DropdownMenuContent
             const menu = menuRef.current;
             if (!menu) return;
 
-            const focusableItems = menu.querySelectorAll<HTMLElement>('[role="menuitem"]:not([disabled])');
+            const focusableItems = menu.querySelectorAll('[role="menuitem"]:not([disabled])') as NodeListOf<HTMLElement>;
             if (focusableItems.length > 0) {
                 focusableItems[0].focus();
             }
 
             const handleKeyDown = (e: KeyboardEvent) => {
-                const items = Array.from(focusableItems);
+                const items: HTMLElement[] = Array.from(focusableItems);
                 const currentIndex = items.findIndex(item => item === document.activeElement);
 
                 switch (e.key) {
@@ -1862,7 +1862,6 @@ export default class EnhancedMeasurement extends React.PureComponent<AllWidgetPr
 
         if (!measurement) return;
 
-        console.log('Graphic deleted via sketch widget:', measurementId);
 
         // Record this action in undo history BEFORE deleting
         this.recordAction({
@@ -3932,7 +3931,7 @@ export default class EnhancedMeasurement extends React.PureComponent<AllWidgetPr
      *  so undo history stays intact; the per-delete toasts are suppressed in favor
      *  of one summary toast. */
     deleteSelected() {
-        const ids = Array.from(this.state.selectedIds);
+        const ids: string[] = Array.from(this.state.selectedIds);
         if (ids.length === 0) return;
         ids.forEach(id => this.deleteMeasurement(id, { showToast: false }));
         this.setState({
@@ -4275,7 +4274,7 @@ export default class EnhancedMeasurement extends React.PureComponent<AllWidgetPr
             } catch (err) {
                 // Quota errors and private-browsing failures are non-fatal; persistence
                 // silently degrades to session-only behavior.
-                console.warn('Session persistence save failed:', err);
+                console.debug('Session persistence save failed:', err);
             }
         }, 800);
     }
@@ -4292,7 +4291,7 @@ export default class EnhancedMeasurement extends React.PureComponent<AllWidgetPr
                 this.safeSetState({ restoreBannerCount: count });
             }
         } catch (err) {
-            console.warn('Session persistence read failed:', err);
+            console.debug('Session persistence read failed:', err);
         }
     }
 
@@ -4309,7 +4308,7 @@ export default class EnhancedMeasurement extends React.PureComponent<AllWidgetPr
                 this.importGeoJSON(fc, { silent: true });
             });
         } catch (err) {
-            console.warn('Session restore failed:', err);
+            console.debug('Session restore failed:', err);
             this.setState({ restoreBannerCount: null });
         }
     }
@@ -4429,14 +4428,6 @@ export default class EnhancedMeasurement extends React.PureComponent<AllWidgetPr
 
                 // Add to sketch layer
                 this.sketchLayer.add(graphic);
-                console.log('Imported feature:', {
-                    type: geometry.type,
-                    id: props.id,
-                    geometryType: esriGeometry.type,
-                    spatialReference: esriGeometry.spatialReference,
-                    hasGeometry: !!esriGeometry
-                });
-
                 // Create measurement record
                 const measurement: MeasurementRecord = {
                     id: props.id || `imported-${Date.now()}-${Math.random()}`,
@@ -5747,12 +5738,12 @@ export default class EnhancedMeasurement extends React.PureComponent<AllWidgetPr
                                 <div style={{ fontSize: '11px', color: '#3b82f6', opacity: 0.9 }}>
                                     {this.getToolHint(currentTool)}
                                 </div>
+                                {config.showLiveMeasurement !== false && this.state.liveMeasurement && (
+                                    <div className="live-readout" aria-live="polite">
+                                        {this.state.liveMeasurement.value}
+                                    </div>
+                                )}
                             </div>
-                            {config.showLiveMeasurement !== false && this.state.liveMeasurement && (
-                                <span className="live-readout" aria-live="polite">
-                                    {this.state.liveMeasurement.value}
-                                </span>
-                            )}
                             <button
                                 type="button"
                                 onClick={() => this.activateTool(currentTool as any)}
@@ -7107,7 +7098,7 @@ export default class EnhancedMeasurement extends React.PureComponent<AllWidgetPr
                                 }
                                 // Focus trap
                                 if (e.key === 'Tab') {
-                                    const focusable = e.currentTarget.querySelectorAll<HTMLElement>('button:not([disabled])');
+                                    const focusable = e.currentTarget.querySelectorAll('button:not([disabled])') as NodeListOf<HTMLElement>;
                                     const first = focusable[0];
                                     const last = focusable[focusable.length - 1];
                                     if (e.shiftKey && document.activeElement === first) {

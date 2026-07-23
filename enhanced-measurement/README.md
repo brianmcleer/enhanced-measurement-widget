@@ -32,7 +32,7 @@ https://community.esri.com/t5/experience-builder-custom-widgets/enhanced-measure
 
 ## Requirements
 
-- ArcGIS Experience Builder Developer Edition 1.19 or 1.20 (these versions run React 19; EB 1.18 and earlier are not supported)
+- ArcGIS Experience Builder Developer Edition 1.19, 1.20, or 1.21 (these versions run React 19; EB 1.18 and earlier are not supported)
 - Node.js as required by your EB version
 
 Dependencies (these install automatically with the standard EB client install; no per-package install needed):
@@ -50,13 +50,22 @@ Dependencies (these install automatically with the standard EB client install; n
 
    The `manifest.json` must sit **directly** inside this folder. Do not nest the widget another level deep (for example `widgets/enhanced-measurement/enhanced-measurement/`). Nesting is the usual cause of a widget not registering.
 
-2. From the `client` folder, run:
+2. Install dependencies from the `client` folder. The command depends on your EB version:
+
+   EB 1.19 or 1.20:
 
    ```
    npm install
    ```
 
-   Experience Builder picks up `package.json` inside the widget folder and installs the dependencies automatically. You do not need to install `@turf/turf` or `jspdf` separately.
+   EB 1.21 and later (Esri switched to pnpm; `npm install` errors out by design):
+
+   ```
+   npm i -g pnpm
+   pnpm ci
+   ```
+
+   Either way, Experience Builder picks up `package.json` inside the widget folder and installs the dependencies automatically. You do not need to install `@turf/turf` or `jspdf` separately.
 
 3. Start (or restart) the client:
 

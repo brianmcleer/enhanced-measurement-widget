@@ -53,7 +53,15 @@ interface SettingState {
     importXmlPaste: string;
 }
 
-export default class Setting extends React.PureComponent<AllWidgetSettingProps<any>, SettingState> {
+// EB 1.21 type-only fix: the 1.21 AllWidgetSettingProps type does not surface the
+// builder-injected id/useMapWidgetIds props even though the builder still provides
+// them at runtime. Intersection keeps the editor clean with zero runtime impact.
+type SettingProps = AllWidgetSettingProps<any> & {
+    id: string;
+    useMapWidgetIds?: string[] | any;
+};
+
+export default class Setting extends React.PureComponent<SettingProps, SettingState> {
 
     constructor(props) {
         super(props);
