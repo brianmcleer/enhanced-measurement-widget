@@ -62,6 +62,16 @@ type SettingProps = AllWidgetSettingProps<any> & {
 };
 
 export default class Setting extends React.PureComponent<SettingProps, SettingState> {
+    // EB 1.21 editor fallback: see the matching note in widget.tsx. Type-only,
+    // zero runtime impact.
+    declare props: Readonly<SettingProps>;
+    declare state: Readonly<SettingState>;
+    declare setState: <K extends keyof SettingState>(
+        state: ((prevState: Readonly<SettingState>, props: Readonly<SettingProps>) => Pick<SettingState, K> | SettingState | null) | Pick<SettingState, K> | SettingState | null,
+        callback?: () => void
+    ) => void;
+    declare forceUpdate: (callback?: () => void) => void;
+
 
     constructor(props) {
         super(props);

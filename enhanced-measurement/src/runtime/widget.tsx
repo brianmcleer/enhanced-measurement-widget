@@ -350,7 +350,27 @@ interface SegmentRecord {
     spatialReference?: any;
 }
 
-export default class EnhancedMeasurement extends React.PureComponent<AllWidgetProps<any>, WidgetState> {
+// EB 1.21 type-only fix: the 1.21 types may not surface builder-injected props
+// (e.g. id). Intersection restores them at the type level only.
+type WidgetProps = AllWidgetProps<any> & {
+    id: string;
+};
+
+export default class EnhancedMeasurement extends React.PureComponent<WidgetProps, WidgetState> {
+    // EB 1.21 editor fallback: some Visual Studio TypeScript services cannot resolve
+    // React's class typings through pnpm layouts, which makes every this.props /
+    // this.state / this.setState reference error. These `declare` members restate the
+    // inherited types explicitly. `declare` emits no JavaScript, so runtime behavior
+    // is untouched, and when React's types do resolve these are compatible
+    // redeclarations that change nothing.
+    declare props: Readonly<WidgetProps>;
+    declare state: Readonly<WidgetState>;
+    declare setState: <K extends keyof WidgetState>(
+        state: ((prevState: Readonly<WidgetState>, props: Readonly<WidgetProps>) => Pick<WidgetState, K> | WidgetState | null) | Pick<WidgetState, K> | WidgetState | null,
+        callback?: () => void
+    ) => void;
+    declare forceUpdate: (callback?: () => void) => void;
+
     private Sketch: any = null;
     private GraphicsLayer: any = null;
     private Graphic: any = null;
