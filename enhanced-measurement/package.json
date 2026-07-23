@@ -19,10 +19,5 @@
   "dependencies": {
     "@turf/turf": "^7.1.0",
     "jspdf": "^4.2.1"
-  },
-  "pnpm": {
-    "overrides": {
-      "dompurify": "3.4.12"
-    }
   }
 }
