@@ -1,6 +1,8 @@
 /* eslint-disable eslint-comments/no-unlimited-disable -- intentional file-wide disable */
 /* eslint-disable */
-import { React, WidgetState as JimuWidgetState } from 'jimu-core';
+/** @jsx jsx */
+/** @jsxFrag React.Fragment */
+import { React, jsx, WidgetState as JimuWidgetState } from 'jimu-core';
 import type { AllWidgetProps } from 'jimu-core';
 import { JimuMapViewComponent, loadArcGISJSAPIModules } from 'jimu-arcgis';
 import type { JimuMapView } from 'jimu-arcgis';
@@ -354,6 +356,7 @@ interface SegmentRecord {
 // (e.g. id). Intersection restores them at the type level only.
 type WidgetProps = AllWidgetProps<any> & {
     id: string;
+    useMapWidgetIds?: string[] | any;
 };
 
 export default class EnhancedMeasurement extends React.PureComponent<WidgetProps, WidgetState> {
@@ -2514,7 +2517,7 @@ export default class EnhancedMeasurement extends React.PureComponent<WidgetProps
                 const planar = Math.abs(this.geometryEngine.planarLength(jsapiGeometry, 'meters'));
                 if (!isNaN(planar) && planar > 0) {
                     if (this.isCustomLinearUnit(unit)) return planar / this.getCustomLinearFactor(unit);
-                    return turf.convertLength(planar, 'meters' as turf.helpers.Units, unit as turf.helpers.Units);
+                    return turf.convertLength(planar, 'meters' as any, unit as any);
                 }
             } catch (_) { }
 
@@ -2633,10 +2636,10 @@ export default class EnhancedMeasurement extends React.PureComponent<WidgetProps
     turfLength(geojson: any, unit: string): number {
         try {
             if (this.isCustomLinearUnit(unit)) {
-                const meters = turf.length(geojson, { units: 'meters' as turf.helpers.Units });
+                const meters = turf.length(geojson, { units: 'meters' as any });
                 return meters / this.getCustomLinearFactor(unit);
             }
-            return turf.length(geojson, { units: unit as turf.helpers.Units });
+            return turf.length(geojson, { units: unit as any });
         } catch (e) {
             return 0;
         }
@@ -2649,10 +2652,10 @@ export default class EnhancedMeasurement extends React.PureComponent<WidgetProps
     turfDistance(from: any, to: any, unit: string): number {
         try {
             if (this.isCustomLinearUnit(unit)) {
-                const meters = turf.distance(from, to, { units: 'meters' as turf.helpers.Units });
+                const meters = turf.distance(from, to, { units: 'meters' as any });
                 return meters / this.getCustomLinearFactor(unit);
             }
-            return turf.distance(from, to, { units: unit as turf.helpers.Units });
+            return turf.distance(from, to, { units: unit as any });
         } catch (e) {
             return 0;
         }
@@ -2676,14 +2679,14 @@ export default class EnhancedMeasurement extends React.PureComponent<WidgetProps
             } else if (fromIsCustom) {
                 // Custom -> standard: convert to meters first, then use turf
                 const meters = value * this.getCustomLinearFactor(fromUnit);
-                return turf.convertLength(meters, 'meters' as turf.helpers.Units, toUnit as turf.helpers.Units);
+                return turf.convertLength(meters, 'meters' as any, toUnit as any);
             } else if (toIsCustom) {
                 // Standard -> custom: convert to meters via turf, then to custom
-                const meters = turf.convertLength(value, fromUnit as turf.helpers.Units, 'meters' as turf.helpers.Units);
+                const meters = turf.convertLength(value, fromUnit as any, 'meters' as any);
                 return meters / this.getCustomLinearFactor(toUnit);
             } else {
                 // Both standard: use turf directly
-                return turf.convertLength(value, fromUnit as turf.helpers.Units, toUnit as turf.helpers.Units);
+                return turf.convertLength(value, fromUnit as any, toUnit as any);
             }
         } catch (e) {
             console.error('convertLinearValue error:', e);
