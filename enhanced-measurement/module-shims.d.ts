@@ -11,3 +11,7 @@ declare module 'jspdf' {
     const jsPDF: any;
     export default jsPDF;
 }
+
+// Side-effect asset imports (import './style.css'). Webpack handles these;
+// this tells the editor's TypeScript service they are valid modules.
+declare module '*.css';
