@@ -1,23 +1,25 @@
 {
-  "extends": "../../../tsconfig.json",
   "compilerOptions": {
     "target": "ES2018",
-    "lib": [
-      "ES2018",
-      "DOM",
-      "DOM.Iterable"
-    ],
+    "module": "ESNext",
+    "moduleResolution": "Node",
+    "lib": [ "ESNext", "DOM", "DOM.Iterable" ],
     "jsx": "react",
+    "types": [],
+    "strict": false,
+    "skipLibCheck": true,
     "esModuleInterop": true,
     "allowSyntheticDefaultImports": true,
-    "skipLibCheck": true,
-    "strict": false,
-    "noEmit": true,
-    "moduleResolution": "Node"
+    "resolveJsonModule": true,
+    "noEmit": true
   },
   "include": [
     "src/**/*.ts",
     "src/**/*.tsx",
-    "module-shims.d.ts"
+    "src/**/*.d.ts"
+  ],
+  "exclude": [
+    "node_modules",
+    "dist"
   ]
 }

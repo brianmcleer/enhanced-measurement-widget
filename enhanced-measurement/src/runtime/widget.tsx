@@ -8,6 +8,13 @@ import { JimuMapViewComponent, loadArcGISJSAPIModules } from 'jimu-arcgis';
 import type { JimuMapView } from 'jimu-arcgis';
 import * as turf from '@turf/turf';
 import jsPDF from 'jspdf';
+import { Button } from 'jimu-ui';
+import { CalciteIcon } from 'calcite-components';
+import HelpPopup from './components/HelpPopup';
+import FirstRunHint from './components/FirstRunHint';
+import { buildHelpSections } from './helpSections';
+import type { HelpFeatures } from './helpSections';
+import defaultMessages from './translations/default';
 import './style.css';
 
 // Dropdown Menu Components (shadcn/ui style) - WCAG 2.1 AA Accessible
@@ -315,6 +322,10 @@ interface WidgetState {
     sortOrder: 'newest' | 'oldest' | 'name' | 'type';
     /** Detail-stat key that was just copied to clipboard, for the transient "Copied" flash. */
     copiedStatKey: string | null;
+    /** Whether the in-widget help guide is open. */
+    helpOpen: boolean;
+    /** Whether the first-run hint banner shows (until dismissed once per browser, per widget id). */
+    showFirstRunHint: boolean;
 }
 
 interface MeasurementRecord {
@@ -479,7 +490,9 @@ export default class EnhancedMeasurement extends React.PureComponent<WidgetProps
             selectMode: false,
             selectedIds: new Set(),
             sortOrder: 'newest',
-            copiedStatKey: null
+            copiedStatKey: null,
+            helpOpen: false,
+            showFirstRunHint: false
         };
     }
 
@@ -615,6 +628,104 @@ export default class EnhancedMeasurement extends React.PureComponent<WidgetProps
         document.addEventListener('keydown', this.handleKeyDown);
         // Surface the restore banner if a saved session exists (config-gated)
         this.checkForSavedSession();
+        // First-run hint shows until the user dismisses it once (or opens the guide)
+        if (!this.readHintDismissed()) this.safeSetState({ showFirstRunHint: true });
+    }
+
+    // ==================== In-widget help guide (shared pattern, see WIDGETHANDOFF Section 10) ====================
+
+    /** Translate helper for the guide. Reads defaultMessages directly (class component, no useIntl). */
+    private t = (id: string, values?: Record<string, string>): string => {
+        let text: string = (defaultMessages as any)[id] ?? id;
+        if (values) {
+            Object.keys(values).forEach((k) => { text = text.split(`{${k}}`).join(values[k]); });
+        }
+        return text;
+    };
+
+    /** Storage key for the first-run hint dismissal, namespaced by widget id so two copies in one app do not share it. */
+    private get firstRunHintKey(): string {
+        return `enhancedMeasurement.helpHintDismissed.${this.props.id}`;
+    }
+
+    private readHintDismissed(): boolean {
+        try {
+            return typeof window !== 'undefined' && !!window.localStorage && window.localStorage.getItem(this.firstRunHintKey) === '1';
+        } catch (_) {
+            // Private browsing can throw on read; the guide is not worth breaking the widget over.
+            return false;
+        }
+    }
+
+    private dismissFirstRunHint = (): void => {
+        try {
+            if (typeof window !== 'undefined' && window.localStorage) window.localStorage.setItem(this.firstRunHintKey, '1');
+        } catch (_) { /* private browsing */ }
+        this.setState({ showFirstRunHint: false });
+    };
+
+    /** Opening the guide counts as answering the hint, so it dismisses the hint too. */
+    private openHelp = (): void => {
+        if (this.state.showFirstRunHint) this.dismissFirstRunHint();
+        this.setState({ helpOpen: true });
+    };
+
+    private closeHelp = (): void => {
+        this.setState({ helpOpen: false });
+    };
+
+    /**
+     * Feature flags for the guide, computed with the same checks the render method uses
+     * (config.x !== false), so the guide never describes a control that is not on screen.
+     */
+    private helpFeatures(): HelpFeatures {
+        const config = this.props.config || {};
+        return {
+            point: config.enablePointTool !== false,
+            distance: config.enableDistanceTool !== false,
+            freehandLine: config.enableFreehandPolylineTool !== false,
+            rectangle: config.enableRectangleTool !== false,
+            area: config.enableAreaTool !== false,
+            freehandArea: config.enableFreehandPolygonTool !== false,
+            circle: config.enableCircleTool !== false,
+            triangle: config.enableTriangleTool !== false,
+            vertexEdit: config.enableVertexEditTool !== false,
+            liveMeasurement: config.showLiveMeasurement !== false,
+            segmentLabelsToggle: config.showSegmentLabelsToggle !== false,
+            tooltipsToggle: config.showTooltipsToggle !== false,
+            snappingToggle: config.showSnappingToggle !== false,
+            printReady: config.showPrintReadyButton !== false,
+            unitToggle: config.showUnitToggle !== false,
+            coordinateModeToggle: config.showCoordinateModeToggle !== false,
+            customUnits: this.getCustomLinearUnits().some(u => u.addToDropdown) || this.getCustomAreaUnits().some(u => u.addToDropdown),
+            statistics: config.showStatisticsToggle !== false,
+            exportButton: config.showExportButton !== false,
+            importButton: config.showImportButton !== false,
+            clearAll: config.showClearAllButton !== false,
+            undoRedo: config.enableUndoRedo !== false,
+            multiSelect: config.enableMultiSelect !== false,
+            sortOptions: config.enableSortOptions !== false,
+            persistence: config.enablePersistence === true,
+            labels: {
+                point: config.pointButtonText || 'Point',
+                distance: config.lineButtonText || 'Line',
+                freehandLine: config.freehandLineButtonText || 'Freehand Line',
+                rectangle: config.rectangleButtonText || 'Rectangle',
+                area: config.areaButtonText || 'Area',
+                freehandArea: config.freehandAreaButtonText || 'Freehand Area',
+                circle: config.circleButtonText || 'Circle',
+                triangle: config.triangleButtonText || 'Triangle',
+                segmentLabels: config.segmentLabelText || 'Show Segment Labels',
+                tooltips: config.tooltipsToggleText || 'Show Tooltips',
+                snapping: config.snappingToggleText || 'Enable Snapping',
+                undo: config.undoButtonText || 'Undo',
+                redo: config.redoButtonText || 'Redo',
+                displayOptions: config.displayOptionsHeaderText || 'Display Options',
+                units: config.unitsHeaderText || 'Units & Coordinates',
+                statistics: config.statisticsHeaderText || 'Summary Statistics',
+                measurements: config.measurementsHeaderText || 'Measurements'
+            }
+        };
     }
 
     componentWillUnmount() {
@@ -687,7 +798,7 @@ export default class EnhancedMeasurement extends React.PureComponent<WidgetProps
                 target.tagName === 'SELECT' ||
                 target.isContentEditable
             );
-            const dialogOpen = this.state.showClearAllDialog || this.state.showImportSuccessDialog || this.state.showImportErrorDialog || this.state.showPDFExportDialog || this.state.showShortcutsHelp;
+            const dialogOpen = this.state.showClearAllDialog || this.state.showImportSuccessDialog || this.state.showImportErrorDialog || this.state.showPDFExportDialog || this.state.showShortcutsHelp || this.state.helpOpen;
             if (!inEditable && !dialogOpen) {
                 if (this.state.detailViewMeasurementId) {
                     event.preventDefault();
@@ -5686,21 +5797,42 @@ export default class EnhancedMeasurement extends React.PureComponent<WidgetProps
                 />
 
                 <div className="widget-content">
-                    {config.showWidgetTitle !== false && (
-                        <div style={{
-                            padding: '8px 4px',
-                            fontSize: '14px',
-                            fontWeight: '600',
-                            color: '#1e293b',
-                            borderBottom: '1px solid #e2e8f0',
-                            marginBottom: '4px',
-                            flexShrink: 0
-                        }}>
-                            {config.widgetTitle || 'Measurement Tools'}
-                        </div>
+                    {/* Header row: optional title on the left, Help button always at the top right (shared help pattern). */}
+                    <div style={{
+                        display: 'flex',
+                        alignItems: 'center',
+                        gap: '8px',
+                        padding: config.showWidgetTitle !== false ? '8px 4px' : '2px 4px',
+                        fontSize: '14px',
+                        fontWeight: '600',
+                        color: '#1e293b',
+                        borderBottom: config.showWidgetTitle !== false ? '1px solid #e2e8f0' : 'none',
+                        marginBottom: '4px',
+                        flexShrink: 0
+                    }}>
+                        {config.showWidgetTitle !== false && (
+                            <span style={{ flex: 1, minWidth: 0, overflow: 'hidden', textOverflow: 'ellipsis', whiteSpace: 'nowrap' }}>
+                                {config.widgetTitle || 'Measurement Tools'}
+                            </span>
+                        )}
+                        {config.showWidgetTitle === false && <span style={{ flex: 1 }} />}
+                        <Button size="sm" type="tertiary" icon onClick={this.openHelp} title={this.t('helpTitle')} aria-label={this.t('helpTitle')} style={{ flexShrink: 0 }}>
+                            <CalciteIcon icon="question" scale="s" />
+                        </Button>
+                    </div>
+
+                    {this.state.showFirstRunHint && (
+                        <FirstRunHint
+                            title={this.t('firstRunTitle')}
+                            body={this.t('firstRunBody')}
+                            linkLabel={this.t('firstRunHelpLink')}
+                            dismissLabel={this.t('firstRunDismiss')}
+                            onOpenHelp={this.openHelp}
+                            onDismiss={this.dismissFirstRunHint}
+                        />
                     )}
 
-                    {config.showHintMessage !== false && measurements.length === 0 && !currentTool && (
+                    {config.showHintMessage !== false && !this.state.showFirstRunHint && measurements.length === 0 && !currentTool && (
                         <div style={{
                             padding: '6px 10px',
                             fontSize: '12px',
@@ -7476,6 +7608,17 @@ export default class EnhancedMeasurement extends React.PureComponent<WidgetProps
                         </div>
                     </>
                 )}
+
+                <HelpPopup
+                    open={this.state.helpOpen}
+                    onClose={this.closeHelp}
+                    sections={buildHelpSections(this.t, this.helpFeatures())}
+                    title={this.t('helpTitle')}
+                    intro={this.t('helpIntro')}
+                    searchPlaceholder={this.t('helpSearchPlaceholder')}
+                    noMatches={this.t('helpNoMatches')}
+                    closeLabel={this.t('close')}
+                />
             </div>
         );
     }

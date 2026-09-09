@@ -8,6 +8,7 @@ https://community.esri.com/t5/experience-builder-custom-widgets/enhanced-measure
 ## Features
 
 - Eight measurement tools: point, distance, area, circle, rectangle, triangle, freehand polyline, freehand polygon
+- In-widget help guide: a Help button in the header opens a short, searchable, plain-language guide that only describes the features the builder has turned on, plus a dismissable first-run hint
 - Session persistence: measurements can be saved in the browser and restored after a page reload (opt-in via settings)
 - Live measurement readout in the drawing banner while a tool is active
 - Multi-select mode with bulk delete (one-click undo) and bulk GeoJSON export
@@ -98,6 +99,18 @@ This means Experience Builder found more than one widget registering the same `n
 3. **Stale build output.** Stop the client server, delete `client/dist/widgets/enhanced-measurement/`, and run `npm start` again. This is common after switching EB versions.
 
 If removing one copy makes the widget disappear from the widget picker entirely, the remaining copy is nested too deep. Move it so `manifest.json` is directly inside the widget folder.
+
+### Visual Studio shows hundreds of TypeScript errors on EB 1.21
+
+Experience Builder 1.21 installs the client with pnpm. Visual Studio cannot read through the pnpm junctions under `client\node_modules` (`IDE1100 Access to the path ... is denied`), so its own TypeScript analysis has no types for React, jimu or the Maps SDK and reports errors the webpack build does not have. Webpack (`npm start` in `client`) is the only type authority.
+
+The widget ships a self-contained `tsconfig.json` and `src/exb-editor-shims.d.ts` that give Visual Studio everything it needs without touching `node_modules`. They are `noEmit` and ignored by the build. To use them:
+
+1. Open the widget folder itself in Visual Studio (`File > Open > Folder` on `client\your-extensions\widgets\enhanced-measurement`), never `client` or the EB root.
+2. Set the Error List scope to **Open Documents**. Errors whose File column is under `client\jimu-core`, `client\dist` or `client\node_modules` are Esri's, not the widget's, and appear whenever a file under `client` is open in a tab.
+3. If stale errors linger, close Visual Studio, delete the widget's `.vs` folder, and reopen.
+
+`npx tsc -p .` from the widget folder should report 0 errors.
 
 ## Feedback
 
