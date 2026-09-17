@@ -3828,8 +3828,12 @@ export default class EnhancedMeasurement extends React.PureComponent<WidgetProps
         this.setState({ trianglePoints: [], liveMeasurement: null });
         this.clearLiveLabel();
 
-        // Disable popups while drawing
-        (view.popup as any).autoOpenEnabled = false;
+        // Disable popups while drawing. Maps SDK 5.x: view.popup is undefined until a popup
+        // has opened, so guard every access and prefer closePopup() when present.
+        try {
+            if (typeof (view as any).closePopup === 'function') (view as any).closePopup();
+            if (view.popup) (view.popup as any).autoOpenEnabled = false;
+        } catch (e) { /* popup not available on this view */ }
 
         let startPoint: any = null;
         let previewGraphic: any = null;
@@ -3876,7 +3880,7 @@ export default class EnhancedMeasurement extends React.PureComponent<WidgetProps
                 // Cleanup handlers
                 clickHandler.remove();
                 pointerMoveHandler.remove();
-                (view.popup as any).autoOpenEnabled = true;
+                try { if (view.popup) (view.popup as any).autoOpenEnabled = true; } catch (e) { /* popup not available */ }
                 view.container.style.cursor = 'default';
 
                 // Restart if continuous drawing

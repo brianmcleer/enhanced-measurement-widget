@@ -11,6 +11,12 @@ Latest release: https://github.com/brianmcleer/enhanced-measurement-widget/relea
 You can also browse the post on Esri Community:
 https://community.esri.com/t5/experience-builder-custom-widgets/enhanced-measurement-widget/ba-p/1664211
 
+### The release zip and the editor shims
+
+The zip is the widget only. The Visual Studio type shims in the repo (`enhanced-measurement/src/exb-editor-shims.d.ts`) are left out on purpose: their ambient `declare module` blocks are not file-scoped and would rewrite the react, jimu and esri types for every other widget in your `your-extensions` folder.
+
+If you clone the repository instead of using the zip, delete `enhanced-measurement/src/exb-editor-shims.d.ts` before building; nothing else depends on it.
+
 ## What's new in v1.1.0
 
 - Session persistence: measurements can be saved in the browser and restored after a page reload (opt-in, configured by the developer in settings)

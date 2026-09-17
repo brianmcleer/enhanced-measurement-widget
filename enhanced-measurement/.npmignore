@@ -27,3 +27,7 @@ build/
 # Local env files
 .env
 .env.local
+
+# Cowork working folder and release zips never ship
+Claude outputs/
+*.zip
