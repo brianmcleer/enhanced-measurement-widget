@@ -15,6 +15,8 @@ import FirstRunHint from './components/FirstRunHint';
 import { buildHelpSections } from './helpSections';
 import type { HelpFeatures } from './helpSections';
 import defaultMessages from './translations/default';
+import { beacon } from '../shared/beacon';
+import type { BeaconHandle } from '../shared/beacon';
 import './style.css';
 
 // Dropdown Menu Components (shadcn/ui style) - WCAG 2.1 AA Accessible
@@ -385,6 +387,7 @@ export default class EnhancedMeasurement extends React.PureComponent<WidgetProps
     ) => void;
     declare forceUpdate: (callback?: () => void) => void;
 
+    private beacon: BeaconHandle | null = null;
     private Sketch: any = null;
     private GraphicsLayer: any = null;
     private Graphic: any = null;
@@ -619,6 +622,7 @@ export default class EnhancedMeasurement extends React.PureComponent<WidgetProps
     }
 
     async componentDidMount() {
+        this.beacon = beacon.init(this.props);
         this._isMounted = true;
         await this.loadModules();
         document.addEventListener('click', this.handleDocumentClick);
@@ -2128,6 +2132,7 @@ export default class EnhancedMeasurement extends React.PureComponent<WidgetProps
             // Update all labels for this measurement
             this.refreshSingleMeasurementLabels(updatedMeasurement);
         } catch (error) {
+            this.beacon?.error(error, 'measure');
             console.error('Error updating measurement:', error);
         }
     }
@@ -3494,6 +3499,7 @@ export default class EnhancedMeasurement extends React.PureComponent<WidgetProps
     }
 
     activateTool(tool: 'point' | 'distance' | 'freehand-polyline' | 'rectangle' | 'area' | 'freehand-polygon' | 'circle' | 'triangle' | 'edit') {
+        this.beacon?.action('measure');
         if (!this.state.sketchWidget) return;
 
         if (this.state.currentTool === tool) {
@@ -4633,6 +4639,7 @@ export default class EnhancedMeasurement extends React.PureComponent<WidgetProps
     }
 
     exportMeasurementToCSV(measurement: MeasurementRecord) {
+        this.beacon?.action('export-csv', 'single');
         const config = this.props.config || {};
         const includeTimestamp = config.includeTimestampInExport !== false;
 
@@ -4711,6 +4718,7 @@ export default class EnhancedMeasurement extends React.PureComponent<WidgetProps
     }
 
     exportAllToCSV() {
+        this.beacon?.action('export-csv', 'all');
         const config = this.props.config || {};
         const includeTimestamp = config.includeTimestampInExport !== false;
 
@@ -4787,6 +4795,7 @@ export default class EnhancedMeasurement extends React.PureComponent<WidgetProps
 
             return screenshot.dataUrl;
         } catch (error) {
+            this.beacon?.error(error, 'export-pdf');
             console.error('Error capturing screenshot:', error);
             await view.goTo(originalExtent, { animate: false });
             return null;
@@ -4794,6 +4803,7 @@ export default class EnhancedMeasurement extends React.PureComponent<WidgetProps
     }
 
     async exportMeasurementToPDF(measurement: MeasurementRecord) {
+        this.beacon?.action('export-pdf', 'single');
         this.safeSetState({ isExportingPDF: true });
         await new Promise(resolve => setTimeout(resolve, 16));
         try {
@@ -5034,6 +5044,7 @@ export default class EnhancedMeasurement extends React.PureComponent<WidgetProps
     }
 
     async exportAllToPDF() {
+        this.beacon?.action('export-pdf', 'all');
         this.safeSetState({ isExportingPDF: true });
         // Yield to React so the spinner can paint before jsPDF blocks the thread
         await new Promise(resolve => setTimeout(resolve, 16));

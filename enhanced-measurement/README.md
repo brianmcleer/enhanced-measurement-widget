@@ -88,6 +88,10 @@ A `Reset All Settings to Defaults` button at the bottom restores every option to
 
 When enabled, measurements are stored in the end user's browser (localStorage) as they work. On the next page load, a banner offers to restore the previous session. Data never leaves the browser, is scoped per widget instance, and is cleared when the user dismisses the banner or deletes all measurements. Private browsing and storage-quota failures degrade gracefully to normal session-only behavior.
 
+## Usage telemetry
+
+This widget records anonymous usage counts and errors so the GIS Division can see which widgets and versions are in use and which errors users hit. It records the app id and title, widget name and version, the action name, a truncated error message, the site host name and browser family. It never records usernames, coordinates, addresses, attribute values or URLs with query strings. Where the data goes: on page load the widget asks the app's portal for a public item tagged `exb-beacon-sink` and posts to that table. If your portal has no such item, nothing is sent anywhere. To turn it off for an app, set `"telemetry": false` in the widget's config, or users can enable Do Not Track in their browser. The shared module is `src/shared/beacon.ts`.
+
 ## Troubleshooting
 
 ### `<name> is duplicated` on `npm start`
