@@ -1,6 +1,6 @@
 {
     "name":  "enhanced-measurement",
-    "version":  "1.2.3",
+    "version":  "1.2.4",
     "description":  "Comprehensive measurement widget for ArcGIS Experience Builder. Supports eight measurement tool types, custom units, segment labeling, statistics, multiple export formats (JSON, CSV, GeoJSON, PDF), XML settings import/export, and extensive UI customization.",
     "keywords":  [
                      "exb-widget",

@@ -1,7 +1,7 @@
 {
   "name": "enhanced-measurement",
   "type": "widget",
-  "version": "1.2.3",
+  "version": "1.2.4",
   "exbVersion": "1.21.0",
   "author": "Brian McLeer",
   "label": "Enhanced Measurement",
