@@ -17,7 +17,7 @@
     "license":  "Apache-2.0",
     "author":  "Brian McLeer",
     "dependencies":  {
-                         "@turf/turf":  "^7.1.0",
+                         "@turf/turf":  "^7.4.0",
                          "jspdf":  "^4.2.1"
                      }
 }
