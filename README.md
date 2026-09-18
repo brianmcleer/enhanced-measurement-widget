@@ -1,5 +1,7 @@
 # enhanced-measurement-widget
 
+[![License](https://img.shields.io/github/license/brianmcleer/enhanced-measurement-widget)](LICENSE) [![Release](https://img.shields.io/github/v/release/brianmcleer/=tag)](https://github.com/brianmcleer/enhanced-measurement-widget/releases) [![Issues](https://img.shields.io/github/issues/brianmcleer/enhanced-measurement-widget)](https://github.com/brianmcleer/enhanced-measurement-widget/issues)
+
 Comprehensive measurement widget for ArcGIS Experience Builder, by Brian McLeer (GIS Administrator/Developer, City of Grand Junction, CO).
 
 The widget supports eight measurement tool types (point, distance, area, circle, rectangle, triangle, freehand polyline, freehand polygon), with session persistence, multi-select bulk operations, a sortable and searchable measurement list, live measurement readout while drawing, copy-to-clipboard on every stat, custom units, segment labeling, statistics, multiple export formats (JSON, CSV, GeoJSON, PDF), XML import/export of widget settings, undo/redo, vertex editing, optional dark mode, and extensive UI customization.
@@ -30,26 +32,26 @@ If you clone the repository instead of using the zip, delete `enhanced-measureme
 
 ```
 enhanced-measurement-widget/
-├── README.md             <- this file (GitHub landing page)
-├── LICENSE               <- Apache-2.0
-├── .gitignore
-├── publish.ps1           <- one-command sync + push + release script
-└── enhanced-measurement/ <- the actual widget (drops into your-extensions/widgets)
-    ├── package.json
-    ├── package-lock.json
-    ├── manifest.json
-    ├── config.json
-    ├── icon.svg
-    ├── README.md
-    ├── LICENSE
-    ├── .gitignore
-    ├── .npmignore
-    └── src/
-        ├── runtime/
-        │   ├── widget.tsx
-        │   └── style.css
-        └── setting/
-            └── setting.tsx
+â”œâ”€â”€ README.md             <- this file (GitHub landing page)
+â”œâ”€â”€ LICENSE               <- Apache-2.0
+â”œâ”€â”€ .gitignore
+â”œâ”€â”€ publish.ps1           <- one-command sync + push + release script
+â””â”€â”€ enhanced-measurement/ <- the actual widget (drops into your-extensions/widgets)
+    â”œâ”€â”€ package.json
+    â”œâ”€â”€ package-lock.json
+    â”œâ”€â”€ manifest.json
+    â”œâ”€â”€ config.json
+    â”œâ”€â”€ icon.svg
+    â”œâ”€â”€ README.md
+    â”œâ”€â”€ LICENSE
+    â”œâ”€â”€ .gitignore
+    â”œâ”€â”€ .npmignore
+    â””â”€â”€ src/
+        â”œâ”€â”€ runtime/
+        â”‚   â”œâ”€â”€ widget.tsx
+        â”‚   â””â”€â”€ style.css
+        â””â”€â”€ setting/
+            â””â”€â”€ setting.tsx
 ```
 
 The `enhanced-measurement` subfolder is the shippable widget. Drop it into your Experience Builder install at `client/your-extensions/widgets/enhanced-measurement/`. See [enhanced-measurement/README.md](./enhanced-measurement/README.md) for full install steps and troubleshooting.

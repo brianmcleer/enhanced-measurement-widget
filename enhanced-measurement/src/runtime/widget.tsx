@@ -5831,12 +5831,14 @@ export default class EnhancedMeasurement extends React.PureComponent<WidgetProps
                             </span>
                         )}
                         {config.showWidgetTitle === false && <span style={{ flex: 1 }} />}
-                        <Button size="sm" type="tertiary" icon onClick={this.openHelp} title={this.t('helpTitle')} aria-label={this.t('helpTitle')} style={{ flexShrink: 0 }}>
-                            <CalciteIcon icon="question" scale="s" />
-                        </Button>
+                        {this.props.config?.showHelp !== false && (
+                            <Button size="sm" type="tertiary" icon onClick={this.openHelp} title={this.t('helpTitle')} aria-label={this.t('helpTitle')} style={{ flexShrink: 0 }}>
+                                <CalciteIcon icon="question" scale="s" />
+                            </Button>
+                        )}
                     </div>
 
-                    {this.state.showFirstRunHint && (
+                    {this.props.config?.showHelp !== false && this.state.showFirstRunHint && (
                         <FirstRunHint
                             title={this.t('firstRunTitle')}
                             body={this.t('firstRunBody')}
