@@ -328,6 +328,8 @@ interface WidgetState {
     helpOpen: boolean;
     /** Whether the first-run hint banner shows (until dismissed once per browser, per widget id). */
     showFirstRunHint: boolean;
+    /** Segment row kept highlighted on the map by a click, as `<measurementId>|<index>`, or null. */
+    pinnedSegmentKey: string | null;
 }
 
 interface MeasurementRecord {
@@ -421,6 +423,8 @@ export default class EnhancedMeasurement extends React.PureComponent<WidgetProps
     private _isMounted: boolean = false;
     /** Sketch handler refs we keep for explicit removal when switching map views (instead of leaking on the old SketchViewModel). */
     private sketchHandlers: any[] = [];
+    /** Temporary layer that draws the highlighted segment (hover or click in the detail list). */
+    private highlightLayer: any = null;
     /** Refs map keyed by measurement id — replaces leaky `this[`exportTrigger_${id}`]` properties so we can clean up on delete. */
     private exportTriggerRefs: Map<string, HTMLElement | null> = new Map();
     private overflowTriggerRefs: Map<string, HTMLElement | null> = new Map();
@@ -495,7 +499,8 @@ export default class EnhancedMeasurement extends React.PureComponent<WidgetProps
             sortOrder: 'newest',
             copiedStatKey: null,
             helpOpen: false,
-            showFirstRunHint: false
+            showFirstRunHint: false,
+            pinnedSegmentKey: null
         };
     }
 
@@ -531,6 +536,13 @@ export default class EnhancedMeasurement extends React.PureComponent<WidgetProps
         // Persist to localStorage whenever measurements change (debounced, config-gated)
         if (prevState && prevState.measurements !== this.state.measurements) {
             this.schedulePersist();
+        }
+
+        // A highlighted segment belongs to one measurement's current shape. Drop it when the
+        // measurements change (edit, delete, undo) or the detail view opens or closes.
+        if (prevState && (prevState.measurements !== this.state.measurements ||
+            prevState.detailViewMeasurementId !== this.state.detailViewMeasurementId)) {
+            this.clearSegmentHighlight(true);
         }
 
         // Check if widget was closed - deactivate any active measurement tool
@@ -607,7 +619,7 @@ export default class EnhancedMeasurement extends React.PureComponent<WidgetProps
                 const map = this.state.jimuMapView.view.map;
 
                 map.allLayers.forEach((layer: any) => {
-                    if (layer.type === 'feature' && layer !== this.sketchLayer && layer !== this.labelLayer) {
+                    if (layer.type === 'feature' && layer !== this.sketchLayer && layer !== this.labelLayer && layer !== this.highlightLayer) {
                         featureSources.push({ layer: layer, enabled: true });
                     }
                 });
@@ -709,6 +721,8 @@ export default class EnhancedMeasurement extends React.PureComponent<WidgetProps
             undoRedo: config.enableUndoRedo !== false,
             multiSelect: config.enableMultiSelect !== false,
             sortOptions: config.enableSortOptions !== false,
+            segmentHighlight: config.enableSegmentHighlight !== false,
+            segmentDelete: config.enableSegmentDelete !== false,
             persistence: config.enablePersistence === true,
             labels: {
                 point: config.pointButtonText || 'Point',
@@ -1262,6 +1276,12 @@ export default class EnhancedMeasurement extends React.PureComponent<WidgetProps
             } catch (e) { }
         }
 
+        if (this.highlightLayer && this.state.jimuMapView) {
+            try {
+                this.state.jimuMapView.view.map.remove(this.highlightLayer);
+            } catch (e) { }
+        }
+
         // Drop per-measurement ref entries (Maps don't auto-shrink)
         this.exportTriggerRefs.clear();
         this.overflowTriggerRefs.clear();
@@ -1638,6 +1658,9 @@ export default class EnhancedMeasurement extends React.PureComponent<WidgetProps
             if (this.labelLayer) {
                 this.state.jimuMapView.view.map.remove(this.labelLayer);
             }
+            if (this.highlightLayer) {
+                this.state.jimuMapView.view.map.remove(this.highlightLayer);
+            }
 
             this.sketchLayer = new this.GraphicsLayer({
                 title: 'Measurements',
@@ -1647,15 +1670,20 @@ export default class EnhancedMeasurement extends React.PureComponent<WidgetProps
                 title: 'Measurement Labels',
                 listMode: 'hide'
             });
+            this.highlightLayer = new this.GraphicsLayer({
+                title: 'Measurement Segment Highlight',
+                listMode: 'hide'
+            });
 
-            this.state.jimuMapView.view.map.addMany([this.sketchLayer, this.labelLayer]);
+            // Highlight sits above the drawing and below the labels so the numbers stay readable.
+            this.state.jimuMapView.view.map.addMany([this.sketchLayer, this.highlightLayer, this.labelLayer]);
 
             // Prepare feature snapping sources using plain objects (autocast by SnappingOptions)
             const featureSources = [];
             if (this.state.enableSnapping) {
                 const map = this.state.jimuMapView.view.map;
                 map.allLayers.forEach((layer: any) => {
-                    if (layer.type === 'feature' && layer !== this.sketchLayer && layer !== this.labelLayer) {
+                    if (layer.type === 'feature' && layer !== this.sketchLayer && layer !== this.labelLayer && layer !== this.highlightLayer) {
                         featureSources.push({ layer: layer, enabled: true });
                     }
                 });
@@ -2038,82 +2066,7 @@ export default class EnhancedMeasurement extends React.PureComponent<WidgetProps
 
         // Recalculate measurements based on new geometry
         try {
-            let updatedMeasurement = { ...measurement };
-            updatedMeasurement.geometry = graphic.geometry;
-
-            if (graphic.geometry.type === 'polyline') {
-                const paths = graphic.geometry.paths[0];
-                // Still build geojson for calculateSegments
-                const coordinates = paths.map(p => {
-                    const lonLat = this.convertToGeographic(p[0], p[1], graphic.geometry.spatialReference);
-                    return [lonLat[0], lonLat[1]];
-                });
-                const geojson = turf.lineString(coordinates);
-                updatedMeasurement.geojson = geojson;
-
-                const isFreehand = measurement.label.includes('Freehand');
-                const segments = this.calculateSegments(geojson, paths, graphic.geometry.spatialReference, false, isFreehand);
-
-                // Geodesic length directly on raw JSAPI geometry - correct for any SR
-                const totalDistance = this.measureLength(graphic.geometry, measurement.linearUnit);
-
-                updatedMeasurement.segments = segments;
-                updatedMeasurement.totalDistance = totalDistance;
-            } else if (graphic.geometry.type === 'polygon') {
-                const rings = graphic.geometry.rings[0];
-                const coordinates = rings.map(p => {
-                    const lonLat = this.convertToGeographic(p[0], p[1], graphic.geometry.spatialReference);
-                    return [lonLat[0], lonLat[1]];
-                });
-                if (coordinates[0][0] !== coordinates[coordinates.length - 1][0] ||
-                    coordinates[0][1] !== coordinates[coordinates.length - 1][1]) {
-                    coordinates.push(coordinates[0]);
-                }
-                const geojson = turf.polygon([coordinates]);
-                updatedMeasurement.geojson = geojson;
-
-                // Geodesic area/perimeter directly on raw JSAPI geometry - correct for any SR
-                const areaConverted = this.measureArea(graphic.geometry, this.state.currentAreaUnit);
-                const perimeter = this.measureLength(graphic.geometry, measurement.linearUnit);
-                const isFreehand = measurement.label.includes('Freehand');
-                const perimeterLine = turf.polygonToLine(geojson);
-                const segments = this.calculateSegments(perimeterLine, rings, graphic.geometry.spatialReference, true, isFreehand);
-
-                if (measurement.type === 'circle') {
-                    const centerX = graphic.geometry.centroid.x;
-                    const centerY = graphic.geometry.centroid.y;
-                    const edgePoint = rings[0];
-                    const radius = this.measurePointDistance(centerX, centerY, edgePoint[0], edgePoint[1], graphic.geometry.spatialReference, measurement.linearUnit);
-                    const centerLonLat = this.convertToGeographic(centerX, centerY, graphic.geometry.spatialReference);
-
-                    updatedMeasurement.radius = radius;
-                    updatedMeasurement.totalArea = areaConverted;
-                    updatedMeasurement.perimeter = perimeter;
-                    updatedMeasurement.coordinates = {
-                        x: centerX,
-                        y: centerY,
-                        lon: centerLonLat[0],
-                        lat: centerLonLat[1],
-                        spatialReference: graphic.geometry.spatialReference
-                    };
-                } else {
-                    updatedMeasurement.segments = segments;
-                    updatedMeasurement.totalArea = areaConverted;
-                    updatedMeasurement.perimeter = perimeter;
-                }
-            } else if (graphic.geometry.type === 'point') {
-                const lonLat = this.convertToGeographic(graphic.geometry.x, graphic.geometry.y, graphic.geometry.spatialReference);
-                const geojson = turf.point([lonLat[0], lonLat[1]]);
-
-                updatedMeasurement.geojson = geojson;
-                updatedMeasurement.coordinates = {
-                    x: graphic.geometry.x,
-                    y: graphic.geometry.y,
-                    lon: lonLat[0],
-                    lat: lonLat[1],
-                    spatialReference: graphic.geometry.spatialReference
-                };
-            }
+            const updatedMeasurement = this.recalcMeasurementFromGeometry(measurement, graphic.geometry);
 
             // Record this action in undo history BEFORE updating state
             this.recordAction({
@@ -2134,6 +2087,268 @@ export default class EnhancedMeasurement extends React.PureComponent<WidgetProps
         } catch (error) {
             this.beacon?.error(error, 'measure');
             console.error('Error updating measurement:', error);
+        }
+    }
+
+    /**
+     * Rebuild a measurement record (geojson, segments, totals) from a new geometry.
+     * Shared by vertex editing and segment delete so both produce identical numbers.
+     */
+    recalcMeasurementFromGeometry(measurement: MeasurementRecord, geometry: any): MeasurementRecord {
+        let updatedMeasurement = { ...measurement };
+        updatedMeasurement.geometry = geometry;
+
+        if (geometry.type === 'polyline') {
+            const paths = geometry.paths[0];
+            // Still build geojson for calculateSegments
+            const coordinates = paths.map(p => {
+                const lonLat = this.convertToGeographic(p[0], p[1], geometry.spatialReference);
+                return [lonLat[0], lonLat[1]];
+            });
+            const geojson = turf.lineString(coordinates);
+            updatedMeasurement.geojson = geojson;
+
+            const isFreehand = measurement.label.includes('Freehand');
+            const segments = this.calculateSegments(geojson, paths, geometry.spatialReference, false, isFreehand);
+
+            // Geodesic length directly on raw JSAPI geometry - correct for any SR
+            const totalDistance = this.measureLength(geometry, measurement.linearUnit);
+
+            updatedMeasurement.segments = segments;
+            updatedMeasurement.totalDistance = totalDistance;
+        } else if (geometry.type === 'polygon') {
+            const rings = geometry.rings[0];
+            const coordinates = rings.map(p => {
+                const lonLat = this.convertToGeographic(p[0], p[1], geometry.spatialReference);
+                return [lonLat[0], lonLat[1]];
+            });
+            if (coordinates[0][0] !== coordinates[coordinates.length - 1][0] ||
+                coordinates[0][1] !== coordinates[coordinates.length - 1][1]) {
+                coordinates.push(coordinates[0]);
+            }
+            const geojson = turf.polygon([coordinates]);
+            updatedMeasurement.geojson = geojson;
+
+            // Geodesic area/perimeter directly on raw JSAPI geometry - correct for any SR
+            const areaConverted = this.measureArea(geometry, this.state.currentAreaUnit);
+            const perimeter = this.measureLength(geometry, measurement.linearUnit);
+            const isFreehand = measurement.label.includes('Freehand');
+            const perimeterLine = turf.polygonToLine(geojson);
+            const segments = this.calculateSegments(perimeterLine, rings, geometry.spatialReference, true, isFreehand);
+
+            if (measurement.type === 'circle') {
+                const centerX = geometry.centroid.x;
+                const centerY = geometry.centroid.y;
+                const edgePoint = rings[0];
+                const radius = this.measurePointDistance(centerX, centerY, edgePoint[0], edgePoint[1], geometry.spatialReference, measurement.linearUnit);
+                const centerLonLat = this.convertToGeographic(centerX, centerY, geometry.spatialReference);
+
+                updatedMeasurement.radius = radius;
+                updatedMeasurement.totalArea = areaConverted;
+                updatedMeasurement.perimeter = perimeter;
+                updatedMeasurement.coordinates = {
+                    x: centerX,
+                    y: centerY,
+                    lon: centerLonLat[0],
+                    lat: centerLonLat[1],
+                    spatialReference: geometry.spatialReference
+                };
+            } else {
+                updatedMeasurement.segments = segments;
+                updatedMeasurement.totalArea = areaConverted;
+                updatedMeasurement.perimeter = perimeter;
+            }
+        } else if (geometry.type === 'point') {
+            const lonLat = this.convertToGeographic(geometry.x, geometry.y, geometry.spatialReference);
+            const geojson = turf.point([lonLat[0], lonLat[1]]);
+
+            updatedMeasurement.geojson = geojson;
+            updatedMeasurement.coordinates = {
+                x: geometry.x,
+                y: geometry.y,
+                lon: lonLat[0],
+                lat: lonLat[1],
+                spatialReference: geometry.spatialReference
+            };
+        }
+
+        return updatedMeasurement;
+    }
+
+    // ==================== Segment highlight and delete ====================
+
+    /** Vertex list a segment index refers to: segment i runs from vertex i to vertex i + 1. */
+    private segmentVertices(m: MeasurementRecord): number[][] | null {
+        const g = m && m.geometry;
+        if (!g) return null;
+        if (g.type === 'polyline') return (g.paths && g.paths.length === 1) ? g.paths[0] : null;
+        if (g.type === 'polygon') return (g.rings && g.rings.length === 1) ? g.rings[0] : null;
+        return null;
+    }
+
+    /** A polygon ring without its repeated closing vertex. */
+    private uniqueRingVertices(ring: number[][]): number[][] {
+        const v = ring.map((pt: number[]) => pt.slice());
+        if (v.length > 1) {
+            const f = v[0];
+            const l = v[v.length - 1];
+            if (f[0] === l[0] && f[1] === l[1]) v.pop();
+        }
+        return v;
+    }
+
+    /** Draw one segment on the map so it stands out from the rest of the measurement. */
+    showSegmentHighlight(measurementId: string, index: number) {
+        if ((this.props.config || {}).enableSegmentHighlight === false) return;
+        if (!this.highlightLayer || !this.Graphic || !this.Polyline || !this.Point) return;
+        const m = this.state.measurements.find(x => x.id === measurementId);
+        if (!m) return;
+        const pts = this.segmentVertices(m);
+        if (!pts || !pts[index] || !pts[index + 1]) return;
+        try {
+            const sr = m.geometry.spatialReference;
+            const line = new this.Polyline({ paths: [[pts[index], pts[index + 1]]], spatialReference: sr });
+            const mkPoint = (pt: number[]) => new this.Point({ x: pt[0], y: pt[1], spatialReference: sr });
+            this.highlightLayer.removeAll();
+            this.highlightLayer.addMany([
+                new this.Graphic({
+                    geometry: line,
+                    symbol: new this.SimpleLineSymbol({ color: [255, 255, 255, 0.95], width: 10, cap: 'round', join: 'round' })
+                }),
+                new this.Graphic({
+                    geometry: line,
+                    symbol: new this.SimpleLineSymbol({ color: [255, 106, 0, 1], width: 5, cap: 'round', join: 'round' })
+                }),
+                new this.Graphic({
+                    geometry: mkPoint(pts[index]),
+                    symbol: new this.SimpleMarkerSymbol({ style: 'circle', size: 10, color: [255, 255, 255, 1], outline: { color: [255, 106, 0, 1], width: 2 } })
+                }),
+                new this.Graphic({
+                    geometry: mkPoint(pts[index + 1]),
+                    symbol: new this.SimpleMarkerSymbol({ style: 'circle', size: 10, color: [255, 106, 0, 1], outline: { color: [255, 255, 255, 1], width: 2 } })
+                })
+            ]);
+        } catch (error) {
+            this.beacon?.error(error, 'segment-highlight');
+        }
+    }
+
+    /**
+     * Remove the hover highlight. A clicked (pinned) segment stays lit unless dropPin is true,
+     * which also forgets the pin.
+     */
+    clearSegmentHighlight(dropPin: boolean = false) {
+        if (dropPin) {
+            if (this.state.pinnedSegmentKey) this.setState({ pinnedSegmentKey: null });
+            if (this.highlightLayer) this.highlightLayer.removeAll();
+            return;
+        }
+        if (this.highlightLayer) this.highlightLayer.removeAll();
+        const key = this.state.pinnedSegmentKey;
+        if (key) {
+            const at = key.lastIndexOf('|');
+            this.showSegmentHighlight(key.slice(0, at), parseInt(key.slice(at + 1), 10));
+        }
+    }
+
+    /** Click on a segment row: keep it lit on the map, and bring it into view if it is off screen. */
+    toggleSegmentPin(measurementId: string, index: number) {
+        if ((this.props.config || {}).enableSegmentHighlight === false) return;
+        const key = `${measurementId}|${index}`;
+        if (this.state.pinnedSegmentKey === key) {
+            // Unpinned: the pointer is still over the row, so the hover highlight stays until it leaves.
+            this.setState({ pinnedSegmentKey: null });
+            return;
+        }
+        this.setState({ pinnedSegmentKey: key }, () => {
+            this.showSegmentHighlight(measurementId, index);
+            try {
+                const m = this.state.measurements.find(x => x.id === measurementId);
+                const pts = m ? this.segmentVertices(m) : null;
+                const view = this.state.jimuMapView && this.state.jimuMapView.view;
+                if (pts && pts[index] && pts[index + 1] && view && view.extent && this.Polyline) {
+                    const line = new this.Polyline({ paths: [[pts[index], pts[index + 1]]], spatialReference: m.geometry.spatialReference });
+                    if (!line.extent || !view.extent.contains(line.extent)) {
+                        view.goTo(line, { duration: 300 }).catch(() => { /* interrupted by another navigation */ });
+                    }
+                }
+            } catch (_) { /* highlight still shows; panning is a convenience */ }
+        });
+    }
+
+    /** True when a segment can be removed: lines keep at least 2 corners, shapes keep at least 3. */
+    canDeleteSegment(m: MeasurementRecord): boolean {
+        if ((this.props.config || {}).enableSegmentDelete === false) return false;
+        if (!m || !m.graphic || !m.segments || m.segments.length === 0) return false;
+        if (this.state.currentTool === 'edit') return false;
+        const g = m.geometry;
+        if (!g) return false;
+        if (g.type === 'polyline') {
+            return !!g.paths && g.paths.length === 1 && g.paths[0].length > 2;
+        }
+        if (g.type === 'polygon') {
+            if (m.type === 'circle' || m.type === 'triangle') return false;
+            return !!g.rings && g.rings.length === 1 && this.uniqueRingVertices(g.rings[0]).length > 3;
+        }
+        return false;
+    }
+
+    /**
+     * Remove one segment from a drawn line or shape. The first or last segment of a line is
+     * trimmed off. Any other segment loses its far-end corner, so its neighbors join up with a
+     * straight segment. Totals, segments and labels are recalculated and the change is undoable.
+     */
+    deleteSegment(measurementId: string, segmentIndex: number) {
+        const m = this.state.measurements.find(x => x.id === measurementId);
+        if (!m || !this.canDeleteSegment(m)) return;
+        const segment = m.segments[segmentIndex];
+        if (!segment) return;
+
+        try {
+            const g = m.geometry;
+            let newGeometry: any;
+            if (g.type === 'polyline') {
+                const path = g.paths[0].map((pt: number[]) => pt.slice());
+                path.splice(segmentIndex === 0 ? 0 : segmentIndex + 1, 1);
+                newGeometry = new this.Polyline({ paths: [path], spatialReference: g.spatialReference });
+            } else {
+                const ring = this.uniqueRingVertices(g.rings[0]);
+                ring.splice((segmentIndex + 1) % ring.length, 1);
+                ring.push(ring[0].slice());
+                newGeometry = new this.Polygon({ rings: [ring], spatialReference: g.spatialReference });
+            }
+
+            // New graphic, so the old one (old shape) stays intact for undo.
+            const newGraphic = m.graphic.clone();
+            newGraphic.geometry = newGeometry;
+            const updated = this.recalcMeasurementFromGeometry(m, newGeometry);
+            updated.graphic = newGraphic;
+
+            this.sketchLayer.remove(m.graphic);
+            this.sketchLayer.add(newGraphic);
+
+            const action: HistoryAction = { type: 'MODIFY', measurement: updated, previousMeasurement: m };
+            this.recordAction(action);
+            this._statsCache = null;
+            this.clearSegmentHighlight(true);
+
+            this.setState(prevState => ({
+                measurements: prevState.measurements.map(x => x.id === measurementId ? updated : x),
+                undoToast: { message: `Removed "${segment.label}" from "${m.label}"`, action }
+            }), () => {
+                this.refreshSingleMeasurementLabels(updated);
+            });
+
+            if (this.deleteToastTimer) clearTimeout(this.deleteToastTimer);
+            this.deleteToastTimer = setTimeout(() => {
+                this.safeSetState({ undoToast: null });
+                this.deleteToastTimer = null;
+            }, 6000);
+
+            this.beacon?.action('segment-delete');
+        } catch (error) {
+            this.beacon?.error(error, 'segment-delete');
+            console.error('Error deleting segment:', error);
         }
     }
 
@@ -3764,8 +3979,8 @@ export default class EnhancedMeasurement extends React.PureComponent<WidgetProps
             this.setState({ undoToast: null });
             return;
         }
-        if (!toast.action || toast.action.type !== 'DELETE') return;
-        // The unified undo() handler already knows how to revert a DELETE action,
+        if (!toast.action || (toast.action.type !== 'DELETE' && toast.action.type !== 'MODIFY')) return;
+        // The unified undo() handler already knows how to revert DELETE and MODIFY actions,
         // but since we've already pushed it to the undo stack via recordAction,
         // just call undo() — it'll pop our action and restore.
         this.undo();
@@ -5585,14 +5800,46 @@ export default class EnhancedMeasurement extends React.PureComponent<WidgetProps
                                 <span className="segments-count">{m.segments.length}</span>
                             </div>
                             <div className="segments-list">
-                                {m.segments.map((segment, index) => (
-                                    <details key={segment.id} className="segment-row">
-                                        <summary className="segment-row-summary">
+                                {m.segments.map((segment, index) => {
+                                    const highlightOn = config.enableSegmentHighlight !== false;
+                                    const isPinned = this.state.pinnedSegmentKey === `${m.id}|${index}`;
+                                    return (
+                                    <details
+                                        key={segment.id}
+                                        className={`segment-row${isPinned ? ' segment-row-pinned' : ''}`}
+                                        onMouseEnter={highlightOn ? () => this.showSegmentHighlight(m.id, index) : undefined}
+                                        onMouseLeave={highlightOn ? () => this.clearSegmentHighlight() : undefined}
+                                    >
+                                        <summary
+                                            className="segment-row-summary"
+                                            title={highlightOn ? 'Show this segment on the map' : undefined}
+                                            onFocus={highlightOn ? () => this.showSegmentHighlight(m.id, index) : undefined}
+                                            onBlur={highlightOn ? () => this.clearSegmentHighlight() : undefined}
+                                            onClick={highlightOn ? () => this.toggleSegmentPin(m.id, index) : undefined}
+                                        >
                                             <span className="segment-number">{index + 1}</span>
                                             <span className="segment-row-label">{segment.label}</span>
                                             <span className="segment-row-value">
                                                 {this.formatValue(segment.distance)} <span className="segment-row-unit">{m.linearUnit}</span>
                                             </span>
+                                            {this.canDeleteSegment(m) && (
+                                                <button
+                                                    type="button"
+                                                    className="segment-row-delete"
+                                                    aria-label={`Delete ${segment.label}`}
+                                                    title={`Delete ${segment.label}`}
+                                                    onClick={(e) => {
+                                                        // Inside <summary>: stop the row from also expanding.
+                                                        e.preventDefault();
+                                                        e.stopPropagation();
+                                                        this.deleteSegment(m.id, index);
+                                                    }}
+                                                >
+                                                    <svg fill="none" stroke="currentColor" viewBox="0 0 24 24" width="14" height="14" aria-hidden="true">
+                                                        <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M19 7l-.867 12.142A2 2 0 0116.138 21H7.862a2 2 0 01-1.995-1.858L5 7m5 4v6m4-6v6m1-10V4a1 1 0 00-1-1h-4a1 1 0 00-1 1v3M4 7h16" />
+                                                    </svg>
+                                                </button>
+                                            )}
                                         </summary>
                                         <div className="segment-coords">
                                             <span className="segment-coord-pt">{this.formatSegmentCoords(segment.startPoint)}</span>
@@ -5600,7 +5847,8 @@ export default class EnhancedMeasurement extends React.PureComponent<WidgetProps
                                             <span className="segment-coord-pt">{this.formatSegmentCoords(segment.endPoint)}</span>
                                         </div>
                                     </details>
-                                ))}
+                                    );
+                                })}
                             </div>
                         </div>
                     )}

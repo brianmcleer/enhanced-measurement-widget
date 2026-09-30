@@ -48,6 +48,9 @@ export default {
   helpCards4: 'The Zoom to measurement button moves the map to that measurement.',
   helpCardsCopy: 'In the details, click any value to copy it. It flashes "Copied" for a moment.',
   helpCardsSegments: 'The small badge on a card counts the legs or edges in that measurement.',
+  helpCardsSegmentMap: 'In the details, point at a segment in the list to light it up on the map. Click it to keep it lit, and click it again to let go.',
+  helpCardsSegmentDelete1: 'To remove one segment of a line or shape, click the trash button at the end of its row. The totals update, and an Undo link appears for a few seconds.',
+  helpCardsSegmentDelete2: 'Deleting the first or last segment of a line shortens it. Deleting one in the middle removes the corner at its far end, so the pieces on either side join with a straight segment.',
 
   /* Card menu */
   helpMenuTitle: 'The card menu, button by button',
@@ -106,6 +109,7 @@ export default {
   helpTroubleLoading: 'It says Loading measurement tools for a long time: the map is still starting. Give it a moment, then reload the page.',
   helpTroubleDouble: 'A line or shape will not finish: double-click on the last point.',
   helpTroubleUnits: 'The numbers look far too big or small: check the unit in {units}. The measurement itself is not wrong, only the unit shown.',
+  helpTroubleSegmentDelete: 'No trash button on a segment: a line needs at least 2 corners and a shape at least 3, or you are still editing vertices. Finish editing, or delete the whole measurement.',
   helpTroubleExport: 'An export shows an error or nothing happens: the download was blocked. Allow downloads for this site and try again.',
   helpTroubleImport: 'An import fails: the file must be GeoJSON exported from this widget. Other GeoJSON files may not have the details the widget needs.',
   helpTroubleGone: 'Measurements disappeared: they live in this browser only. Another computer or a cleared browser will not have them.',

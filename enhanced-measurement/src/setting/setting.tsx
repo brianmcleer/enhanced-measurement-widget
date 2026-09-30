@@ -2562,6 +2562,30 @@ export default class Setting extends React.PureComponent<SettingProps, SettingSt
                             }}
                         />
                     </SettingRow>
+
+                    <SettingRow flow="wrap" label="Highlight a segment on the map when it is pointed at or clicked in the list">
+                        <Switch
+                            checked={config.enableSegmentHighlight !== false}
+                            onChange={(evt) => {
+                                this.props.onSettingChange({
+                                    id: this.props.id,
+                                    config: this.props.config.set('enableSegmentHighlight', evt.target.checked)
+                                });
+                            }}
+                        />
+                    </SettingRow>
+
+                    <SettingRow flow="wrap" label="Delete segments from drawn lines and shapes">
+                        <Switch
+                            checked={config.enableSegmentDelete !== false}
+                            onChange={(evt) => {
+                                this.props.onSettingChange({
+                                    id: this.props.id,
+                                    config: this.props.config.set('enableSegmentDelete', evt.target.checked)
+                                });
+                            }}
+                        />
+                    </SettingRow>
                 </SettingSection>
 
                 <SettingSection title="Default Panel Expansion">

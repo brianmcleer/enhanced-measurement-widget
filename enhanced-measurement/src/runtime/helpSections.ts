@@ -34,6 +34,8 @@ export interface HelpFeatures {
   undoRedo: boolean
   multiSelect: boolean
   sortOptions: boolean
+  segmentHighlight: boolean
+  segmentDelete: boolean
   persistence: boolean
   /* button and header names as the builder configured them */
   labels: HelpLabels
@@ -123,7 +125,11 @@ export function buildHelpSections (t: T, f: HelpFeatures): HelpSection[] {
     icon: 'list',
     title: t('helpCardsTitle'),
     intro: t('helpCardsIntro', { measurements: L.measurements }),
-    body: [t('helpCards1'), t('helpCards2'), t('helpCards3'), t('helpCards4'), t('helpCardsCopy'), t('helpCardsSegments')]
+    body: [
+      t('helpCards1'), t('helpCards2'), t('helpCards3'), t('helpCards4'), t('helpCardsCopy'), t('helpCardsSegments'),
+      ...when(f.segmentHighlight, 'helpCardsSegmentMap'),
+      ...when(f.segmentDelete, 'helpCardsSegmentDelete1', 'helpCardsSegmentDelete2')
+    ]
   })
 
   sections.push({
@@ -214,6 +220,7 @@ export function buildHelpSections (t: T, f: HelpFeatures): HelpSection[] {
       t('helpTroubleLoading'),
       ...when(f.distance || f.area || f.freehandLine || f.freehandArea, 'helpTroubleDouble'),
       ...(f.unitToggle ? [t('helpTroubleUnits', { units: L.units })] : []),
+      ...when(f.segmentDelete, 'helpTroubleSegmentDelete'),
       ...when(f.exportButton, 'helpTroubleExport'),
       ...when(f.importButton, 'helpTroubleImport'),
       ...when(f.persistence, 'helpTroubleGone'),

@@ -2,6 +2,17 @@
 
 Newest first. Every release bumps `manifest.json` and `package.json` together.
 
+## 1.3.0 (2026-09-30)
+
+### Added
+- Delete a segment from a drawn line or shape: each segment row in the measurement details has a trash button. The first or last segment of a line is trimmed off; any other segment loses its far-end corner so the pieces on either side join up. Lines keep at least 2 corners and shapes at least 3 (the button is hidden below that, and while vertices are being edited). Totals, segments and map labels are recalculated, and the change shows an Undo link and works with Ctrl+Z and Ctrl+Y.
+- Point at a segment in the details list (or tab to it) to highlight it on the map. Click it to keep it lit, bringing it into view if it is off screen; click again to let go. The highlight clears when the measurement changes or the details close.
+- Settings, Power Features: **Highlight a segment on the map** and **Delete segments from drawn lines and shapes**. Both default on, and both carry through the settings XML export and import.
+- Help guide: lines for both features, shown only when the switch is on, and a troubleshooting line for a missing trash button.
+
+### Changed
+- Vertex editing and segment delete now share one recalculation routine (`recalcMeasurementFromGeometry`). Numbers are unchanged.
+
 ## 1.2.5 (2026-09-18)
 
 - Settings: a **Show help guide** option. Turn it off and the question-mark button and the first-run hint both disappear; the guide itself is untouched. Undefined means on, so apps configured before this release keep their help button.

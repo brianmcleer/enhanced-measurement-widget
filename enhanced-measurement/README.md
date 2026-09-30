@@ -22,6 +22,8 @@ https://community.esri.com/t5/experience-builder-custom-widgets/enhanced-measure
 - Inline rename (double-click), recolor after creation, and duplicate for any measurement
 - Coordinate display in Decimal Degrees, DMS, or DDM, in Web Mercator or the map's spatial reference
 - Edit vertices on existing measurements
+- Delete a segment from a drawn line or shape (trash button on each segment row in the details, with Undo)
+- Point at or click a segment in the details list to highlight it on the map
 - Undo and redo, including keyboard shortcuts (Ctrl+Z / Ctrl+Y)
 - Import and export of measurements in JSON, CSV, GeoJSON, and PDF
 - Settings configuration import/export as XML (for replicating setup across Experience Builder applications)
@@ -80,7 +82,7 @@ Dependencies (these install automatically with the standard EB client install; n
 
 Open the widget's settings panel in Experience Builder. Settings are grouped into sections covering tool enablement, default units, custom units, measurement display, toggle visibility and defaults, label styling, symbol styling, color palette, UI layout, dialog text, and import/export. A `Settings Import/Export` section at the top lets you transfer the full widget configuration between Experience Builder applications as an XML file.
 
-A `Power Features` section controls the advanced end-user features: session persistence, the live measurement readout, multi-select mode, and list sorting. Session persistence is off by default; the other three are on by default.
+A `Power Features` section controls the advanced end-user features: session persistence, the live measurement readout, multi-select mode, list sorting, segment highlight on the map, and segment delete. Session persistence is off by default; the others are on by default.
 
 A `Reset All Settings to Defaults` button at the bottom restores every option to its default state.
 
