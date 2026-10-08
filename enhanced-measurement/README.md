@@ -17,6 +17,7 @@ https://community.esri.com/t5/experience-builder-custom-widgets/enhanced-measure
 - Master-detail navigation: click a measurement to open a full detail pane with large readable stats
 - Default and custom linear/area units configurable per deployment
 - Segment labeling for polylines and polygons, with editable prefix and font size
+- Segment labels are offset from the line or shape edge by default (switch in Segment Label Styling)
 - Statistics panel showing count, total distance, and total area
 - Search/filter for the measurement list
 - Inline rename (double-click), recolor after creation, and duplicate for any measurement

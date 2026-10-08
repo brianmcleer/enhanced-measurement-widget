@@ -2,6 +2,22 @@
 
 Newest first. Every release bumps `manifest.json` and `package.json` together.
 
+## 1.4.0 (2026-10-08)
+
+### Added
+- Segment labels on lines and shapes are now offset from the segment instead of sitting on top of it. On a line the label sits just above the segment; on a shape it sits on the outside of the edge, so labels stay clear of each other inside small shapes. The label still follows the angle of its segment.
+- Settings, Segment Label Styling: **Offset segment labels from the line or shape edge**. On by default, and it carries through the settings XML export and import. Turn it off to get the old centered labels back.
+- Help guide: one line about offset labels, shown only when segment labels and the offset are both on.
+
+### Changed
+- Segment labels now keep their rotation while a corner is being dragged (they used to snap flat until the drag ended).
+- Print-ready labels use the same offset when it is on. With the offset off, the old small print nudge is kept.
+
+## 1.3.1 (2026-10-01)
+
+### Fixed
+- The measurements list (header, filter and cards) could go blank while Summary Statistics still counted the measurements. The details pane was left pointing at a measurement that no longer existed, so it rendered nothing and hid the list. The widget now drops a stale details view and shows the list again. It also does this when a measurement is removed by undo, by the Delete key on the map, or by the clear-on-tool-switch setting.
+
 ## 1.3.0 (2026-09-30)
 
 ### Added

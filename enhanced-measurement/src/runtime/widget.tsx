@@ -538,6 +538,13 @@ export default class EnhancedMeasurement extends React.PureComponent<WidgetProps
             this.schedulePersist();
         }
 
+        // Self-heal: if the detail view points at a measurement that no longer exists (undo, Delete key
+        // on the map, tool-switch clear), drop it so the list comes back instead of a blank pane.
+        if (this.state.detailViewMeasurementId &&
+            !this.state.measurements.some(m => m.id === this.state.detailViewMeasurementId)) {
+            this.setState({ detailViewMeasurementId: null });
+        }
+
         // A highlighted segment belongs to one measurement's current shape. Drop it when the
         // measurements change (edit, delete, undo) or the detail view opens or closes.
         if (prevState && (prevState.measurements !== this.state.measurements ||
@@ -723,6 +730,7 @@ export default class EnhancedMeasurement extends React.PureComponent<WidgetProps
             sortOptions: config.enableSortOptions !== false,
             segmentHighlight: config.enableSegmentHighlight !== false,
             segmentDelete: config.enableSegmentDelete !== false,
+            offsetSegmentLabels: config.offsetSegmentLabels !== false,
             persistence: config.enablePersistence === true,
             labels: {
                 point: config.pointButtonText || 'Point',
@@ -1157,6 +1165,61 @@ export default class EnhancedMeasurement extends React.PureComponent<WidgetProps
         return labelGraphic;
     }
 
+    /**
+     * Works out how a segment label should sit on the map: the rotation that follows the
+     * segment, and (when "Offset segment labels" is on, which is the default) a vertical
+     * alignment that moves the text off the line instead of centering it on top of it.
+     * Lines put the text above the segment. Shapes put it on the outside of the shape, so
+     * labels do not pile up inside small polygons. Alignment is used rather than a pixel
+     * offset because it follows the text's own rotation.
+     */
+    getSegmentLabelPlacement(geometry: any, startCoords: number[], endCoords: number[]): { angle: number, verticalAlignment?: 'top' | 'bottom' } {
+        let angle = 0;
+        let verticalAlignment: 'top' | 'bottom' | undefined;
+        const view = this.state.jimuMapView && this.state.jimuMapView.view;
+        const offsetOn = (this.props.config || {}).offsetSegmentLabels !== false;
+        if (offsetOn) verticalAlignment = 'bottom';
+
+        if (!view) return { angle, verticalAlignment };
+
+        const toScreenXY = (c: number[]) => {
+            const sp = view.toScreen(new this.Point({ x: c[0], y: c[1], spatialReference: geometry.spatialReference }));
+            return sp ? { x: sp.x, y: sp.y } : null;
+        };
+
+        const a = toScreenXY(startCoords);
+        const b = toScreenXY(endCoords);
+        if (!a || !b) return { angle, verticalAlignment };
+
+        // Angle in screen space (y increases downward), kept readable (never upside down)
+        angle = Math.atan2(b.y - a.y, b.x - a.x) * (180 / Math.PI);
+        if (angle > 90) angle -= 180;
+        else if (angle < -90) angle += 180;
+
+        // For shapes, put the label on the outside: test a point just above the segment
+        // (in the text's own "up" direction); if it falls inside the shape, flip below.
+        if (offsetOn && geometry.type === 'polygon' && geometry.rings && geometry.rings[0]) {
+            const rad = angle * Math.PI / 180;
+            const upX = Math.sin(rad);
+            const upY = -Math.cos(rad);
+            const probe = { x: (a.x + b.x) / 2 + upX * 6, y: (a.y + b.y) / 2 + upY * 6 };
+            const ring = geometry.rings[0].map((c: number[]) => toScreenXY(c));
+            if (ring.every((pt: any) => pt)) {
+                let inside = false;
+                for (let i = 0, j = ring.length - 1; i < ring.length; j = i++) {
+                    const xi = ring[i].x, yi = ring[i].y, xj = ring[j].x, yj = ring[j].y;
+                    if ((yi > probe.y) !== (yj > probe.y) &&
+                        probe.x < (xj - xi) * (probe.y - yi) / (yj - yi) + xi) {
+                        inside = !inside;
+                    }
+                }
+                if (inside) verticalAlignment = 'top';
+            }
+        }
+
+        return { angle, verticalAlignment };
+    }
+
     createSegmentLabelGraphic(segment: SegmentRecord, measurement: MeasurementRecord, segmentIndex: number): any {
         const config = this.props.config || {};
         const geometry = measurement.geometry;
@@ -1182,41 +1245,7 @@ export default class EnhancedMeasurement extends React.PureComponent<WidgetProps
             spatialReference: geometry.spatialReference
         });
 
-        // Calculate angle using screen coordinates for accurate rotation
-        let angle = 0;
-        if (this.state.jimuMapView && this.state.jimuMapView.view) {
-            const view = this.state.jimuMapView.view;
-
-            // Create points in map coordinates
-            const startPoint = new this.Point({
-                x: startCoords[0],
-                y: startCoords[1],
-                spatialReference: geometry.spatialReference
-            });
-            const endPoint = new this.Point({
-                x: endCoords[0],
-                y: endCoords[1],
-                spatialReference: geometry.spatialReference
-            });
-
-            // Convert to screen coordinates
-            const startScreen = view.toScreen(startPoint);
-            const endScreen = view.toScreen(endPoint);
-
-            if (startScreen && endScreen) {
-                // Calculate angle in screen space
-                const dx = endScreen.x - startScreen.x;
-                const dy = endScreen.y - startScreen.y;
-                angle = Math.atan2(dy, dx) * (180 / Math.PI);  // Screen coordinates: y increases downward
-
-                // Normalize angle to keep text readable (avoid upside-down text)
-                if (angle > 90) {
-                    angle -= 180;
-                } else if (angle < -90) {
-                    angle += 180;
-                }
-            }
-        }
+        const placement = this.getSegmentLabelPlacement(geometry, startCoords, endCoords);
 
         const segmentTextSymbol = new this.TextSymbol({
             text: `${segment.label}: ${this.formatValue(segment.distance)} ${measurement.linearUnit}`,
@@ -1229,7 +1258,8 @@ export default class EnhancedMeasurement extends React.PureComponent<WidgetProps
                 weight: config.segmentLabelFontWeight || 'normal',
                 style: config.segmentLabelFontStyle || 'normal'
             },
-            angle: angle  // Apply rotation to align with segment
+            angle: placement.angle,  // Apply rotation to align with segment
+            ...(placement.verticalAlignment ? { verticalAlignment: placement.verticalAlignment } : {})
         });
 
         const segmentLabelGraphic = new this.Graphic({
@@ -2454,6 +2484,7 @@ export default class EnhancedMeasurement extends React.PureComponent<WidgetProps
                         );
 
                         const segmentLabel = measurement.type === 'distance' ? `Segment ${segmentIndex + 1}` : `Edge ${segmentIndex + 1}`;
+                        const segPlacement = this.getSegmentLabelPlacement(geometry, startCoords, endCoords);
 
                         label.geometry = labelPoint;
                         label.symbol = new this.TextSymbol({
@@ -2466,7 +2497,9 @@ export default class EnhancedMeasurement extends React.PureComponent<WidgetProps
                                 family: (this.props.config || {}).segmentLabelFontFamily || 'Arial',
                                 weight: (this.props.config || {}).segmentLabelFontWeight || 'normal',
                                 style: (this.props.config || {}).segmentLabelFontStyle || 'normal'
-                            }
+                            },
+                            angle: segPlacement.angle,
+                            ...(segPlacement.verticalAlignment ? { verticalAlignment: segPlacement.verticalAlignment } : {})
                         });
                     }
                 }
@@ -3537,41 +3570,7 @@ export default class EnhancedMeasurement extends React.PureComponent<WidgetProps
                         spatialReference: geometry.spatialReference
                     });
 
-                    // Calculate angle using screen coordinates for accurate rotation
-                    let angle = 0;
-                    if (this.state.jimuMapView && this.state.jimuMapView.view) {
-                        const view = this.state.jimuMapView.view;
-
-                        // Create points in map coordinates
-                        const startPoint = new this.Point({
-                            x: startCoords[0],
-                            y: startCoords[1],
-                            spatialReference: geometry.spatialReference
-                        });
-                        const endPoint = new this.Point({
-                            x: endCoords[0],
-                            y: endCoords[1],
-                            spatialReference: geometry.spatialReference
-                        });
-
-                        // Convert to screen coordinates
-                        const startScreen = view.toScreen(startPoint);
-                        const endScreen = view.toScreen(endPoint);
-
-                        if (startScreen && endScreen) {
-                            // Calculate angle in screen space
-                            const dx = endScreen.x - startScreen.x;
-                            const dy = endScreen.y - startScreen.y;
-                            angle = Math.atan2(dy, dx) * (180 / Math.PI);  // Screen coordinates: y increases downward
-
-                            // Normalize angle to keep text readable (avoid upside-down text)
-                            if (angle > 90) {
-                                angle -= 180;
-                            } else if (angle < -90) {
-                                angle += 180;
-                            }
-                        }
-                    }
+                    const placement = this.getSegmentLabelPlacement(geometry, startCoords, endCoords);
 
                     // Apply print-ready adjustments to segment labels
                     const segmentFontSize = config.segmentLabelFontSize || (printMode ? 10 : 10);
@@ -3588,8 +3587,10 @@ export default class EnhancedMeasurement extends React.PureComponent<WidgetProps
                             weight: config.segmentLabelFontWeight || 'normal',
                             style: config.segmentLabelFontStyle || 'normal'
                         },
-                        angle: angle,  // Apply rotation to align with segment
-                        yoffset: printMode ? -5 : 0  // More offset for print
+                        angle: placement.angle,  // Apply rotation to align with segment
+                        ...(placement.verticalAlignment
+                            ? { verticalAlignment: placement.verticalAlignment }
+                            : { yoffset: printMode ? -5 : 0 })  // Offset off: keep the old print nudge
                     });
 
                     const segmentLabelGraphic = new this.Graphic({
@@ -6845,7 +6846,7 @@ export default class EnhancedMeasurement extends React.PureComponent<WidgetProps
                             if (detailMeasurement) return this.renderDetailView(detailMeasurement, config);
                             return null;
                         })()}
-                        {!this.state.detailViewMeasurementId && (<>
+                        {!(this.state.detailViewMeasurementId && measurements.some(m => m.id === this.state.detailViewMeasurementId)) && (<>
                             <div className="section-header" style={{
                                 display: 'flex',
                                 alignItems: 'center',

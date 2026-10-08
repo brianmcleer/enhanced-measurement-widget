@@ -2639,6 +2639,18 @@ export default class Setting extends React.PureComponent<SettingProps, SettingSt
                         />
                     </SettingRow>
 
+                    <SettingRow flow="wrap" label="Offset segment labels from the line or shape edge">
+                        <Switch
+                            checked={config.offsetSegmentLabels !== false}
+                            onChange={(evt) => {
+                                this.props.onSettingChange({
+                                    id: this.props.id,
+                                    config: this.props.config.set('offsetSegmentLabels', evt.target.checked)
+                                });
+                            }}
+                        />
+                    </SettingRow>
+
                     <SettingRow flow="wrap" label="Auto-save Segments">
                         <Switch
                             checked={config.autoSaveSegments === true}

@@ -36,6 +36,7 @@ export interface HelpFeatures {
   sortOptions: boolean
   segmentHighlight: boolean
   segmentDelete: boolean
+  offsetSegmentLabels: boolean
   persistence: boolean
   /* button and header names as the builder configured them */
   labels: HelpLabels
@@ -181,6 +182,7 @@ export function buildHelpSections (t: T, f: HelpFeatures): HelpSection[] {
       intro: t('helpOptionsIntro', { displayOptions: L.displayOptions }),
       body: [
         ...(f.segmentLabelsToggle ? [t('helpOptionsSegments', { segmentLabels: L.segmentLabels })] : []),
+        ...(f.segmentLabelsToggle && f.offsetSegmentLabels ? [t('helpOptionsSegmentOffset')] : []),
         ...(f.tooltipsToggle ? [t('helpOptionsTooltips', { tooltips: L.tooltips })] : []),
         ...(f.snappingToggle ? [t('helpOptionsSnapping', { snapping: L.snapping })] : []),
         ...when(f.printReady, 'helpOptionsPrint')
