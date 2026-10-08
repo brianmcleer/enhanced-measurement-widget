@@ -5603,12 +5603,12 @@ export default class EnhancedMeasurement extends React.PureComponent<WidgetProps
                         type="button"
                         className="detail-back-button"
                         onClick={() => this.exitDetailView()}
-                        aria-label="Back to measurements list"
+                        aria-label={this.t('backToMeasurementsList')}
                     >
                         <svg fill="none" stroke="currentColor" viewBox="0 0 24 24" width="16" height="16" aria-hidden="true">
                             <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2.2} d="M15 19l-7-7 7-7" />
                         </svg>
-                        <span>Back</span>
+                        <span>{this.t('back')}</span>
                     </button>
                     <div className="detail-view-title-row">
                         <button
@@ -5619,8 +5619,8 @@ export default class EnhancedMeasurement extends React.PureComponent<WidgetProps
                                 e.stopPropagation();
                                 this.setState(prev => ({ colorPickerForId: prev.colorPickerForId === m.id ? null : m.id }));
                             }}
-                            title="Change color"
-                            aria-label={`Change color for ${m.label}`}
+                            title={this.t('changeColor')}
+                            aria-label={this.t('changeColorForLabel', { label: String(m.label) })}
                         />
                         <span className="detail-view-type-icon" aria-hidden="true">
                             <svg fill="none" stroke="currentColor" viewBox="0 0 24 24" width="14" height="14">
@@ -5647,26 +5647,26 @@ export default class EnhancedMeasurement extends React.PureComponent<WidgetProps
                                     if (e.key === 'Enter') { e.preventDefault(); this.renameMeasurement(m.id, this.state.renamingValue); }
                                     else if (e.key === 'Escape') { e.preventDefault(); this.setState({ renamingMeasurementId: null, renamingValue: '' }); }
                                 }}
-                                aria-label="Edit measurement name"
+                                aria-label={this.t('editMeasurementName')}
                                 maxLength={80}
                             />
                         ) : (
                             <h3
                                 className="detail-view-title"
                                 onDoubleClick={() => this.setState({ renamingMeasurementId: m.id, renamingValue: m.label })}
-                                title="Double-click to rename"
+                                title={this.t('doubleClickToRename')}
                             >
                                 {m.label}
                             </h3>
                         )}
                         {this.state.colorPickerForId === m.id && (
-                            <div className="color-picker-popover" onClick={(e) => e.stopPropagation()} role="dialog" aria-label="Choose color">
+                            <div className="color-picker-popover" onClick={(e) => e.stopPropagation()} role="dialog" aria-label={this.t('chooseColor')}>
                                 {this.colorPalette.map((c) => (
                                     <button
                                         key={c}
                                         type="button"
                                         className={`color-swatch ${m.color === c ? 'is-selected' : ''}`}
-                                        aria-label={`Color ${c}`}
+                                        aria-label={this.t('colorC', { c: String(c) })}
                                         aria-pressed={m.color === c}
                                         style={{ backgroundColor: c }}
                                         onClick={() => this.setMeasurementColor(m.id, c)}
@@ -5682,12 +5682,12 @@ export default class EnhancedMeasurement extends React.PureComponent<WidgetProps
                         type="button"
                         className="detail-action-button"
                         onClick={() => this.zoomToMeasurement(m)}
-                        title="Zoom to measurement on map"
+                        title={this.t('zoomToMeasurementOnMap')}
                     >
                         <svg fill="none" stroke="currentColor" viewBox="0 0 24 24" width="14" height="14" aria-hidden="true">
                             <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M21 21l-6-6m2-5a7 7 0 11-14 0 7 7 0 0114 0zM10 7v3m0 0v3m0-3h3m-3 0H7" />
                         </svg>
-                        Zoom to
+                        {this.t('zoomTo')}
                     </button>
                     <DropdownMenu>
                         <div style={{ position: 'relative', display: 'inline-block', zIndex: this.state.exportDropdownOpen[m.id] ? 9998 : 1 }}>
@@ -5697,12 +5697,12 @@ export default class EnhancedMeasurement extends React.PureComponent<WidgetProps
                                 className="detail-action-button"
                                 isOpen={this.state.exportDropdownOpen[m.id]}
                                 onClick={(e) => { e.stopPropagation(); this.toggleExportDropdown(m.id); }}
-                                title="Export"
+                                title={this.t('export')}
                             >
                                 <svg fill="none" stroke="currentColor" viewBox="0 0 24 24" width="14" height="14" aria-hidden="true">
                                     <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M12 10v6m0 0l-3-3m3 3l3-3m2 8H7a2 2 0 01-2-2V5a2 2 0 012-2h5.586a1 1 0 01.707.293l5.414 5.414a1 1 0 01.293.707V19a2 2 0 01-2 2z" />
                                 </svg>
-                                Export
+                                {this.t('export')}
                                 <svg fill="none" stroke="currentColor" viewBox="0 0 24 24" width="10" height="10" style={{ opacity: 0.6 }} aria-hidden="true">
                                     <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M19 9l-7 7-7-7" />
                                 </svg>
@@ -5711,20 +5711,20 @@ export default class EnhancedMeasurement extends React.PureComponent<WidgetProps
                                 <DropdownMenuContent triggerRef={this.exportTriggerRefs.get(m.id) || undefined} aria-labelledby={`detail-export-${m.id}`}>
                                     <DropdownMenuItem onClick={() => { this.exportMeasurementToCSV(m); this.closeAllDropdowns(); }}>
                                         <svg className="menu-icon" fill="none" stroke="currentColor" viewBox="0 0 24 24" width="14" height="14" aria-hidden="true"><path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M9 17v-2a4 4 0 014-4h4M3 3h7l4 4h7v2M3 3v18h18V9" /></svg>
-                                        CSV
+                                        {this.t('csv')}
                                     </DropdownMenuItem>
                                     <DropdownMenuItem onClick={() => { this.closeAllDropdowns(); this.setState({ showPDFExportDialog: true, pendingPDFExport: { kind: 'one', measurement: m } }); }}>
                                         <svg className="menu-icon" fill="none" stroke="currentColor" viewBox="0 0 24 24" width="14" height="14" aria-hidden="true"><path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M9 12h6m-6 4h6m2 5H7a2 2 0 01-2-2V5a2 2 0 012-2h5.586a1 1 0 01.707.293l5.414 5.414a1 1 0 01.293.707V19a2 2 0 01-2 2z" /></svg>
-                                        PDF…
+                                        {this.t('pdf')}
                                     </DropdownMenuItem>
                                     <DropdownMenuSeparator />
                                     <DropdownMenuItem onClick={() => { this.exportMeasurementToJSON(m); this.closeAllDropdowns(); }}>
                                         <svg className="menu-icon" fill="none" stroke="currentColor" viewBox="0 0 24 24" width="14" height="14" aria-hidden="true"><path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M10 20l4-16m4 4l4 4-4 4M6 16l-4-4 4-4" /></svg>
-                                        JSON
+                                        {this.t('json')}
                                     </DropdownMenuItem>
                                     <DropdownMenuItem onClick={() => { this.exportMeasurementToGeoJSON(m); this.closeAllDropdowns(); }}>
                                         <svg className="menu-icon" fill="none" stroke="currentColor" viewBox="0 0 24 24" width="14" height="14" aria-hidden="true"><path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M9 20l-5.447-2.724A1 1 0 013 16.382V5.618a1 1 0 011.447-.894L9 7m0 13l6-3m-6 3V7m6 10l4.553 2.276A1 1 0 0021 18.382V7.618a1 1 0 00-.553-.894L15 4m0 13V4m0 0L9 7" /></svg>
-                                        GeoJSON
+                                        {this.t('geoJSON')}
                                     </DropdownMenuItem>
                                 </DropdownMenuContent>
                             )}
@@ -5738,8 +5738,8 @@ export default class EnhancedMeasurement extends React.PureComponent<WidgetProps
                                 className="detail-action-button detail-action-button-icon"
                                 isOpen={this.state.overflowDropdownOpen[m.id]}
                                 onClick={(e) => { e.stopPropagation(); this.toggleOverflowDropdown(m.id); }}
-                                title="More actions"
-                                aria-label="More actions"
+                                title={this.t('moreActions')}
+                                aria-label={this.t('moreActions')}
                             >
                                 <svg fill="none" stroke="currentColor" viewBox="0 0 24 24" width="16" height="16" aria-hidden="true">
                                     <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2.2} d="M12 5v.01M12 12v.01M12 19v.01" />
@@ -5749,22 +5749,22 @@ export default class EnhancedMeasurement extends React.PureComponent<WidgetProps
                                 <DropdownMenuContent triggerRef={this.overflowTriggerRefs.get(m.id) || undefined} aria-labelledby={`detail-overflow-${m.id}`}>
                                     <DropdownMenuItem onClick={() => { this.closeAllDropdowns(); this.setState({ renamingMeasurementId: m.id, renamingValue: m.label }); }}>
                                         <svg className="menu-icon" fill="none" stroke="currentColor" viewBox="0 0 24 24" width="14" height="14" aria-hidden="true"><path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M11 5H6a2 2 0 00-2 2v11a2 2 0 002 2h11a2 2 0 002-2v-5m-1.414-9.414a2 2 0 112.828 2.828L11.828 15H9v-2.828l8.586-8.586z" /></svg>
-                                        Rename
+                                        {this.t('rename')}
                                     </DropdownMenuItem>
                                     <DropdownMenuItem onClick={() => { this.duplicateMeasurement(m.id); this.closeAllDropdowns(); }}>
                                         <svg className="menu-icon" fill="none" stroke="currentColor" viewBox="0 0 24 24" width="14" height="14" aria-hidden="true"><path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M8 16H6a2 2 0 01-2-2V6a2 2 0 012-2h8a2 2 0 012 2v2m-6 12h8a2 2 0 002-2v-8a2 2 0 00-2-2h-8a2 2 0 00-2 2v8a2 2 0 002 2z" /></svg>
-                                        Duplicate
+                                        {this.t('duplicate')}
                                     </DropdownMenuItem>
                                     {canEditVertices && (
                                         <DropdownMenuItem onClick={() => { this.editMeasurementVertices(m.id); this.closeAllDropdowns(); }}>
                                             <svg className="menu-icon" fill="none" stroke="currentColor" viewBox="0 0 24 24" width="14" height="14" aria-hidden="true"><path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M14.121 4.121a3 3 0 114.243 4.243L7.5 19.243l-4.243 1.06 1.06-4.242L14.121 4.121z" /></svg>
-                                            {this.state.editingMeasurementId === m.id ? 'Stop editing' : 'Edit vertices'}
+                                            {this.state.editingMeasurementId === m.id ? this.t('stopEditing') : this.t('editVertices')}
                                         </DropdownMenuItem>
                                     )}
                                     <DropdownMenuSeparator />
                                     <DropdownMenuItem onClick={() => { this.deleteMeasurement(m.id); this.closeAllDropdowns(); }}>
                                         <svg className="menu-icon" fill="none" stroke="#dc2626" viewBox="0 0 24 24" width="14" height="14" aria-hidden="true"><path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M19 7l-.867 12.142A2 2 0 0116.138 21H7.862a2 2 0 01-1.995-1.858L5 7m5 4v6m4-6v6m1-10V4a1 1 0 00-1-1h-4a1 1 0 00-1 1v3M4 7h16" /></svg>
-                                        <span style={{ color: '#dc2626' }}>Delete</span>
+                                        <span style={{ color: '#dc2626' }}>{this.t('delete')}</span>
                                     </DropdownMenuItem>
                                 </DropdownMenuContent>
                             )}
@@ -5785,8 +5785,8 @@ export default class EnhancedMeasurement extends React.PureComponent<WidgetProps
                                     type="button"
                                     className={`stat-copy-button ${this.state.copiedStatKey === key ? 'is-copied' : ''}`}
                                     onClick={() => this.copyStatToClipboard(key, copyText)}
-                                    title={this.state.copiedStatKey === key ? 'Copied' : 'Copy value'}
-                                    aria-label={`Copy ${typeof label === 'string' ? label : 'value'} to clipboard`}
+                                    title={this.state.copiedStatKey === key ? this.t('copied') : this.t('copyValue')}
+                                    aria-label={this.t('copyLabelToClipboard', { label: String(typeof label === 'string' ? label : 'value') })}
                                 >
                                     {this.state.copiedStatKey === key ? (
                                         <svg fill="none" stroke="currentColor" viewBox="0 0 24 24" width="12" height="12" aria-hidden="true">
@@ -5804,15 +5804,15 @@ export default class EnhancedMeasurement extends React.PureComponent<WidgetProps
                         if (m.type === 'point' && m.coordinates) {
                             const c = fmtCoord(m.coordinates.lat, m.coordinates.lon, this.state.coordinateFormat);
                             cards.push(
-                                stat(`${m.id}-lat`, 'Latitude', c.lat, String(c.lat), 'mono'),
-                                stat(`${m.id}-lon`, 'Longitude', c.lon, String(c.lon), 'mono'),
+                                stat(this.t('idLat', { id: String(m.id) }), this.t('latitude'), c.lat, String(c.lat), 'mono'),
+                                stat(this.t('idLon', { id: String(m.id) }), this.t('longitude'), c.lon, String(c.lon), 'mono'),
                                 stat(`${m.id}-x`, <>X · {srLabel}</>, m.coordinates.x.toFixed(2), m.coordinates.x.toFixed(2), 'mono'),
                                 stat(`${m.id}-y`, <>Y · {srLabel}</>, m.coordinates.y.toFixed(2), m.coordinates.y.toFixed(2), 'mono')
                             );
                         }
                         if (m.type === 'distance' && config.showTotalDistance !== false) {
                             cards.push(
-                                stat(`${m.id}-dist`, 'Total Distance',
+                                stat(this.t('idDist', { id: String(m.id) }), this.t('totalDistance'),
                                     <>{this.formatValue(m.totalDistance)} <span className="detail-stat-unit">{m.linearUnit}</span></>,
                                     `${this.formatValue(m.totalDistance)} ${m.linearUnit}`,
                                     'detail-stat-primary')
@@ -5820,11 +5820,11 @@ export default class EnhancedMeasurement extends React.PureComponent<WidgetProps
                         }
                         if (m.type === 'area') {
                             cards.push(
-                                stat(`${m.id}-area`, 'Area',
+                                stat(this.t('idArea', { id: String(m.id) }), this.t('area'),
                                     <>{this.formatValue(m.totalArea)} <span className="detail-stat-unit">{m.areaUnit}</span></>,
                                     `${this.formatValue(m.totalArea)} ${m.areaUnit}`,
                                     'detail-stat-primary'),
-                                stat(`${m.id}-perim`, 'Perimeter',
+                                stat(this.t('idPerim', { id: String(m.id) }), this.t('perimeter'),
                                     <>{this.formatValue(m.perimeter)} <span className="detail-stat-unit">{m.linearUnit}</span></>,
                                     `${this.formatValue(m.perimeter)} ${m.linearUnit}`)
                             );
@@ -5832,32 +5832,32 @@ export default class EnhancedMeasurement extends React.PureComponent<WidgetProps
                         if (m.type === 'circle' && m.coordinates) {
                             const c = fmtCoord(m.coordinates.lat, m.coordinates.lon, this.state.coordinateFormat);
                             cards.push(
-                                stat(`${m.id}-area`, 'Area',
+                                stat(this.t('idArea', { id: String(m.id) }), this.t('area'),
                                     <>{this.formatValue(m.totalArea)} <span className="detail-stat-unit">{m.areaUnit}</span></>,
                                     `${this.formatValue(m.totalArea)} ${m.areaUnit}`,
                                     'detail-stat-primary'),
-                                stat(`${m.id}-radius`, 'Radius',
+                                stat(this.t('idRadius', { id: String(m.id) }), this.t('radius'),
                                     <>{this.formatValue(m.radius)} <span className="detail-stat-unit">{m.linearUnit}</span></>,
                                     `${this.formatValue(m.radius)} ${m.linearUnit}`),
-                                stat(`${m.id}-circ`, 'Circumference',
+                                stat(this.t('idCirc', { id: String(m.id) }), this.t('circumference'),
                                     <>{this.formatValue(m.perimeter)} <span className="detail-stat-unit">{m.linearUnit}</span></>,
                                     `${this.formatValue(m.perimeter)} ${m.linearUnit}`),
-                                stat(`${m.id}-center`, <>Center · {srLabel}</>,
+                                stat(this.t('idCenter', { id: String(m.id) }), <>{this.t('centerSrLabel', { srLabel: String(srLabel) })}</>,
                                     <>{c.lat}, {c.lon}</>,
                                     `${c.lat}, ${c.lon}`,
-                                    'mono detail-stat-value-sm')
+                                    this.t('monoDetailStatValueSm'))
                             );
                         }
                         if (m.type === 'triangle') {
                             cards.push(
-                                stat(`${m.id}-area`, 'Area',
+                                stat(this.t('idArea', { id: String(m.id) }), this.t('area'),
                                     <>{this.formatValue(m.totalArea)} <span className="detail-stat-unit">{m.areaUnit}</span></>,
                                     `${this.formatValue(m.totalArea)} ${m.areaUnit}`,
                                     'detail-stat-primary'),
-                                stat(`${m.id}-side`, 'Side Length',
+                                stat(this.t('idSide', { id: String(m.id) }), this.t('sideLength'),
                                     <>{this.formatValue(m.sideLength)} <span className="detail-stat-unit">{m.linearUnit}</span></>,
                                     `${this.formatValue(m.sideLength)} ${m.linearUnit}`),
-                                stat(`${m.id}-perim`, 'Perimeter',
+                                stat(this.t('idPerim', { id: String(m.id) }), this.t('perimeter'),
                                     <>{this.formatValue(m.perimeter)} <span className="detail-stat-unit">{m.linearUnit}</span></>,
                                     `${this.formatValue(m.perimeter)} ${m.linearUnit}`)
                             );
@@ -5869,7 +5869,7 @@ export default class EnhancedMeasurement extends React.PureComponent<WidgetProps
                     {m.segments && m.segments.length > 0 && (
                         <div className="detail-segments">
                             <div className="detail-segments-header">
-                                <span>{m.type === 'distance' ? 'Segments' : 'Perimeter Edges'}</span>
+                                <span>{m.type === 'distance' ? this.t('segments') : this.t('perimeterEdges')}</span>
                                 <span className="segments-count">{m.segments.length}</span>
                             </div>
                             <div className="segments-list">
@@ -5885,7 +5885,7 @@ export default class EnhancedMeasurement extends React.PureComponent<WidgetProps
                                     >
                                         <summary
                                             className="segment-row-summary"
-                                            title={highlightOn ? 'Show this segment on the map' : undefined}
+                                            title={highlightOn ? this.t('showThisSegmentOnTheMap') : undefined}
                                             onFocus={highlightOn ? () => this.showSegmentHighlight(m.id, index) : undefined}
                                             onBlur={highlightOn ? () => this.clearSegmentHighlight() : undefined}
                                             onClick={highlightOn ? () => this.toggleSegmentPin(m.id, index) : undefined}
@@ -5899,8 +5899,8 @@ export default class EnhancedMeasurement extends React.PureComponent<WidgetProps
                                                 <button
                                                     type="button"
                                                     className="segment-row-delete"
-                                                    aria-label={`Delete ${segment.label}`}
-                                                    title={`Delete ${segment.label}`}
+                                                    aria-label={this.t('deleteLabel', { label: String(segment.label) })}
+                                                    title={this.t('deleteLabel', { label: String(segment.label) })}
                                                     onClick={(e) => {
                                                         // Inside <summary>: stop the row from also expanding.
                                                         e.preventDefault();
@@ -5956,7 +5956,7 @@ export default class EnhancedMeasurement extends React.PureComponent<WidgetProps
                 <div className="enhanced-measurement-widget jimu-widget">
                     <div style={{ padding: '20px', textAlign: 'center' }}>
                         <div className="loading-spinner" style={{ margin: '0 auto' }}></div>
-                        <p>Loading measurement tools...</p>
+                        <p>{this.t('loadingMeasurementTools')}</p>
                     </div>
                 </div>
             );
@@ -6148,7 +6148,7 @@ export default class EnhancedMeasurement extends React.PureComponent<WidgetProps
                     }}>
                         {config.showWidgetTitle !== false && (
                             <span style={{ flex: 1, minWidth: 0, overflow: 'hidden', textOverflow: 'ellipsis', whiteSpace: 'nowrap' }}>
-                                {config.widgetTitle || 'Measurement Tools'}
+                                {config.widgetTitle || this.t('measurementTools')}
                             </span>
                         )}
                         {config.showWidgetTitle === false && <span style={{ flex: 1 }} />}
@@ -6181,7 +6181,7 @@ export default class EnhancedMeasurement extends React.PureComponent<WidgetProps
                             border: '1px solid #e2e8f0',
                             flexShrink: 0
                         }}>
-                            Select a measurement tool to begin drawing on the map
+                            {this.t('selectAMeasurementToolToBegin')}
                         </div>
                     )}
 
@@ -6226,7 +6226,7 @@ export default class EnhancedMeasurement extends React.PureComponent<WidgetProps
                             </span>
                             <div style={{ flex: 1, minWidth: 0, lineHeight: 1.3 }}>
                                 <div style={{ fontWeight: 600, color: '#1e3a8a' }}>
-                                    Drawing: {this.getToolLabel(currentTool)}
+                                    {this.t('drawingCurrentTool', { currentTool: String(this.getToolLabel(currentTool)) })}
                                 </div>
                                 <div style={{ fontSize: '11px', color: '#3b82f6', opacity: 0.9 }}>
                                     {this.getToolHint(currentTool)}
@@ -6240,8 +6240,8 @@ export default class EnhancedMeasurement extends React.PureComponent<WidgetProps
                             <button
                                 type="button"
                                 onClick={() => this.activateTool(currentTool as any)}
-                                title="Cancel drawing (Esc)"
-                                aria-label="Cancel drawing"
+                                title={this.t('cancelDrawingEsc')}
+                                aria-label={this.t('cancelDrawing')}
                                 style={{
                                     background: 'transparent',
                                     border: '1px solid #93c5fd',
@@ -6254,7 +6254,7 @@ export default class EnhancedMeasurement extends React.PureComponent<WidgetProps
                                     flexShrink: 0
                                 }}
                             >
-                                Esc
+                                {this.t('esc')}
                             </button>
                         </div>
                     )}
@@ -6276,8 +6276,8 @@ export default class EnhancedMeasurement extends React.PureComponent<WidgetProps
                                 <button
                                     className={`tool-button ${currentTool === 'point' ? 'active' : ''}`}
                                     onClick={() => this.activateTool('point')}
-                                    title="Measure by Point"
-                                    aria-label={config.pointButtonText || 'Point'}
+                                    title={this.t('measureByPoint')}
+                                    aria-label={config.pointButtonText || this.t('point')}
                                     aria-pressed={currentTool === 'point'}
                                     style={{ minWidth: 0, flex: 1 }}
                                 >
@@ -6285,7 +6285,7 @@ export default class EnhancedMeasurement extends React.PureComponent<WidgetProps
                                         <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M17.657 16.657L13.414 20.9a1.998 1.998 0 01-2.827 0l-4.244-4.243a8 8 0 1111.314 0z" />
                                         <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M15 11a3 3 0 11-6 0 3 3 0 016 0z" />
                                     </svg>
-                                    <span className="button-text">{config.pointButtonText || 'Point'}</span>
+                                    <span className="button-text">{config.pointButtonText || this.t('point')}</span>
                                 </button>
                             )}
 
@@ -6293,15 +6293,15 @@ export default class EnhancedMeasurement extends React.PureComponent<WidgetProps
                                 <button
                                     className={`tool-button ${currentTool === 'distance' ? 'active' : ''}`}
                                     onClick={() => this.activateTool('distance')}
-                                    title="Measure by Line"
-                                    aria-label={config.lineButtonText || 'Line'}
+                                    title={this.t('measureByLine')}
+                                    aria-label={config.lineButtonText || this.t('line')}
                                     aria-pressed={currentTool === 'distance'}
                                     style={{ minWidth: 0, flex: 1 }}
                                 >
                                     <svg fill="none" stroke="currentColor" viewBox="0 0 24 24" width="18" height="18" aria-hidden="true" focusable="false">
                                         <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M13 7h8m0 0v8m0-8l-8 8-4-4-6 6" />
                                     </svg>
-                                    <span className="button-text">{config.lineButtonText || 'Line'}</span>
+                                    <span className="button-text">{config.lineButtonText || this.t('line')}</span>
                                 </button>
                             )}
 
@@ -6309,15 +6309,15 @@ export default class EnhancedMeasurement extends React.PureComponent<WidgetProps
                                 <button
                                     className={`tool-button ${currentTool === 'freehand-polyline' ? 'active' : ''}`}
                                     onClick={() => this.activateTool('freehand-polyline')}
-                                    title="Measure by Freehand Line"
-                                    aria-label={config.freehandLineButtonText || 'Freehand Line'}
+                                    title={this.t('measureByFreehandLine')}
+                                    aria-label={config.freehandLineButtonText || this.t('freehandLine')}
                                     aria-pressed={currentTool === 'freehand-polyline'}
                                     style={{ minWidth: 0, flex: 1 }}
                                 >
                                     <svg fill="none" stroke="currentColor" viewBox="0 0 24 24" width="18" height="18" aria-hidden="true" focusable="false">
                                         <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M7 21a4 4 0 01-4-4V5a2 2 0 012-2h4a2 2 0 012 2v12a4 4 0 01-4 4zm0 0h12a2 2 0 002-2v-4a2 2 0 00-2-2h-2.343M11 7.343l1.657-1.657a2 2 0 012.828 0l2.829 2.829a2 2 0 010 2.828l-8.486 8.485M7 17h.01" />
                                     </svg>
-                                    <span className="button-text">{config.freehandLineButtonText || 'Freehand Line'}</span>
+                                    <span className="button-text">{config.freehandLineButtonText || this.t('freehandLine')}</span>
                                 </button>
                             )}
 
@@ -6325,15 +6325,15 @@ export default class EnhancedMeasurement extends React.PureComponent<WidgetProps
                                 <button
                                     className={`tool-button ${currentTool === 'rectangle' ? 'active' : ''}`}
                                     onClick={() => this.activateTool('rectangle')}
-                                    title="Measure by Rectangle"
-                                    aria-label={config.rectangleButtonText || 'Rectangle'}
+                                    title={this.t('measureByRectangle')}
+                                    aria-label={config.rectangleButtonText || this.t('rectangle')}
                                     aria-pressed={currentTool === 'rectangle'}
                                     style={{ minWidth: 0, flex: 1 }}
                                 >
                                     <svg fill="none" stroke="currentColor" viewBox="0 0 24 24" width="18" height="18" aria-hidden="true" focusable="false">
                                         <rect x="3" y="3" width="18" height="18" rx="2" ry="2" strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} />
                                     </svg>
-                                    <span className="button-text">{config.rectangleButtonText || 'Rectangle'}</span>
+                                    <span className="button-text">{config.rectangleButtonText || this.t('rectangle')}</span>
                                 </button>
                             )}
 
@@ -6341,15 +6341,15 @@ export default class EnhancedMeasurement extends React.PureComponent<WidgetProps
                                 <button
                                     className={`tool-button ${currentTool === 'area' ? 'active' : ''}`}
                                     onClick={() => this.activateTool('area')}
-                                    title="Measure by Area"
-                                    aria-label={config.areaButtonText || 'Area'}
+                                    title={this.t('measureByArea')}
+                                    aria-label={config.areaButtonText || this.t('area')}
                                     aria-pressed={currentTool === 'area'}
                                     style={{ minWidth: 0, flex: 1 }}
                                 >
                                     <svg fill="none" stroke="currentColor" viewBox="0 0 24 24" width="18" height="18" aria-hidden="true" focusable="false">
                                         <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M4 5a1 1 0 011-1h4a1 1 0 011 1v7a1 1 0 001 1h4a1 1 0 001-1V5a1 1 0 011-1h4a1 1 0 011 1v14a1 1 0 01-1 1H5a1 1 0 01-1-1V5z" />
                                     </svg>
-                                    <span className="button-text">{config.areaButtonText || 'Area'}</span>
+                                    <span className="button-text">{config.areaButtonText || this.t('area')}</span>
                                 </button>
                             )}
 
@@ -6357,15 +6357,15 @@ export default class EnhancedMeasurement extends React.PureComponent<WidgetProps
                                 <button
                                     className={`tool-button ${currentTool === 'freehand-polygon' ? 'active' : ''}`}
                                     onClick={() => this.activateTool('freehand-polygon')}
-                                    title="Measure by Freehand Area"
-                                    aria-label={config.freehandAreaButtonText || 'Freehand Area'}
+                                    title={this.t('measureByFreehandArea')}
+                                    aria-label={config.freehandAreaButtonText || this.t('freehandArea')}
                                     aria-pressed={currentTool === 'freehand-polygon'}
                                     style={{ minWidth: 0, flex: 1 }}
                                 >
                                     <svg fill="none" stroke="currentColor" viewBox="0 0 24 24" width="18" height="18" aria-hidden="true" focusable="false">
                                         <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M11 5H6a2 2 0 00-2 2v11a2 2 0 002 2h11a2 2 0 002-2v-5m-1.414-9.414a2 2 0 112.828 2.828L11.828 15H9v-2.828l8.586-8.586z" />
                                     </svg>
-                                    <span className="button-text">{config.freehandAreaButtonText || 'Freehand Area'}</span>
+                                    <span className="button-text">{config.freehandAreaButtonText || this.t('freehandArea')}</span>
                                 </button>
                             )}
 
@@ -6373,15 +6373,15 @@ export default class EnhancedMeasurement extends React.PureComponent<WidgetProps
                                 <button
                                     className={`tool-button ${currentTool === 'circle' ? 'active' : ''}`}
                                     onClick={() => this.activateTool('circle')}
-                                    title="Measure by Circle"
-                                    aria-label={config.circleButtonText || 'Circle'}
+                                    title={this.t('measureByCircle')}
+                                    aria-label={config.circleButtonText || this.t('circle')}
                                     aria-pressed={currentTool === 'circle'}
                                     style={{ minWidth: 0, flex: 1 }}
                                 >
                                     <svg fill="none" stroke="currentColor" viewBox="0 0 24 24" width="18" height="18" aria-hidden="true" focusable="false">
                                         <circle cx="12" cy="12" r="9" strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} />
                                     </svg>
-                                    <span className="button-text">{config.circleButtonText || 'Circle'}</span>
+                                    <span className="button-text">{config.circleButtonText || this.t('circle')}</span>
                                 </button>
                             )}
 
@@ -6389,15 +6389,15 @@ export default class EnhancedMeasurement extends React.PureComponent<WidgetProps
                                 <button
                                     className={`tool-button ${currentTool === 'triangle' ? 'active' : ''}`}
                                     onClick={() => this.activateTool('triangle')}
-                                    title="Measure by Triangle (Hold Shift for equilateral)"
-                                    aria-label={config.triangleButtonText || 'Triangle'}
+                                    title={this.t('measureByTriangleHoldShiftFor')}
+                                    aria-label={config.triangleButtonText || this.t('triangle')}
                                     aria-pressed={currentTool === 'triangle'}
                                     style={{ minWidth: 0, flex: 1 }}
                                 >
                                     <svg fill="none" stroke="currentColor" viewBox="0 0 24 24" width="18" height="18" aria-hidden="true" focusable="false">
                                         <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M12 4L3 20h18L12 4z" />
                                     </svg>
-                                    <span className="button-text">{config.triangleButtonText || 'Triangle'}</span>
+                                    <span className="button-text">{config.triangleButtonText || this.t('triangle')}</span>
                                 </button>
                             )}
                         </div>
@@ -6416,7 +6416,7 @@ export default class EnhancedMeasurement extends React.PureComponent<WidgetProps
                                             <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M10.325 4.317c.426-1.756 2.924-1.756 3.35 0a1.724 1.724 0 002.573 1.066c1.543-.94 3.31.826 2.37 2.37a1.724 1.724 0 001.065 2.572c1.756.426 1.756 2.924 0 3.35a1.724 1.724 0 00-1.066 2.573c.94 1.543-.826 3.31-2.37 2.37a1.724 1.724 0 00-2.572 1.065c-.426 1.756-2.924 1.756-3.35 0a1.724 1.724 0 00-2.573-1.066c-1.543.94-3.31-.826-2.37-2.37a1.724 1.724 0 00-1.065-2.572c-1.756-.426-1.756-2.924 0-3.35a1.724 1.724 0 001.066-2.573c-.94-1.543.826-3.31 2.37-2.37.996.608 2.296.07 2.572-1.065z" />
                                             <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M15 12a3 3 0 11-6 0 3 3 0 016 0z" />
                                         </svg>
-                                        <span>{config.displayOptionsHeaderText || 'Display Options'}</span>
+                                        <span>{config.displayOptionsHeaderText || this.t('displayOptions')}</span>
                                     </span>
                                     <svg className="chevron" fill="none" stroke="currentColor" viewBox="0 0 24 24" width="16" height="16" aria-hidden="true" focusable="false">
                                         <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M19 9l-7 7-7-7" />
@@ -6445,14 +6445,14 @@ export default class EnhancedMeasurement extends React.PureComponent<WidgetProps
                                                         fontWeight: 500,
                                                         color: '#475569',
                                                         lineHeight: '1.3'
-                                                    }}>{config.segmentLabelText || 'Show Segment Labels'}</span>
+                                                    }}>{config.segmentLabelText || this.t('showSegmentLabels')}</span>
                                                     <label className="toggle-switch" style={{ flexShrink: 0 }}>
                                                         <input
                                                             type="checkbox"
                                                             checked={this.state.showSegmentLabels}
                                                             onChange={() => this.toggleSegmentLabels()}
                                                             disabled={this.state.currentTool === 'freehand-polyline' || this.state.currentTool === 'freehand-polygon'}
-                                                            aria-label={config.segmentLabelText || 'Show Segment Labels'}
+                                                            aria-label={config.segmentLabelText || this.t('showSegmentLabels')}
                                                         />
                                                         <span className="toggle-slider"></span>
                                                     </label>
@@ -6479,13 +6479,13 @@ export default class EnhancedMeasurement extends React.PureComponent<WidgetProps
                                                         fontWeight: 500,
                                                         color: '#475569',
                                                         lineHeight: '1.3'
-                                                    }}>{config.offsetLabelsToggleText || 'Offset Labels'}</span>
+                                                    }}>{config.offsetLabelsToggleText || this.t('offsetLabels')}</span>
                                                     <label className="toggle-switch" style={{ flexShrink: 0 }}>
                                                         <input
                                                             type="checkbox"
                                                             checked={this.state.offsetSegmentLabels}
                                                             onChange={() => this.toggleOffsetSegmentLabels()}
-                                                            aria-label={config.offsetLabelsToggleText || 'Offset Labels'}
+                                                            aria-label={config.offsetLabelsToggleText || this.t('offsetLabels')}
                                                         />
                                                         <span className="toggle-slider"></span>
                                                     </label>
@@ -6512,13 +6512,13 @@ export default class EnhancedMeasurement extends React.PureComponent<WidgetProps
                                                         fontWeight: 500,
                                                         color: '#475569',
                                                         lineHeight: '1.3'
-                                                    }}>{config.tooltipsToggleText || 'Show Tooltips'}</span>
+                                                    }}>{config.tooltipsToggleText || this.t('showTooltips')}</span>
                                                     <label className="toggle-switch" style={{ flexShrink: 0 }}>
                                                         <input
                                                             type="checkbox"
                                                             checked={this.state.showTooltips}
                                                             onChange={() => this.toggleTooltips()}
-                                                            aria-label={config.tooltipsToggleText || 'Show Tooltips'}
+                                                            aria-label={config.tooltipsToggleText || this.t('showTooltips')}
                                                         />
                                                         <span className="toggle-slider"></span>
                                                     </label>
@@ -6545,13 +6545,13 @@ export default class EnhancedMeasurement extends React.PureComponent<WidgetProps
                                                         fontWeight: 500,
                                                         color: '#475569',
                                                         lineHeight: '1.3'
-                                                    }}>{config.snappingToggleText || 'Enable Snapping'}</span>
+                                                    }}>{config.snappingToggleText || this.t('enableSnapping')}</span>
                                                     <label className="toggle-switch" style={{ flexShrink: 0 }}>
                                                         <input
                                                             type="checkbox"
                                                             checked={this.state.enableSnapping}
                                                             onChange={() => this.toggleSnapping()}
-                                                            aria-label={config.snappingToggleText || 'Enable Snapping'}
+                                                            aria-label={config.snappingToggleText || this.t('enableSnapping')}
                                                         />
                                                         <span className="toggle-slider"></span>
                                                     </label>
@@ -6588,15 +6588,15 @@ export default class EnhancedMeasurement extends React.PureComponent<WidgetProps
                                                     fontWeight: 500,
                                                     color: '#475569',
                                                     lineHeight: '1.3'
-                                                }}>Print-Ready Labels</span>
+                                                }}>{this.t('printReadyLabels')}</span>
                                                 <label className="toggle-switch" style={{ flexShrink: 0 }}>
                                                     <input
                                                         type="checkbox"
                                                         checked={this.state.printReadyLabels}
                                                         onChange={() => this.togglePrintReadyLabels()}
                                                         disabled={measurements.length === 0}
-                                                        title={this.state.printReadyLabels ? "Disable print-ready label spacing" : "Enable print-ready label spacing for PDF export"}
-                                                        aria-label="Print-Ready Labels"
+                                                        title={this.state.printReadyLabels ? this.t('disablePrintReadyLabelSpacing') : this.t('enablePrintReadyLabelSpacingFor')}
+                                                        aria-label={this.t('printReadyLabels')}
                                                     />
                                                     <span className="toggle-slider"></span>
                                                 </label>
@@ -6621,12 +6621,12 @@ export default class EnhancedMeasurement extends React.PureComponent<WidgetProps
                                         className="action-button"
                                         onClick={() => this.undo()}
                                         disabled={!this.canUndo()}
-                                        title={`${config.undoButtonText || 'Undo'} (Ctrl+Z)`}
+                                        title={this.t('undoButtonTextCtrlZ', { undoButtonText: String(config.undoButtonText || this.t('undo')) })}
                                     >
                                         <svg fill="none" stroke="currentColor" viewBox="0 0 24 24" width="14" height="14" aria-hidden="true">
                                             <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M3 10h10a8 8 0 018 8v2M3 10l6 6m-6-6l6-6" />
                                         </svg>
-                                        {config.undoButtonText || 'Undo'}
+                                        {config.undoButtonText || this.t('undo')}
                                     </button>
 
                                     <button
@@ -6634,12 +6634,12 @@ export default class EnhancedMeasurement extends React.PureComponent<WidgetProps
                                         className="action-button"
                                         onClick={() => this.redo()}
                                         disabled={!this.canRedo()}
-                                        title={`${config.redoButtonText || 'Redo'} (Ctrl+Y)`}
+                                        title={this.t('redoButtonTextCtrlY', { redoButtonText: String(config.redoButtonText || this.t('redo')) })}
                                     >
                                         <svg fill="none" stroke="currentColor" viewBox="0 0 24 24" width="14" height="14" aria-hidden="true">
                                             <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M21 10h-10a8 8 0 00-8 8v2M21 10l-6 6m6-6l-6-6" />
                                         </svg>
-                                        {config.redoButtonText || 'Redo'}
+                                        {config.redoButtonText || this.t('redo')}
                                     </button>
                                 </>
                             )}
@@ -6650,13 +6650,13 @@ export default class EnhancedMeasurement extends React.PureComponent<WidgetProps
                                     className="action-button action-button-danger"
                                     onClick={() => this.clearAllMeasurements()}
                                     disabled={measurements.length === 0}
-                                    title="Clear all measurements"
+                                    title={this.t('clearAllMeasurements')}
                                     style={{ marginLeft: 'auto' }}
                                 >
                                     <svg fill="none" stroke="currentColor" viewBox="0 0 24 24" width="14" height="14" aria-hidden="true">
                                         <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M19 7l-.867 12.142A2 2 0 0116.138 21H7.862a2 2 0 01-1.995-1.858L5 7m5 4v6m4-6v6m1-10V4a1 1 0 00-1-1h-4a1 1 0 00-1 1v3M4 7h16" />
                                     </svg>
-                                    Clear All
+                                    {this.t('clearAll')}
                                 </button>
                             )}
                         </div>
@@ -6675,7 +6675,7 @@ export default class EnhancedMeasurement extends React.PureComponent<WidgetProps
                                     <svg className="header-icon" fill="none" stroke="currentColor" viewBox="0 0 24 24" width="14" height="14" aria-hidden="true" focusable="false">
                                         <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M3 6l3 1m0 0l-3 9a5.002 5.002 0 006.001 0M6 7l3 9M6 7l6-2m6 2l3-1m-3 1l-3 9a5.002 5.002 0 006.001 0M18 7l3 9m-3-9l-6-2m0-2v2m0 16V5m0 16H9m3 0h3" />
                                     </svg>
-                                    <span>{config.unitsHeaderText || 'Units & Coordinates'}</span>
+                                    <span>{config.unitsHeaderText || this.t('unitsCoordinates')}</span>
                                     <span style={{
                                         fontSize: '11px',
                                         fontWeight: 500,
@@ -6697,7 +6697,7 @@ export default class EnhancedMeasurement extends React.PureComponent<WidgetProps
                                         {config.showCoordinateModeToggle !== false && (
                                             <>
                                                 <div className="unit-group">
-                                                    <label className="unit-label">Coordinate Display</label>
+                                                    <label className="unit-label">{this.t('coordinateDisplay')}</label>
                                                     <select
                                                         value={this.state.coordinateDisplayMode}
                                                         onChange={(e) => {
@@ -6706,11 +6706,11 @@ export default class EnhancedMeasurement extends React.PureComponent<WidgetProps
                                                             });
                                                         }}
                                                     >
-                                                        <option value="webmercator">Web Mercator</option>
+                                                        <option value="webmercator">{this.t('webMercator')}</option>
                                                         {this.state.jimuMapView && this.state.jimuMapView.view.spatialReference &&
                                                             !this.state.jimuMapView.view.spatialReference.isWebMercator && (
                                                                 <option value="input">
-                                                                    Input: {this.getSpatialReferenceLabel(this.state.jimuMapView.view.spatialReference)}
+                                                                    {this.t('inputSpatialReference', { spatialReference: String(this.getSpatialReferenceLabel(this.state.jimuMapView.view.spatialReference)) })}
                                                                 </option>
                                                             )}
                                                     </select>
@@ -6718,7 +6718,7 @@ export default class EnhancedMeasurement extends React.PureComponent<WidgetProps
 
                                                 {this.state.coordinateDisplayMode === 'webmercator' && (
                                                     <div className="unit-group">
-                                                        <label className="unit-label">Coordinate Format</label>
+                                                        <label className="unit-label">{this.t('coordinateFormat')}</label>
                                                         <select
                                                             value={this.state.coordinateFormat}
                                                             onChange={(e) => {
@@ -6727,9 +6727,9 @@ export default class EnhancedMeasurement extends React.PureComponent<WidgetProps
                                                                 });
                                                             }}
                                                         >
-                                                            <option value="decimal">Decimal Degrees (DD)</option>
-                                                            <option value="dms">Degrees Minutes Seconds (DMS)</option>
-                                                            <option value="ddm">Degrees Decimal Minutes (DDM)</option>
+                                                            <option value="decimal">{this.t('decimalDegreesDd')}</option>
+                                                            <option value="dms">{this.t('degreesMinutesSecondsDms')}</option>
+                                                            <option value="ddm">{this.t('degreesDecimalMinutesDdm')}</option>
                                                         </select>
                                                     </div>
                                                 )}
@@ -6739,7 +6739,7 @@ export default class EnhancedMeasurement extends React.PureComponent<WidgetProps
                                         {config.showUnitToggle !== false && (
                                             <>
                                                 <div className="unit-group">
-                                                    <label className="unit-label">Linear Unit</label>
+                                                    <label className="unit-label">{this.t('linearUnit')}</label>
                                                     <select
                                                         value={this.state.currentLinearUnit}
                                                         onChange={(e) => {
@@ -6748,11 +6748,11 @@ export default class EnhancedMeasurement extends React.PureComponent<WidgetProps
                                                             this.convertAllMeasurementsToNewLinearUnit(newUnit);
                                                         }}
                                                     >
-                                                        <option value="miles">Miles</option>
-                                                        <option value="kilometers">Kilometers</option>
-                                                        <option value="meters">Meters</option>
-                                                        <option value="feet">Feet</option>
-                                                        <option value="yards">Yards</option>
+                                                        <option value="miles">{this.t('miles')}</option>
+                                                        <option value="kilometers">{this.t('kilometers')}</option>
+                                                        <option value="meters">{this.t('meters')}</option>
+                                                        <option value="feet">{this.t('feet')}</option>
+                                                        <option value="yards">{this.t('yards')}</option>
                                                         {this.getCustomLinearUnits()
                                                             .filter(u => u.addToDropdown)
                                                             .map(u => (
@@ -6763,7 +6763,7 @@ export default class EnhancedMeasurement extends React.PureComponent<WidgetProps
                                                 </div>
 
                                                 <div className="unit-group">
-                                                    <label className="unit-label">Area Unit</label>
+                                                    <label className="unit-label">{this.t('areaUnit')}</label>
                                                     <select
                                                         value={this.state.currentAreaUnit}
                                                         onChange={(e) => {
@@ -6772,12 +6772,12 @@ export default class EnhancedMeasurement extends React.PureComponent<WidgetProps
                                                             this.convertAllMeasurementsToNewAreaUnit(newUnit);
                                                         }}
                                                     >
-                                                        <option value="square-meters">Square Meters</option>
-                                                        <option value="square-kilometers">Square Kilometers</option>
-                                                        <option value="square-feet">Square Feet</option>
-                                                        <option value="square-miles">Square Miles</option>
-                                                        <option value="acres">Acres</option>
-                                                        <option value="hectares">Hectares</option>
+                                                        <option value="square-meters">{this.t('squareMeters')}</option>
+                                                        <option value="square-kilometers">{this.t('squareKilometers')}</option>
+                                                        <option value="square-feet">{this.t('squareFeet')}</option>
+                                                        <option value="square-miles">{this.t('squareMiles')}</option>
+                                                        <option value="acres">{this.t('acres')}</option>
+                                                        <option value="hectares">{this.t('hectares')}</option>
                                                         {this.getCustomAreaUnits()
                                                             .filter(u => u.addToDropdown)
                                                             .map(u => (
@@ -6807,7 +6807,7 @@ export default class EnhancedMeasurement extends React.PureComponent<WidgetProps
                                     <svg className="header-icon" fill="none" stroke="currentColor" viewBox="0 0 24 24" width="14" height="14" aria-hidden="true" focusable="false">
                                         <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M9 19v-6a2 2 0 00-2-2H5a2 2 0 00-2 2v6a2 2 0 002 2h2a2 2 0 002-2zm0 0V9a2 2 0 012-2h2a2 2 0 012 2v10m-6 0a2 2 0 002 2h2a2 2 0 002-2m0 0V5a2 2 0 012-2h2a2 2 0 012 2v14a2 2 0 01-2 2h-2a2 2 0 01-2-2z" />
                                     </svg>
-                                    <span>{config.statisticsHeaderText || 'Summary Statistics'}</span>
+                                    <span>{config.statisticsHeaderText || this.t('summaryStatistics')}</span>
                                     <span style={{
                                         fontSize: '11px',
                                         fontWeight: 500,
@@ -6823,44 +6823,44 @@ export default class EnhancedMeasurement extends React.PureComponent<WidgetProps
                             </button>
                             {showStatistics && (
                                 <div id="statistics-content" className="collapsible-section-content">
-                                    <div className="stats-grid" role="region" aria-label="Summary Statistics">
+                                    <div className="stats-grid" role="region" aria-label={this.t('summaryStatistics')}>
                                         <div className="stat-item">
-                                            <div className="stat-label">Total Measurements</div>
+                                            <div className="stat-label">{this.t('totalMeasurements')}</div>
                                             <div className="stat-value">{stats.totalMeasurements}</div>
                                         </div>
                                         {stats.totalSegments > 0 && (
                                             <div className="stat-item">
-                                                <div className="stat-label">Total Segments</div>
+                                                <div className="stat-label">{this.t('totalSegments')}</div>
                                                 <div className="stat-value">{stats.totalSegments}</div>
                                             </div>
                                         )}
                                         {stats.pointMeasurements > 0 && (
                                             <div className="stat-item">
-                                                <div className="stat-label">Point Count</div>
+                                                <div className="stat-label">{this.t('pointCount')}</div>
                                                 <div className="stat-value">{stats.pointMeasurements}</div>
                                             </div>
                                         )}
                                         {stats.distanceMeasurements > 0 && (
                                             <div className="stat-item">
-                                                <div className="stat-label">Distance Count</div>
+                                                <div className="stat-label">{this.t('distanceCount')}</div>
                                                 <div className="stat-value">{stats.distanceMeasurements}</div>
                                             </div>
                                         )}
                                         {stats.areaMeasurements > 0 && (
                                             <div className="stat-item">
-                                                <div className="stat-label">Area Count</div>
+                                                <div className="stat-label">{this.t('areaCount')}</div>
                                                 <div className="stat-value">{stats.areaMeasurements}</div>
                                             </div>
                                         )}
                                         {stats.circleMeasurements > 0 && (
                                             <div className="stat-item">
-                                                <div className="stat-label">Circle Count</div>
+                                                <div className="stat-label">{this.t('circleCount')}</div>
                                                 <div className="stat-value">{stats.circleMeasurements}</div>
                                             </div>
                                         )}
                                         {stats.totalDistance > 0 && (
                                             <div className="stat-item">
-                                                <div className="stat-label">Total Distance</div>
+                                                <div className="stat-label">{this.t('totalDistance')}</div>
                                                 <div className="stat-value">
                                                     {this.formatValue(stats.totalDistance)} {this.state.currentLinearUnit}
                                                 </div>
@@ -6868,7 +6868,7 @@ export default class EnhancedMeasurement extends React.PureComponent<WidgetProps
                                         )}
                                         {stats.distanceMeasurements > 0 && (
                                             <div className="stat-item">
-                                                <div className="stat-label">Avg Distance</div>
+                                                <div className="stat-label">{this.t('avgDistance')}</div>
                                                 <div className="stat-value">
                                                     {this.formatValue(stats.avgDistance)} {this.state.currentLinearUnit}
                                                 </div>
@@ -6876,7 +6876,7 @@ export default class EnhancedMeasurement extends React.PureComponent<WidgetProps
                                         )}
                                         {stats.totalArea > 0 && (
                                             <div className="stat-item">
-                                                <div className="stat-label">Total Area</div>
+                                                <div className="stat-label">{this.t('totalArea')}</div>
                                                 <div className="stat-value">
                                                     {this.formatValue(stats.totalArea)} {this.state.currentAreaUnit}
                                                 </div>
@@ -6884,7 +6884,7 @@ export default class EnhancedMeasurement extends React.PureComponent<WidgetProps
                                         )}
                                         {(stats.areaMeasurements > 0 || stats.circleMeasurements > 0) && (
                                             <div className="stat-item">
-                                                <div className="stat-label">Avg Area</div>
+                                                <div className="stat-label">{this.t('avgArea')}</div>
                                                 <div className="stat-value">
                                                     {this.formatValue(stats.avgArea)} {this.state.currentAreaUnit}
                                                 </div>
@@ -6893,14 +6893,14 @@ export default class EnhancedMeasurement extends React.PureComponent<WidgetProps
                                         {stats.totalPerimeter > 0 && (
                                             <>
                                                 <div className="stat-item">
-                                                    <div className="stat-label">Total Perimeter</div>
+                                                    <div className="stat-label">{this.t('totalPerimeter')}</div>
                                                     <div className="stat-value">
                                                         {this.formatValue(stats.totalPerimeter)} {this.state.currentLinearUnit}
                                                     </div>
                                                 </div>
                                                 {stats.totalSegments > 0 && (
                                                     <div className="stat-item">
-                                                        <div className="stat-label">Avg Segment Length</div>
+                                                        <div className="stat-label">{this.t('avgSegmentLength')}</div>
                                                         <div className="stat-value">
                                                             {this.formatValue((stats.totalDistance + stats.totalPerimeter) / stats.totalSegments)} {this.state.currentLinearUnit}
                                                         </div>
@@ -6920,21 +6920,21 @@ export default class EnhancedMeasurement extends React.PureComponent<WidgetProps
                                 <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M4 4v5h.582m15.356 2A8.001 8.001 0 004.582 9m0 0H9m11 11v-5h-.581m0 0a8.003 8.003 0 01-15.357-2m15.357 2H15" />
                             </svg>
                             <span className="restore-banner-text">
-                                {this.state.restoreBannerCount} measurement{this.state.restoreBannerCount === 1 ? '' : 's'} from your last session
+                                {(this.state.restoreBannerCount === 1 ? this.t('restoreBannerCountMeasurementFromYourLastSession', { restoreBannerCount: String(this.state.restoreBannerCount) }) : this.t('restoreBannerCountMeasurementsFromYourLastSession', { restoreBannerCount: String(this.state.restoreBannerCount) }))}
                             </span>
                             <button
                                 type="button"
                                 className="restore-banner-action"
                                 onClick={() => this.restoreSavedSession()}
                             >
-                                Restore
+                                {this.t('restore')}
                             </button>
                             <button
                                 type="button"
                                 className="restore-banner-dismiss"
                                 onClick={() => this.dismissSavedSession()}
-                                title="Discard saved session"
-                                aria-label="Discard saved session"
+                                title={this.t('discardSavedSession')}
+                                aria-label={this.t('discardSavedSession')}
                             >
                                 <svg fill="none" stroke="currentColor" viewBox="0 0 24 24" width="13" height="13" aria-hidden="true">
                                     <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M6 18L18 6M6 6l12 12" />
@@ -6960,7 +6960,7 @@ export default class EnhancedMeasurement extends React.PureComponent<WidgetProps
                                 borderBottom: '1px solid #e5e7eb'
                             }}>
                                 <h3 className="section-title" style={{ margin: 0, fontSize: '13px', fontWeight: '600', color: '#334155' }}>
-                                    {config.measurementsHeaderText || 'Measurements'} ({(() => {
+                                    {config.measurementsHeaderText || this.t('measurements')} ({(() => {
                                         const q = this.state.measurementFilter.trim().toLowerCase();
                                         const filteredCount = q ? measurements.filter(m => m.label.toLowerCase().includes(q) || m.type.toLowerCase().includes(q)).length : measurements.length;
                                         return q ? `${filteredCount} of ${measurements.length}` : measurements.length;
@@ -6972,8 +6972,8 @@ export default class EnhancedMeasurement extends React.PureComponent<WidgetProps
                                             type="button"
                                             className="icon-button select-mode-button"
                                             onClick={() => this.toggleSelectMode()}
-                                            title="Select multiple measurements"
-                                            aria-label="Enter multi-select mode"
+                                            title={this.t('selectMultipleMeasurements')}
+                                            aria-label={this.t('enterMultiSelectMode')}
                                         >
                                             <svg fill="none" stroke="currentColor" viewBox="0 0 24 24" width="16" height="16" aria-hidden="true">
                                                 <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M9 5H7a2 2 0 00-2 2v12a2 2 0 002 2h10a2 2 0 002-2V7a2 2 0 00-2-2h-2M9 5a2 2 0 002 2h2a2 2 0 002-2M9 5a2 2 0 012-2h2a2 2 0 012 2m-6 9l2 2 4-4" />
@@ -6984,8 +6984,8 @@ export default class EnhancedMeasurement extends React.PureComponent<WidgetProps
                                         type="button"
                                         className="icon-button shortcuts-help-button"
                                         onClick={() => this.setState({ showShortcutsHelp: true })}
-                                        title="Keyboard shortcuts"
-                                        aria-label="Show keyboard shortcuts"
+                                        title={this.t('keyboardShortcuts')}
+                                        aria-label={this.t('showKeyboardShortcuts')}
                                     >
                                         <svg fill="none" stroke="currentColor" viewBox="0 0 24 24" width="16" height="16" aria-hidden="true">
                                             <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M8.228 9c.549-1.165 2.03-2 3.772-2 2.21 0 4 1.343 4 3 0 1.4-1.278 2.575-3.006 2.907-.542.104-.994.54-.994 1.093m0 3h.01M21 12a9 9 0 11-18 0 9 9 0 0118 0z" />
@@ -7010,8 +7010,8 @@ export default class EnhancedMeasurement extends React.PureComponent<WidgetProps
                                                         this.toggleExportAllDropdown();
                                                     }}
                                                     disabled={measurements.length === 0}
-                                                    title="Export all measurements"
-                                                    aria-label="Export all measurements"
+                                                    title={this.t('exportAllMeasurements')}
+                                                    aria-label={this.t('exportAllMeasurements')}
                                                     style={{
                                                         padding: '6px 10px',
                                                         display: 'flex',
@@ -7038,7 +7038,7 @@ export default class EnhancedMeasurement extends React.PureComponent<WidgetProps
                                                             <svg className="menu-icon" fill="none" stroke="currentColor" viewBox="0 0 24 24" width="14" height="14" aria-hidden="true">
                                                                 <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M9 17v-2a4 4 0 014-4h4M3 3h7l4 4h7v2M3 3v18h18V9" />
                                                             </svg>
-                                                            CSV
+                                                            {this.t('csv')}
                                                         </DropdownMenuItem>
                                                         <DropdownMenuItem
                                                             onClick={() => {
@@ -7052,7 +7052,7 @@ export default class EnhancedMeasurement extends React.PureComponent<WidgetProps
                                                             <svg className="menu-icon" fill="none" stroke="currentColor" viewBox="0 0 24 24" width="14" height="14" aria-hidden="true">
                                                                 <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M9 12h6m-6 4h6m2 5H7a2 2 0 01-2-2V5a2 2 0 012-2h5.586a1 1 0 01.707.293l5.414 5.414a1 1 0 01.293.707V19a2 2 0 01-2 2z" />
                                                             </svg>
-                                                            PDF…
+                                                            {this.t('pdf')}
                                                         </DropdownMenuItem>
                                                         <DropdownMenuSeparator />
                                                         <DropdownMenuItem
@@ -7064,7 +7064,7 @@ export default class EnhancedMeasurement extends React.PureComponent<WidgetProps
                                                             <svg className="menu-icon" fill="none" stroke="currentColor" viewBox="0 0 24 24" width="14" height="14" aria-hidden="true">
                                                                 <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M10 20l4-16m4 4l4 4-4 4M6 16l-4-4 4-4" />
                                                             </svg>
-                                                            JSON
+                                                            {this.t('json')}
                                                         </DropdownMenuItem>
                                                         <DropdownMenuItem
                                                             onClick={() => {
@@ -7075,7 +7075,7 @@ export default class EnhancedMeasurement extends React.PureComponent<WidgetProps
                                                             <svg className="menu-icon" fill="none" stroke="currentColor" viewBox="0 0 24 24" width="14" height="14" aria-hidden="true">
                                                                 <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M9 20l-5.447-2.724A1 1 0 013 16.382V5.618a1 1 0 011.447-.894L9 7m0 13l6-3m-6 3V7m6 10l4.553 2.276A1 1 0 0021 18.382V7.618a1 1 0 00-.553-.894L15 4m0 13V4m0 0L9 7" />
                                                             </svg>
-                                                            GeoJSON
+                                                            {this.t('geoJSON')}
                                                         </DropdownMenuItem>
                                                     </DropdownMenuContent>
                                                 )}
@@ -7102,13 +7102,13 @@ export default class EnhancedMeasurement extends React.PureComponent<WidgetProps
                                                     border: 0
                                                 }}
                                                 ref={(ref) => { this.fileInputRef = ref; }}
-                                                aria-label="Import GeoJSON file"
+                                                aria-label={this.t('importGeoJSONFile')}
                                             />
                                             <button
                                                 className="tool-button"
                                                 onClick={() => this.fileInputRef?.click()}
-                                                title="Import GeoJSON measurements"
-                                                aria-label="Import GeoJSON measurements"
+                                                title={this.t('importGeoJSONMeasurements')}
+                                                aria-label={this.t('importGeoJSONMeasurements')}
                                                 aria-controls="geojson-import-input"
                                                 style={{
                                                     padding: '6px 10px',
@@ -7121,7 +7121,7 @@ export default class EnhancedMeasurement extends React.PureComponent<WidgetProps
                                                 <svg fill="none" stroke="currentColor" viewBox="0 0 24 24" width="16" height="16" aria-hidden="true" focusable="false">
                                                     <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M7 16a4 4 0 01-.88-7.903A5 5 0 1115.9 6L16 6a5 5 0 011 9.9M9 19l3 3m0 0l3-3m-3 3V10" />
                                                 </svg>
-                                                <span className="sr-only">Import</span>
+                                                <span className="sr-only">{this.t('import')}</span>
                                             </button>
                                         </>
                                     )}
@@ -7136,18 +7136,18 @@ export default class EnhancedMeasurement extends React.PureComponent<WidgetProps
                                     <input
                                         type="text"
                                         className="search-input"
-                                        placeholder="Filter measurements…"
+                                        placeholder={this.t('filterMeasurements')}
                                         value={this.state.measurementFilter}
                                         onChange={(e) => this.setState({ measurementFilter: e.target.value, visibleMeasurementCount: 50 })}
-                                        aria-label="Filter measurements by name or type"
+                                        aria-label={this.t('filterMeasurementsByNameOrType')}
                                     />
                                     {this.state.measurementFilter && (
                                         <button
                                             type="button"
                                             className="search-clear"
                                             onClick={() => this.setState({ measurementFilter: '', visibleMeasurementCount: 50 })}
-                                            title="Clear filter"
-                                            aria-label="Clear filter"
+                                            title={this.t('clearFilter')}
+                                            aria-label={this.t('clearFilter')}
                                         >
                                             <svg fill="none" stroke="currentColor" viewBox="0 0 24 24" width="12" height="12" aria-hidden="true">
                                                 <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M6 18L18 6M6 6l12 12" />
@@ -7159,53 +7159,53 @@ export default class EnhancedMeasurement extends React.PureComponent<WidgetProps
                                             className="sort-select"
                                             value={this.state.sortOrder}
                                             onChange={(e) => this.setState({ sortOrder: e.target.value as any, visibleMeasurementCount: 50 })}
-                                            aria-label="Sort measurements"
-                                            title="Sort measurements"
+                                            aria-label={this.t('sortMeasurements')}
+                                            title={this.t('sortMeasurements')}
                                         >
-                                            <option value="newest">Newest</option>
-                                            <option value="oldest">Oldest</option>
-                                            <option value="name">Name</option>
-                                            <option value="type">Type</option>
+                                            <option value="newest">{this.t('newest')}</option>
+                                            <option value="oldest">{this.t('oldest')}</option>
+                                            <option value="name">{this.t('name')}</option>
+                                            <option value="type">{this.t('type')}</option>
                                         </select>
                                     )}
                                 </div>
                             )}
 
                             {this.state.selectMode && (
-                                <div className="select-action-bar" role="toolbar" aria-label="Bulk actions">
+                                <div className="select-action-bar" role="toolbar" aria-label={this.t('bulkActions')}>
                                     <span className="select-count">
-                                        {this.state.selectedIds.size} selected
+                                        {this.t('selectedIdsCountSelected', { selectedIdsCount: String(this.state.selectedIds.size) })}
                                     </span>
                                     <button
                                         type="button"
                                         className="select-bar-button"
                                         disabled={this.state.selectedIds.size === 0}
                                         onClick={() => this.exportSelectedToGeoJSON()}
-                                        title="Export selected as GeoJSON"
+                                        title={this.t('exportSelectedAsGeoJSON')}
                                     >
                                         <svg fill="none" stroke="currentColor" viewBox="0 0 24 24" width="13" height="13" aria-hidden="true">
                                             <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M12 10v6m0 0l-3-3m3 3l3-3m2 8H7a2 2 0 01-2-2V5a2 2 0 012-2h5.586a1 1 0 01.707.293l5.414 5.414a1 1 0 01.293.707V19a2 2 0 01-2 2z" />
                                         </svg>
-                                        Export
+                                        {this.t('export')}
                                     </button>
                                     <button
                                         type="button"
                                         className="select-bar-button select-bar-button-danger"
                                         disabled={this.state.selectedIds.size === 0}
                                         onClick={() => this.deleteSelected()}
-                                        title="Delete selected"
+                                        title={this.t('deleteSelected')}
                                     >
                                         <svg fill="none" stroke="currentColor" viewBox="0 0 24 24" width="13" height="13" aria-hidden="true">
                                             <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M19 7l-.867 12.142A2 2 0 0116.138 21H7.862a2 2 0 01-1.995-1.858L5 7m5 4v6m4-6v6m1-10V4a1 1 0 00-1-1h-4a1 1 0 00-1 1v3M4 7h16" />
                                         </svg>
-                                        Delete
+                                        {this.t('delete')}
                                     </button>
                                     <button
                                         type="button"
                                         className="select-bar-button select-bar-cancel"
                                         onClick={() => this.toggleSelectMode()}
                                     >
-                                        Cancel
+                                        {this.t('cancel')}
                                     </button>
                                 </div>
                             )}
@@ -7224,8 +7224,8 @@ export default class EnhancedMeasurement extends React.PureComponent<WidgetProps
                                         <svg className="empty-state-icon" fill="none" stroke="currentColor" viewBox="0 0 24 24" width="40" height="40" aria-hidden="true" focusable="false">
                                             <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={1.5} d="M9 5H7a2 2 0 00-2 2v12a2 2 0 002 2h10a2 2 0 002-2V7a2 2 0 00-2-2h-2M9 5a2 2 0 002 2h2a2 2 0 002-2M9 5a2 2 0 012-2h2a2 2 0 012 2m-6 9l2 2 4-4" />
                                         </svg>
-                                        <p>{config.emptyStateMessage || 'No measurements yet'}</p>
-                                        <p className="empty-hint">{config.emptyStateHint || 'Pick a tool above to start drawing on the map'}</p>
+                                        <p>{config.emptyStateMessage || this.t('noMeasurementsYet')}</p>
+                                        <p className="empty-hint">{config.emptyStateHint || this.t('pickAToolAboveToStart')}</p>
                                     </div>
                                 ) : (() => {
                                     // Filter + sort + page the list — see #11 (paged list instead of virtualization) and #23 (search)
@@ -7239,8 +7239,8 @@ export default class EnhancedMeasurement extends React.PureComponent<WidgetProps
                                                 <svg className="empty-state-icon" fill="none" stroke="currentColor" viewBox="0 0 24 24" width="40" height="40" aria-hidden="true">
                                                     <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={1.5} d="M21 21l-6-6m2-5a7 7 0 11-14 0 7 7 0 0114 0z" />
                                                 </svg>
-                                                <p>No matches</p>
-                                                <p className="empty-hint">No measurements match "{this.state.measurementFilter}".</p>
+                                                <p>{this.t('noMatches')}</p>
+                                                <p className="empty-hint">{this.t('noMeasurementsMatchMeasurementFilter', { measurementFilter: String(this.state.measurementFilter) })}</p>
                                             </div>
                                         );
                                     }
@@ -7250,16 +7250,16 @@ export default class EnhancedMeasurement extends React.PureComponent<WidgetProps
                                     const visibleIds = visible.map(m => m.id);
                                     const allVisibleSelected = this.state.selectMode && visibleIds.length > 0 && visibleIds.every(id => this.state.selectedIds.has(id));
                                     return (
-                                        <div className="measurements-list" role="list" aria-label="Measurements">
+                                        <div className="measurements-list" role="list" aria-label={this.t('measurements')}>
                                             {this.state.selectMode && (
                                                 <label className="select-all-row">
                                                     <input
                                                         type="checkbox"
                                                         checked={allVisibleSelected}
                                                         onChange={() => this.toggleSelectAll(visibleIds)}
-                                                        aria-label="Select all visible measurements"
+                                                        aria-label={this.t('selectAllVisibleMeasurements')}
                                                     />
-                                                    <span>Select all visible</span>
+                                                    <span>{this.t('selectAllVisible')}</span>
                                                 </label>
                                             )}
                                             {visible.map(measurement => {
@@ -7276,7 +7276,7 @@ export default class EnhancedMeasurement extends React.PureComponent<WidgetProps
                                                             className="card-header"
                                                             role="button"
                                                             tabIndex={0}
-                                                            aria-label={this.state.selectMode ? `${isChecked ? 'Deselect' : 'Select'} ${measurement.label}` : `Open details for ${measurement.label}`}
+                                                            aria-label={this.state.selectMode ? (isChecked ? this.t('deselectLabel', { label: String(measurement.label) }) : this.t('selectLabel', { label: String(measurement.label) })) : this.t('openDetailsForLabel', { label: String(measurement.label) })}
                                                             onClick={() => this.openDetailView(measurement.id)}
                                                             onKeyDown={(e) => {
                                                                 if (e.key === 'Enter' || e.key === ' ') {
@@ -7292,15 +7292,15 @@ export default class EnhancedMeasurement extends React.PureComponent<WidgetProps
                                                                     checked={isChecked}
                                                                     onChange={() => this.toggleSelected(measurement.id)}
                                                                     onClick={(e) => e.stopPropagation()}
-                                                                    aria-label={`Select ${measurement.label}`}
+                                                                    aria-label={this.t('selectLabel', { label: String(measurement.label) })}
                                                                 />
                                                             )}
                                                             <div className="card-title-row">
                                                                 <button
                                                                     type="button"
                                                                     className="card-color-swatch"
-                                                                    aria-label={`Change color for ${measurement.label}`}
-                                                                    title="Change color"
+                                                                    aria-label={this.t('changeColorForLabel', { label: String(measurement.label) })}
+                                                                    title={this.t('changeColor')}
                                                                     onClick={(e) => {
                                                                         e.stopPropagation();
                                                                         this.setState(prev => ({
@@ -7333,7 +7333,7 @@ export default class EnhancedMeasurement extends React.PureComponent<WidgetProps
                                                                         )}
                                                                     </svg>
                                                                 </span>
-                                                                <span className="sr-only">Color: {measurement.color}</span>
+                                                                <span className="sr-only">{this.t('colorColor', { color: String(measurement.color) })}</span>
                                                                 {this.state.renamingMeasurementId === measurement.id ? (
                                                                     <input
                                                                         type="text"
@@ -7353,7 +7353,7 @@ export default class EnhancedMeasurement extends React.PureComponent<WidgetProps
                                                                                 this.setState({ renamingMeasurementId: null, renamingValue: '' });
                                                                             }
                                                                         }}
-                                                                        aria-label="Edit measurement name"
+                                                                        aria-label={this.t('editMeasurementName')}
                                                                         maxLength={80}
                                                                     />
                                                                 ) : (
@@ -7363,13 +7363,13 @@ export default class EnhancedMeasurement extends React.PureComponent<WidgetProps
                                                                             e.stopPropagation();
                                                                             this.setState({ renamingMeasurementId: measurement.id, renamingValue: measurement.label });
                                                                         }}
-                                                                        title="Double-click to rename"
+                                                                        title={this.t('doubleClickToRename')}
                                                                     >
                                                                         {measurement.label}
                                                                     </span>
                                                                 )}
                                                                 {measurement.segments && measurement.segments.length > 0 && (
-                                                                    <span className="jimu-badge jimu-badge-light" aria-label={`${measurement.segments.length} ${measurement.type === 'distance' ? 'segments' : 'edges'}`}>
+                                                                    <span className="jimu-badge jimu-badge-light" aria-label={(measurement.type === 'distance' ? this.t('segmentsCountSegments', { segmentsCount: String(measurement.segments.length) }) : this.t('segmentsCountEdges', { segmentsCount: String(measurement.segments.length) }))}>
                                                                         {measurement.segments.length} {measurement.type === 'distance' ? 'seg' : 'edges'}
                                                                     </span>
                                                                 )}
@@ -7378,14 +7378,14 @@ export default class EnhancedMeasurement extends React.PureComponent<WidgetProps
                                                                         className="color-picker-popover"
                                                                         onClick={(e) => e.stopPropagation()}
                                                                         role="dialog"
-                                                                        aria-label="Choose color"
+                                                                        aria-label={this.t('chooseColor')}
                                                                     >
                                                                         {this.colorPalette.map((c) => (
                                                                             <button
                                                                                 key={c}
                                                                                 type="button"
                                                                                 className={`color-swatch ${measurement.color === c ? 'is-selected' : ''}`}
-                                                                                aria-label={`Color ${c}`}
+                                                                                aria-label={this.t('colorC', { c: String(c) })}
                                                                                 aria-pressed={measurement.color === c}
                                                                                 style={{ backgroundColor: c }}
                                                                                 onClick={() => this.setMeasurementColor(measurement.id, c)}
@@ -7412,8 +7412,8 @@ export default class EnhancedMeasurement extends React.PureComponent<WidgetProps
                                                                                 e.stopPropagation();
                                                                                 this.toggleExportDropdown(measurement.id);
                                                                             }}
-                                                                            title="Export"
-                                                                            aria-label={`Export ${measurement.label}`}
+                                                                            title={this.t('export')}
+                                                                            aria-label={this.t('exportLabel', { label: String(measurement.label) })}
                                                                         >
                                                                             <svg fill="none" stroke="currentColor" viewBox="0 0 24 24" width="16" height="16" aria-hidden="true" focusable="false">
                                                                                 <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M12 10v6m0 0l-3-3m3 3l3-3m2 8H7a2 2 0 01-2-2V5a2 2 0 012-2h5.586a1 1 0 01.707.293l5.414 5.414a1 1 0 01.293.707V19a2 2 0 01-2 2z" />
@@ -7430,7 +7430,7 @@ export default class EnhancedMeasurement extends React.PureComponent<WidgetProps
                                                                                     <svg className="menu-icon" fill="none" stroke="currentColor" viewBox="0 0 24 24" width="14" height="14" aria-hidden="true">
                                                                                         <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M9 17v-2a4 4 0 014-4h4M3 3h7l4 4h7v2M3 3v18h18V9" />
                                                                                     </svg>
-                                                                                    CSV
+                                                                                    {this.t('csv')}
                                                                                 </DropdownMenuItem>
                                                                                 <DropdownMenuItem
                                                                                     onClick={() => {
@@ -7444,7 +7444,7 @@ export default class EnhancedMeasurement extends React.PureComponent<WidgetProps
                                                                                     <svg className="menu-icon" fill="none" stroke="currentColor" viewBox="0 0 24 24" width="14" height="14" aria-hidden="true">
                                                                                         <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M9 12h6m-6 4h6m2 5H7a2 2 0 01-2-2V5a2 2 0 012-2h5.586a1 1 0 01.707.293l5.414 5.414a1 1 0 01.293.707V19a2 2 0 01-2 2z" />
                                                                                     </svg>
-                                                                                    PDF…
+                                                                                    {this.t('pdf')}
                                                                                 </DropdownMenuItem>
                                                                                 <DropdownMenuSeparator />
                                                                                 <DropdownMenuItem
@@ -7456,7 +7456,7 @@ export default class EnhancedMeasurement extends React.PureComponent<WidgetProps
                                                                                     <svg className="menu-icon" fill="none" stroke="currentColor" viewBox="0 0 24 24" width="14" height="14" aria-hidden="true">
                                                                                         <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M10 20l4-16m4 4l4 4-4 4M6 16l-4-4 4-4" />
                                                                                     </svg>
-                                                                                    JSON
+                                                                                    {this.t('json')}
                                                                                 </DropdownMenuItem>
                                                                                 <DropdownMenuItem
                                                                                     onClick={() => {
@@ -7467,7 +7467,7 @@ export default class EnhancedMeasurement extends React.PureComponent<WidgetProps
                                                                                     <svg className="menu-icon" fill="none" stroke="currentColor" viewBox="0 0 24 24" width="14" height="14" aria-hidden="true">
                                                                                         <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M9 20l-5.447-2.724A1 1 0 013 16.382V5.618a1 1 0 011.447-.894L9 7m0 13l6-3m-6 3V7m6 10l4.553 2.276A1 1 0 0021 18.382V7.618a1 1 0 00-.553-.894L15 4m0 13V4m0 0L9 7" />
                                                                                     </svg>
-                                                                                    GeoJSON
+                                                                                    {this.t('geoJSON')}
                                                                                 </DropdownMenuItem>
                                                                             </DropdownMenuContent>
                                                                         )}
@@ -7476,8 +7476,8 @@ export default class EnhancedMeasurement extends React.PureComponent<WidgetProps
                                                                 <button
                                                                     className="icon-button"
                                                                     onClick={(e) => { e.stopPropagation(); this.zoomToMeasurement(measurement); }}
-                                                                    title="Zoom to measurement"
-                                                                    aria-label={`Zoom to ${measurement.label}`}
+                                                                    title={this.t('zoomToMeasurement')}
+                                                                    aria-label={this.t('zoomToLabel', { label: String(measurement.label) })}
                                                                 >
                                                                     <svg fill="none" stroke="currentColor" viewBox="0 0 24 24" width="16" height="16" aria-hidden="true" focusable="false">
                                                                         <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M21 21l-6-6m2-5a7 7 0 11-14 0 7 7 0 0114 0zM10 7v3m0 0v3m0-3h3m-3 0H7" />
@@ -7500,8 +7500,8 @@ export default class EnhancedMeasurement extends React.PureComponent<WidgetProps
                                                                                 e.stopPropagation();
                                                                                 this.toggleOverflowDropdown(measurement.id);
                                                                             }}
-                                                                            title="More actions"
-                                                                            aria-label={`More actions for ${measurement.label}`}
+                                                                            title={this.t('moreActions')}
+                                                                            aria-label={this.t('moreActionsForLabel', { label: String(measurement.label) })}
                                                                         >
                                                                             <svg fill="none" stroke="currentColor" viewBox="0 0 24 24" width="16" height="16" aria-hidden="true" focusable="false">
                                                                                 <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2.2} d="M12 5v.01M12 12v.01M12 19v.01" />
@@ -7518,7 +7518,7 @@ export default class EnhancedMeasurement extends React.PureComponent<WidgetProps
                                                                                     <svg className="menu-icon" fill="none" stroke="currentColor" viewBox="0 0 24 24" width="14" height="14" aria-hidden="true">
                                                                                         <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M11 5H6a2 2 0 00-2 2v11a2 2 0 002 2h11a2 2 0 002-2v-5m-1.414-9.414a2 2 0 112.828 2.828L11.828 15H9v-2.828l8.586-8.586z" />
                                                                                     </svg>
-                                                                                    Rename
+                                                                                    {this.t('rename')}
                                                                                 </DropdownMenuItem>
                                                                                 <DropdownMenuItem
                                                                                     onClick={() => {
@@ -7529,7 +7529,7 @@ export default class EnhancedMeasurement extends React.PureComponent<WidgetProps
                                                                                     <svg className="menu-icon" fill="none" stroke="currentColor" viewBox="0 0 24 24" width="14" height="14" aria-hidden="true">
                                                                                         <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M8 16H6a2 2 0 01-2-2V6a2 2 0 012-2h8a2 2 0 012 2v2m-6 12h8a2 2 0 002-2v-8a2 2 0 00-2-2h-8a2 2 0 00-2 2v8a2 2 0 002 2z" />
                                                                                     </svg>
-                                                                                    Duplicate
+                                                                                    {this.t('duplicate')}
                                                                                 </DropdownMenuItem>
                                                                                 {canEditVertices && (
                                                                                     <DropdownMenuItem
@@ -7541,7 +7541,7 @@ export default class EnhancedMeasurement extends React.PureComponent<WidgetProps
                                                                                         <svg className="menu-icon" fill="none" stroke="currentColor" viewBox="0 0 24 24" width="14" height="14" aria-hidden="true">
                                                                                             <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M14.121 4.121a3 3 0 114.243 4.243L7.5 19.243l-4.243 1.06 1.06-4.242L14.121 4.121z" />
                                                                                         </svg>
-                                                                                        {this.state.editingMeasurementId === measurement.id ? 'Stop editing' : 'Edit vertices'}
+                                                                                        {this.state.editingMeasurementId === measurement.id ? this.t('stopEditing') : this.t('editVertices')}
                                                                                     </DropdownMenuItem>
                                                                                 )}
                                                                                 <DropdownMenuSeparator />
@@ -7554,7 +7554,7 @@ export default class EnhancedMeasurement extends React.PureComponent<WidgetProps
                                                                                     <svg className="menu-icon" fill="none" stroke="#dc2626" viewBox="0 0 24 24" width="14" height="14" aria-hidden="true">
                                                                                         <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M19 7l-.867 12.142A2 2 0 0116.138 21H7.862a2 2 0 01-1.995-1.858L5 7m5 4v6m4-6v6m1-10V4a1 1 0 00-1-1h-4a1 1 0 00-1 1v3M4 7h16" />
                                                                                     </svg>
-                                                                                    <span style={{ color: '#dc2626' }}>Delete</span>
+                                                                                    <span style={{ color: '#dc2626' }}>{this.t('delete')}</span>
                                                                                 </DropdownMenuItem>
                                                                             </DropdownMenuContent>
                                                                         )}
@@ -7580,8 +7580,8 @@ export default class EnhancedMeasurement extends React.PureComponent<WidgetProps
                                                     className="show-more-button"
                                                     onClick={() => this.setState(prev => ({ visibleMeasurementCount: prev.visibleMeasurementCount + 50 }))}
                                                 >
-                                                    Show {Math.min(50, hidden)} more measurements
-                                                    <span className="show-more-hint"> · {hidden} remaining</span>
+                                                    {this.t('showValueMoreMeasurements', { value: String(Math.min(50, hidden)) })}
+                                                    <span className="show-more-hint"> {this.t('hiddenRemaining', { hidden: String(hidden) })}</span>
                                                 </button>
                                             )}
                                         </div>
@@ -7660,7 +7660,7 @@ export default class EnhancedMeasurement extends React.PureComponent<WidgetProps
                                     color: '#f1f5f9'
                                 }}
                             >
-                                {config.clearDialogTitle || 'Are you sure you want to clear all measurements?'}
+                                {config.clearDialogTitle || this.t('areYouSureYouWantTo')}
                             </div>
                             <div style={{
                                 display: 'flex',
@@ -7683,7 +7683,7 @@ export default class EnhancedMeasurement extends React.PureComponent<WidgetProps
                                     onMouseEnter={(e) => e.currentTarget.style.backgroundColor = '#64748b'}
                                     onMouseLeave={(e) => e.currentTarget.style.backgroundColor = '#475569'}
                                 >
-                                    {config.clearDialogCancelText || 'Cancel'}
+                                    {config.clearDialogCancelText || this.t('cancel')}
                                 </button>
                                 <button
                                     onClick={() => this.confirmClearAll()}
@@ -7784,7 +7784,7 @@ export default class EnhancedMeasurement extends React.PureComponent<WidgetProps
                                     onMouseEnter={(e) => e.currentTarget.style.backgroundColor = '#2563eb'}
                                     onMouseLeave={(e) => e.currentTarget.style.backgroundColor = '#3b82f6'}
                                 >
-                                    OK
+                                    {this.t('ok')}
                                 </button>
                             </div>
                         </div>
@@ -7807,7 +7807,7 @@ export default class EnhancedMeasurement extends React.PureComponent<WidgetProps
                             className="undo-toast-action"
                             onClick={() => this.undoLastDelete()}
                         >
-                            Undo
+                            {this.t('undo')}
                         </button>
                         <button
                             type="button"
@@ -7816,8 +7816,8 @@ export default class EnhancedMeasurement extends React.PureComponent<WidgetProps
                                 if (this.deleteToastTimer) { clearTimeout(this.deleteToastTimer); this.deleteToastTimer = null; }
                                 this.setState({ undoToast: null });
                             }}
-                            aria-label="Dismiss notification"
-                            title="Dismiss"
+                            aria-label={this.t('dismissNotification')}
+                            title={this.t('firstRunDismiss')}
                         >
                             <svg fill="none" stroke="currentColor" viewBox="0 0 24 24" width="14" height="14" aria-hidden="true">
                                 <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M6 18L18 6M6 6l12 12" />
@@ -7832,8 +7832,8 @@ export default class EnhancedMeasurement extends React.PureComponent<WidgetProps
                         <div className="pdf-progress-card">
                             <div className="loading-spinner" style={{ width: '24px', height: '24px' }} aria-hidden="true"></div>
                             <div>
-                                <div className="pdf-progress-title">Generating PDF…</div>
-                                <div className="pdf-progress-hint">This may take a moment for many measurements.</div>
+                                <div className="pdf-progress-title">{this.t('generatingPdf')}</div>
+                                <div className="pdf-progress-hint">{this.t('thisMayTakeAMomentFor')}</div>
                             </div>
                         </div>
                     </div>
@@ -7863,14 +7863,14 @@ export default class EnhancedMeasurement extends React.PureComponent<WidgetProps
                                     <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M12 9v2m0 4h.01m-6.938 4h13.856c1.54 0 2.502-1.667 1.732-3L13.732 4c-.77-1.333-2.694-1.333-3.464 0L3.34 16c-.77 1.333.192 3 1.732 3z" />
                                 </svg>
                             </div>
-                            <div id="import-error-title" className="dialog-title">Import failed</div>
+                            <div id="import-error-title" className="dialog-title">{this.t('importFailed')}</div>
                             <div className="dialog-body">{this.state.importErrorMessage}</div>
                             <div className="dialog-actions">
                                 <button
                                     className="action-button"
                                     onClick={() => this.setState({ showImportErrorDialog: false })}
                                 >
-                                    OK
+                                    {this.t('ok')}
                                 </button>
                             </div>
                         </div>
@@ -7896,7 +7896,7 @@ export default class EnhancedMeasurement extends React.PureComponent<WidgetProps
                             }}
                             className="dialog-card"
                         >
-                            <div id="pdf-export-title" className="dialog-title">PDF export options</div>
+                            <div id="pdf-export-title" className="dialog-title">{this.t('pdfExportOptions')}</div>
                             <div className="dialog-body">
                                 <label className="dialog-checkbox-row">
                                     <input
@@ -7905,8 +7905,8 @@ export default class EnhancedMeasurement extends React.PureComponent<WidgetProps
                                         onChange={() => this.togglePrintReadyLabels()}
                                     />
                                     <span>
-                                        <span className="dialog-checkbox-title">Print-ready labels</span>
-                                        <span className="dialog-checkbox-hint">Adds extra spacing between segment labels so they don't overlap on printed maps.</span>
+                                        <span className="dialog-checkbox-title">{this.t('printReadyLabels2')}</span>
+                                        <span className="dialog-checkbox-hint">{this.t('addsExtraSpacingBetweenSegmentLabels')}</span>
                                     </span>
                                 </label>
                             </div>
@@ -7915,7 +7915,7 @@ export default class EnhancedMeasurement extends React.PureComponent<WidgetProps
                                     className="action-button"
                                     onClick={() => this.setState({ showPDFExportDialog: false, pendingPDFExport: null })}
                                 >
-                                    Cancel
+                                    {this.t('cancel')}
                                 </button>
                                 <button
                                     className="action-button action-button-primary"
@@ -7928,7 +7928,7 @@ export default class EnhancedMeasurement extends React.PureComponent<WidgetProps
                                         }
                                     }}
                                 >
-                                    Export PDF
+                                    {this.t('exportPdf')}
                                 </button>
                             </div>
                         </div>
@@ -7954,17 +7954,17 @@ export default class EnhancedMeasurement extends React.PureComponent<WidgetProps
                             }}
                             className="dialog-card"
                         >
-                            <div id="shortcuts-help-title" className="dialog-title">Keyboard shortcuts</div>
+                            <div id="shortcuts-help-title" className="dialog-title">{this.t('keyboardShortcuts')}</div>
                             <div className="dialog-body">
                                 <table className="shortcuts-table">
                                     <tbody>
-                                        <tr><td><kbd>Esc</kbd></td><td>Cancel active drawing tool</td></tr>
-                                        <tr><td><kbd>Ctrl</kbd>+<kbd>Z</kbd></td><td>Undo last action</td></tr>
-                                        <tr><td><kbd>Ctrl</kbd>+<kbd>Y</kbd></td><td>Redo</td></tr>
-                                        <tr><td><kbd>Ctrl</kbd>+<kbd>Shift</kbd>+<kbd>Z</kbd></td><td>Redo (alt)</td></tr>
-                                        <tr><td><kbd>Enter</kbd></td><td>Expand or collapse a measurement card</td></tr>
-                                        <tr><td><kbd>Tab</kbd> / <kbd>Shift</kbd>+<kbd>Tab</kbd></td><td>Move between controls</td></tr>
-                                        <tr><td><kbd>↑</kbd> / <kbd>↓</kbd></td><td>Navigate within dropdown menus</td></tr>
+                                        <tr><td><kbd>Esc</kbd></td><td>{this.t('cancelActiveDrawingTool')}</td></tr>
+                                        <tr><td><kbd>Ctrl</kbd>+<kbd>Z</kbd></td><td>{this.t('undoLastAction')}</td></tr>
+                                        <tr><td><kbd>Ctrl</kbd>+<kbd>Y</kbd></td><td>{this.t('redo')}</td></tr>
+                                        <tr><td><kbd>Ctrl</kbd>+<kbd>Shift</kbd>+<kbd>Z</kbd></td><td>{this.t('redoAlt')}</td></tr>
+                                        <tr><td><kbd>Enter</kbd></td><td>{this.t('expandOrCollapseAMeasurementCard')}</td></tr>
+                                        <tr><td><kbd>Tab</kbd> / <kbd>Shift</kbd>+<kbd>Tab</kbd></td><td>{this.t('moveBetweenControls')}</td></tr>
+                                        <tr><td><kbd>↑</kbd> / <kbd>↓</kbd></td><td>{this.t('navigateWithinDropdownMenus')}</td></tr>
                                     </tbody>
                                 </table>
                             </div>
@@ -7973,7 +7973,7 @@ export default class EnhancedMeasurement extends React.PureComponent<WidgetProps
                                     className="action-button"
                                     onClick={() => this.setState({ showShortcutsHelp: false })}
                                 >
-                                    Close
+                                    {this.t('close')}
                                 </button>
                             </div>
                         </div>

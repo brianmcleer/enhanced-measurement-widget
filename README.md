@@ -84,6 +84,17 @@ Edit the three variables at the top of `publish.ps1` once (widget name, repo nam
 Open an issue on the Esri Community post above for bug reports and enhancement requests:
 https://community.esri.com/t5/experience-builder-custom-widgets/enhanced-measurement-widget/ba-p/1664211
 
+<!-- exb-i18n:languages -->
+## Languages
+
+The widget follows the Experience Builder app language: the ArcGIS profile language, the browser, `?locale=xx` in the URL, or the Language Switcher widget. Interface text lives in `src/runtime/translations/default.ts` (and `src/setting/translations/default.ts` for the settings panel), with language files for all 39 Experience Builder locales made by [exb-i18n-kit](https://github.com/brianmcleer/exb-i18n-kit).
+
+- Esri's own Experience Builder translations are used first, so shared words match the out-of-the-box widgets.
+- Other strings come from the kit's shared translation memory. Machine translations are marked for review.
+- Anything not translated yet shows in English.
+- Coverage per language: `enhanced-measurement/i18n/STATUS.md`.
+- To fix a translation for every widget that uses it, open a pull request on `memory/<locale>.json` in exb-i18n-kit.
+
 ## License
 
 Apache License, Version 2.0. See [LICENSE](./LICENSE).
