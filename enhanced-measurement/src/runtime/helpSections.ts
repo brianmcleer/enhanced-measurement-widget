@@ -37,6 +37,7 @@ export interface HelpFeatures {
   segmentHighlight: boolean
   segmentDelete: boolean
   offsetSegmentLabels: boolean
+  offsetLabelsToggle: boolean
   persistence: boolean
   /* button and header names as the builder configured them */
   labels: HelpLabels
@@ -71,7 +72,7 @@ export function buildHelpSections (t: T, f: HelpFeatures): HelpSection[] {
     parts.length <= 1 ? (parts[0] ?? '') : `${parts.slice(0, -1).join(', ')} ${t('helpAnd')} ${parts[parts.length - 1]}`
 
   const anyTool = f.point || f.distance || f.freehandLine || f.rectangle || f.area || f.freehandArea || f.circle || f.triangle
-  const anyDisplayOption = f.segmentLabelsToggle || f.tooltipsToggle || f.snappingToggle || f.printReady
+  const anyDisplayOption = f.segmentLabelsToggle || f.tooltipsToggle || f.snappingToggle || f.printReady || f.offsetLabelsToggle
   const anyUnits = f.unitToggle || f.coordinateModeToggle
 
   /* Start here names the first two enabled tools so the steps match the buttons on screen. */
@@ -182,7 +183,7 @@ export function buildHelpSections (t: T, f: HelpFeatures): HelpSection[] {
       intro: t('helpOptionsIntro', { displayOptions: L.displayOptions }),
       body: [
         ...(f.segmentLabelsToggle ? [t('helpOptionsSegments', { segmentLabels: L.segmentLabels })] : []),
-        ...(f.segmentLabelsToggle && f.offsetSegmentLabels ? [t('helpOptionsSegmentOffset')] : []),
+        ...when(f.offsetLabelsToggle, 'helpOptionsSegmentOffset'),
         ...(f.tooltipsToggle ? [t('helpOptionsTooltips', { tooltips: L.tooltips })] : []),
         ...(f.snappingToggle ? [t('helpOptionsSnapping', { snapping: L.snapping })] : []),
         ...when(f.printReady, 'helpOptionsPrint')

@@ -2387,6 +2387,18 @@ export default class Setting extends React.PureComponent<SettingProps, SettingSt
                         />
                     </SettingRow>
 
+                    <SettingRow flow="wrap" label="Show Offset Labels Toggle">
+                        <Switch
+                            checked={config.showOffsetLabelsToggle !== false}
+                            onChange={(evt) => {
+                                this.props.onSettingChange({
+                                    id: this.props.id,
+                                    config: this.props.config.set('showOffsetLabelsToggle', evt.target.checked)
+                                });
+                            }}
+                        />
+                    </SettingRow>
+
                     <SettingRow flow="wrap" label="Show Tooltips Toggle">
                         <Switch
                             checked={config.showTooltipsToggle !== false}
@@ -2639,7 +2651,7 @@ export default class Setting extends React.PureComponent<SettingProps, SettingSt
                         />
                     </SettingRow>
 
-                    <SettingRow flow="wrap" label="Offset segment labels from the line or shape edge">
+                    <SettingRow flow="wrap" label="Offset Labels on by default (segment labels sit clear of the line or shape edge)">
                         <Switch
                             checked={config.offsetSegmentLabels !== false}
                             onChange={(evt) => {

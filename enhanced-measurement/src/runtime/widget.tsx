@@ -285,6 +285,7 @@ interface WidgetState {
     showClearAllDialog: boolean;
     showImportSuccessDialog: boolean;
     printReadyLabels: boolean;
+    offsetSegmentLabels: boolean;
     importSuccessMessage: string;
     importErrorMessage: string;
     showImportErrorDialog: boolean;
@@ -478,6 +479,7 @@ export default class EnhancedMeasurement extends React.PureComponent<WidgetProps
             importSuccessMessage: '',
             importErrorMessage: '',
             printReadyLabels: false,
+            offsetSegmentLabels: config.offsetSegmentLabels !== false,
             trianglePoints: [],
             undoStack: [],
             redoStack: [],
@@ -730,6 +732,7 @@ export default class EnhancedMeasurement extends React.PureComponent<WidgetProps
             sortOptions: config.enableSortOptions !== false,
             segmentHighlight: config.enableSegmentHighlight !== false,
             segmentDelete: config.enableSegmentDelete !== false,
+            offsetLabelsToggle: config.showOffsetLabelsToggle !== false,
             offsetSegmentLabels: config.offsetSegmentLabels !== false,
             persistence: config.enablePersistence === true,
             labels: {
@@ -1166,21 +1169,28 @@ export default class EnhancedMeasurement extends React.PureComponent<WidgetProps
     }
 
     /**
-     * Works out how a segment label should sit on the map: the rotation that follows the
-     * segment, and (when "Offset segment labels" is on, which is the default) a vertical
-     * alignment that moves the text off the line instead of centering it on top of it.
-     * Lines put the text above the segment. Shapes put it on the outside of the shape, so
-     * labels do not pile up inside small polygons. Alignment is used rather than a pixel
-     * offset because it follows the text's own rotation.
+     * Works out how a segment label should sit on the map: the point it is anchored at, the
+     * rotation that follows the segment and, when Offset Labels is on (the default), a vertical
+     * alignment plus a gap in screen pixels so the text sits entirely off the line.
+     * Lines put the text above the segment. Shapes put it on the outside of the shape, so labels
+     * do not pile up inside small polygons. The gap is applied by moving the anchor point in
+     * screen space, so it does not depend on how a symbol offset interacts with rotation. The
+     * anchor is re-placed after each zoom or pan (see repositionSegmentLabels) so the gap stays
+     * the same size on screen.
      */
-    getSegmentLabelPlacement(geometry: any, startCoords: number[], endCoords: number[]): { angle: number, verticalAlignment?: 'top' | 'bottom' } {
+    getSegmentLabelPlacement(geometry: any, startCoords: number[], endCoords: number[]): { point: any, angle: number, verticalAlignment?: 'top' | 'bottom' } {
+        const SEGMENT_LABEL_GAP_PX = 8;
+        const mid = new this.Point({
+            x: (startCoords[0] + endCoords[0]) / 2,
+            y: (startCoords[1] + endCoords[1]) / 2,
+            spatialReference: geometry.spatialReference
+        });
         let angle = 0;
-        let verticalAlignment: 'top' | 'bottom' | undefined;
+        const offsetOn = this.state.offsetSegmentLabels !== false;
+        let verticalAlignment: 'top' | 'bottom' | undefined = offsetOn ? 'bottom' : undefined;
         const view = this.state.jimuMapView && this.state.jimuMapView.view;
-        const offsetOn = (this.props.config || {}).offsetSegmentLabels !== false;
-        if (offsetOn) verticalAlignment = 'bottom';
 
-        if (!view) return { angle, verticalAlignment };
+        if (!view) return { point: mid, angle, verticalAlignment };
 
         const toScreenXY = (c: number[]) => {
             const sp = view.toScreen(new this.Point({ x: c[0], y: c[1], spatialReference: geometry.spatialReference }));
@@ -1189,20 +1199,26 @@ export default class EnhancedMeasurement extends React.PureComponent<WidgetProps
 
         const a = toScreenXY(startCoords);
         const b = toScreenXY(endCoords);
-        if (!a || !b) return { angle, verticalAlignment };
+        if (!a || !b) return { point: mid, angle, verticalAlignment };
 
         // Angle in screen space (y increases downward), kept readable (never upside down)
         angle = Math.atan2(b.y - a.y, b.x - a.x) * (180 / Math.PI);
         if (angle > 90) angle -= 180;
         else if (angle < -90) angle += 180;
 
-        // For shapes, put the label on the outside: test a point just above the segment
-        // (in the text's own "up" direction); if it falls inside the shape, flip below.
-        if (offsetOn && geometry.type === 'polygon' && geometry.rings && geometry.rings[0]) {
-            const rad = angle * Math.PI / 180;
-            const upX = Math.sin(rad);
-            const upY = -Math.cos(rad);
-            const probe = { x: (a.x + b.x) / 2 + upX * 6, y: (a.y + b.y) / 2 + upY * 6 };
+        if (!offsetOn) return { point: mid, angle, verticalAlignment };
+
+        // "Up" in the text's own frame, in screen coordinates
+        const rad = angle * Math.PI / 180;
+        const upX = Math.sin(rad);
+        const upY = -Math.cos(rad);
+        const midX = (a.x + b.x) / 2;
+        const midY = (a.y + b.y) / 2;
+
+        // For shapes, put the label on the outside: test a point just above the segment;
+        // if it falls inside the shape, put the label below instead.
+        if (geometry.type === 'polygon' && geometry.rings && geometry.rings[0]) {
+            const probe = { x: midX + upX * 6, y: midY + upY * 6 };
             const ring = geometry.rings[0].map((c: number[]) => toScreenXY(c));
             if (ring.every((pt: any) => pt)) {
                 let inside = false;
@@ -1217,7 +1233,46 @@ export default class EnhancedMeasurement extends React.PureComponent<WidgetProps
             }
         }
 
-        return { angle, verticalAlignment };
+        // Move the anchor off the line by the gap, on the side the text will sit
+        const dir = verticalAlignment === 'top' ? -1 : 1;
+        let point = mid;
+        try {
+            const moved = view.toMap({ x: midX + upX * SEGMENT_LABEL_GAP_PX * dir, y: midY + upY * SEGMENT_LABEL_GAP_PX * dir });
+            if (moved && isFinite(moved.x) && isFinite(moved.y)) {
+                point = new this.Point({ x: moved.x, y: moved.y, spatialReference: moved.spatialReference || geometry.spatialReference });
+            }
+        } catch (_) { /* keep the midpoint */ }
+
+        return { point, angle, verticalAlignment };
+    }
+
+    /**
+     * Re-places every segment label (anchor, angle, side) for the current view. Called when the
+     * view stops moving so the gap keeps its screen size after a zoom, and so the text angle
+     * stays right if the view is rotated.
+     */
+    repositionSegmentLabels() {
+        if (!this.labelLayer || !this.state.showSegmentLabels || !this.state.jimuMapView) return;
+        try {
+            this.labelLayer.graphics.toArray().forEach((g: any) => {
+                if (!g.attributes || g.attributes.labelType !== 'segment') return;
+                const m = this.state.measurements.find(x => x.id === g.attributes.measurementId);
+                if (!m || !m.geometry || !m.segments) return;
+                const idx = m.segments.findIndex(sg => sg.id === g.attributes.segmentId);
+                if (idx < 0) return;
+                const pts = m.geometry.type === 'polyline' ? m.geometry.paths[0] : (m.geometry.rings && m.geometry.rings[0]);
+                if (!pts || !pts[idx] || !pts[idx + 1]) return;
+                const placement = this.getSegmentLabelPlacement(m.geometry, pts[idx], pts[idx + 1]);
+                const sym = g.symbol && g.symbol.clone ? g.symbol.clone() : null;
+                if (!sym) return;
+                sym.angle = placement.angle;
+                sym.verticalAlignment = placement.verticalAlignment || 'baseline';
+                g.geometry = placement.point;
+                g.symbol = sym;
+            });
+        } catch (error) {
+            console.error('Error repositioning segment labels:', error);
+        }
     }
 
     createSegmentLabelGraphic(segment: SegmentRecord, measurement: MeasurementRecord, segmentIndex: number): any {
@@ -1239,12 +1294,6 @@ export default class EnhancedMeasurement extends React.PureComponent<WidgetProps
         const midX = (startCoords[0] + endCoords[0]) / 2;
         const midY = (startCoords[1] + endCoords[1]) / 2;
 
-        const segmentLabelPoint = new this.Point({
-            x: midX,
-            y: midY,
-            spatialReference: geometry.spatialReference
-        });
-
         const placement = this.getSegmentLabelPlacement(geometry, startCoords, endCoords);
 
         const segmentTextSymbol = new this.TextSymbol({
@@ -1263,7 +1312,7 @@ export default class EnhancedMeasurement extends React.PureComponent<WidgetProps
         });
 
         const segmentLabelGraphic = new this.Graphic({
-            geometry: segmentLabelPoint,
+            geometry: placement.point,
             symbol: segmentTextSymbol,
             attributes: {
                 measurementId: measurement.id,
@@ -1789,6 +1838,17 @@ export default class EnhancedMeasurement extends React.PureComponent<WidgetProps
             });
 
             this.sketchHandlers.push(createHandle, updateHandle);
+
+            // Keep segment labels the same distance off their line after zooming or panning
+            const watchedView = this.state.jimuMapView.view;
+            loadArcGISJSAPIModules(['esri/core/reactiveUtils']).then(([reactiveUtils]) => {
+                if (this.state.jimuMapView?.view !== watchedView) return;
+                const stationaryHandle = reactiveUtils.watch(
+                    () => watchedView.stationary,
+                    (stationary: boolean) => { if (stationary) this.repositionSegmentLabels(); }
+                );
+                this.sketchHandlers.push(stationaryHandle);
+            }).catch(() => { /* labels simply stay where they were placed */ });
 
             this.safeSetState({ sketchWidget });
         } catch (error) {
@@ -2486,7 +2546,7 @@ export default class EnhancedMeasurement extends React.PureComponent<WidgetProps
                         const segmentLabel = measurement.type === 'distance' ? `Segment ${segmentIndex + 1}` : `Edge ${segmentIndex + 1}`;
                         const segPlacement = this.getSegmentLabelPlacement(geometry, startCoords, endCoords);
 
-                        label.geometry = labelPoint;
+                        label.geometry = segPlacement.point;
                         label.symbol = new this.TextSymbol({
                             text: `${segmentLabel}: ${this.formatValue(distance)} ${measurement.linearUnit}`,
                             color: (this.props.config || {}).segmentLabelColor || (this.props.config || {}).labelColor || 'white',
@@ -3594,7 +3654,7 @@ export default class EnhancedMeasurement extends React.PureComponent<WidgetProps
                     });
 
                     const segmentLabelGraphic = new this.Graphic({
-                        geometry: segmentLabelPoint,
+                        geometry: placement.point,
                         symbol: segmentTextSymbol,
                         attributes: {
                             measurementId: measurement.id,
@@ -4435,6 +4495,18 @@ export default class EnhancedMeasurement extends React.PureComponent<WidgetProps
                 );
                 segmentLabels.forEach(label => this.labelLayer.remove(label));
             }
+        });
+    }
+
+    toggleOffsetSegmentLabels() {
+        const next = !this.state.offsetSegmentLabels;
+        this.setState({ offsetSegmentLabels: next }, () => {
+            // Rebuild the labels so every segment label picks up the new placement
+            this.state.measurements.forEach(measurement => {
+                if (measurement.geometry && measurement.geometry.type !== 'point') {
+                    this.refreshSingleMeasurementLabels(measurement);
+                }
+            });
         });
     }
 
@@ -6330,7 +6402,7 @@ export default class EnhancedMeasurement extends React.PureComponent<WidgetProps
                             )}
                         </div>
 
-                        {(config.showSegmentLabelsToggle !== false || config.showTooltipsToggle !== false || config.showSnappingToggle !== false || config.showPrintReadyButton !== false) && (
+                        {(config.showSegmentLabelsToggle !== false || config.showTooltipsToggle !== false || config.showSnappingToggle !== false || config.showPrintReadyButton !== false || config.showOffsetLabelsToggle !== false) && (
                             <div className="collapsible-section">
                                 <button
                                     type="button"
@@ -6381,6 +6453,39 @@ export default class EnhancedMeasurement extends React.PureComponent<WidgetProps
                                                             onChange={() => this.toggleSegmentLabels()}
                                                             disabled={this.state.currentTool === 'freehand-polyline' || this.state.currentTool === 'freehand-polygon'}
                                                             aria-label={config.segmentLabelText || 'Show Segment Labels'}
+                                                        />
+                                                        <span className="toggle-slider"></span>
+                                                    </label>
+                                                </div>
+                                            )}
+
+                                            {config.showOffsetLabelsToggle !== false && (
+                                                <div style={{
+                                                    display: 'flex',
+                                                    alignItems: 'center',
+                                                    gap: '8px',
+                                                    minHeight: '40px',
+                                                    padding: '8px 10px',
+                                                    borderRadius: '6px',
+                                                    backgroundColor: 'rgba(0, 0, 0, 0.02)',
+                                                    boxSizing: 'border-box'
+                                                }}>
+                                                    <svg style={{ flexShrink: 0 }} fill="none" stroke="#64748b" viewBox="0 0 24 24" width="14" height="14" aria-hidden="true">
+                                                        <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M5 12h14M12 5v4m0 6v4" />
+                                                    </svg>
+                                                    <span style={{
+                                                        flex: 1,
+                                                        fontSize: '12px',
+                                                        fontWeight: 500,
+                                                        color: '#475569',
+                                                        lineHeight: '1.3'
+                                                    }}>{config.offsetLabelsToggleText || 'Offset Labels'}</span>
+                                                    <label className="toggle-switch" style={{ flexShrink: 0 }}>
+                                                        <input
+                                                            type="checkbox"
+                                                            checked={this.state.offsetSegmentLabels}
+                                                            onChange={() => this.toggleOffsetSegmentLabels()}
+                                                            aria-label={config.offsetLabelsToggleText || 'Offset Labels'}
                                                         />
                                                         <span className="toggle-slider"></span>
                                                     </label>

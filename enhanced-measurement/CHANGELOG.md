@@ -5,13 +5,14 @@ Newest first. Every release bumps `manifest.json` and `package.json` together.
 ## 1.4.0 (2026-10-08)
 
 ### Added
-- Segment labels on lines and shapes are now offset from the segment instead of sitting on top of it. On a line the label sits just above the segment; on a shape it sits on the outside of the edge, so labels stay clear of each other inside small shapes. The label still follows the angle of its segment.
-- Settings, Segment Label Styling: **Offset segment labels from the line or shape edge**. On by default, and it carries through the settings XML export and import. Turn it off to get the old centered labels back.
-- Help guide: one line about offset labels, shown only when segment labels and the offset are both on.
+- Segment labels on lines and shapes are now offset so the text sits entirely clear of the segment instead of on top of it. On a line the label sits just above the segment; on a shape it sits on the outside of the edge, so labels stay out of small shapes. The label still follows the angle of its segment. The gap is 8 screen pixels and is re-placed when the map stops moving, so it keeps its size after a zoom.
+- Display Options: new **Offset Labels** switch, on by default. Turn it off to get the old centered labels back. It rebuilds the segment labels straight away.
+- Settings: **Offset Labels on by default** (Segment Label Styling) sets the starting state, and **Show Offset Labels Toggle** (UI Toggle Controls Visibility) hides the switch from end users. Both carry through the settings XML export and import.
+- Help guide: one line about Offset Labels in the display options section.
 
 ### Changed
 - Segment labels now keep their rotation while a corner is being dragged (they used to snap flat until the drag ended).
-- Print-ready labels use the same offset when it is on. With the offset off, the old small print nudge is kept.
+- Print-ready labels use the same offset when it is on. With it off, the old small print nudge is kept.
 
 ## 1.3.1 (2026-10-01)
 

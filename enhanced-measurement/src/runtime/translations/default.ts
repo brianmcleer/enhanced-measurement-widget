@@ -81,7 +81,7 @@ export default {
   helpOptionsTitle: 'What shows on the map',
   helpOptionsIntro: 'Open {displayOptions} to turn map decorations on or off.',
   helpOptionsSegments: '{segmentLabels}: show the length of each leg or edge on the map.',
-  helpOptionsSegmentOffset: 'Segment labels sit just beside their line. On a shape they sit outside it, so they stay clear of the edges.',
+  helpOptionsSegmentOffset: 'Offset Labels: keep each segment label clear of its line instead of sitting on top of it. On a shape the labels go outside the edges. It is on by default.',
   helpOptionsTooltips: '{tooltips}: show a small label when you hover over a measurement.',
   helpOptionsSnapping: '{snapping}: make the cursor jump to nearby corners and lines while you draw.',
   helpOptionsPrint: 'Print-Ready Labels: spread out the labels so they do not overlap when exported to PDF.',
