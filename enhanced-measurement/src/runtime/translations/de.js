@@ -293,9 +293,9 @@ System.register([], function (e) {
         unknownError: "Unbekannter Fehler",
         unserializableError: "nichtialisierbarer Fehler",
         input: "Eingabe",
-        radiusFormatValueCurrentLinearUnitCircumferenceFormatValue2CurrentLinearUnit2: "Radius: {formatValue} {currentLinearUnit}\nCircumference: {formatValue2} {currentLinearUnit2}\nArea: {formatValue3} {currentAreaUnit}",
-        areaFormatValueCurrentAreaUnitPerimeterFormatValue2CurrentLinearUnit: "Area: {formatValue} {currentAreaUnit}\nPerimeter: {formatValue2} {currentLinearUnit}",
-        sideLengthFormatValueCurrentLinearUnitPerimeterFormatValue2: "Side Length: {formatValue} {currentLinearUnit}\nPerimeter: {formatValue2} {currentLinearUnit2}\nArea: {formatValue3} {currentAreaUnit}"
+        radiusFormatValueCurrentLinearUnitCircumferenceFormatValue2CurrentLinearUnit2: "Radius: {formatValue} {currentLinearUnit}Umfang: {formatValue2} {currentLinearUnit2}Fläche: {formatValue3} {currentAreaUnit}",
+        areaFormatValueCurrentAreaUnitPerimeterFormatValue2CurrentLinearUnit: "Fläche: {formatValue} {currentAreaUnit}Umfang: {formatValue2} {currentLinearUnit}",
+        sideLengthFormatValueCurrentLinearUnitPerimeterFormatValue2: "Seitenlänge: {formatValue} {currentLinearUnit}Umfang: {formatValue2} {currentLinearUnit2}Fläche: {formatValue3} {currentAreaUnit}"
       })
     }
   }

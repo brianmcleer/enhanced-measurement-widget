@@ -293,9 +293,9 @@ System.register([], function (e) {
         unknownError: "onbekende fout",
         unserializableError: "onuitwisbare fout",
         input: "Invoer",
-        radiusFormatValueCurrentLinearUnitCircumferenceFormatValue2CurrentLinearUnit2: "Radius: {formatValue} {currentLinearUnit}\nCircumference: {formatValue2} {currentLinearUnit2}\nArea: {formatValue3} {currentAreaUnit}",
-        areaFormatValueCurrentAreaUnitPerimeterFormatValue2CurrentLinearUnit: "Area: {formatValue} {currentAreaUnit}\nPerimeter: {formatValue2} {currentLinearUnit}",
-        sideLengthFormatValueCurrentLinearUnitPerimeterFormatValue2: "Side Length: {formatValue} {currentLinearUnit}\nPerimeter: {formatValue2} {currentLinearUnit2}\nArea: {formatValue3} {currentAreaUnit}"
+        radiusFormatValueCurrentLinearUnitCircumferenceFormatValue2CurrentLinearUnit2: "Straal: {formatValue} {currentLinearUnit}Omtrek: {formatValue2} {currentLinearUnit2}Gebied: {formatValue3} {currentAreaUnit}",
+        areaFormatValueCurrentAreaUnitPerimeterFormatValue2CurrentLinearUnit: "Gebied: {formatValue} {currentAreaUnit}Omtrek: {formatValue2} {currentLinearUnit}",
+        sideLengthFormatValueCurrentLinearUnitPerimeterFormatValue2: "Zijlengte: {formatValue} {currentLinearUnit}Omtrek: {formatValue2} {currentLinearUnit2}Gebied: {formatValue3} {currentAreaUnit}"
       })
     }
   }

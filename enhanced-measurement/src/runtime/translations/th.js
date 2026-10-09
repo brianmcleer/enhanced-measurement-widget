@@ -293,9 +293,9 @@ System.register([], function (e) {
         unknownError: "ข้อผิดพลาดไม่ทราบสาเหตุ",
         unserializableError: "ข้อผิดพลาดที่ไม่สามารถตรวจสอบได้",
         input: "ข้อมูลนำเข้า",
-        radiusFormatValueCurrentLinearUnitCircumferenceFormatValue2CurrentLinearUnit2: "Radius: {formatValue} {currentLinearUnit}\nCircumference: {formatValue2} {currentLinearUnit2}\nArea: {formatValue3} {currentAreaUnit}",
-        areaFormatValueCurrentAreaUnitPerimeterFormatValue2CurrentLinearUnit: "Area: {formatValue} {currentAreaUnit}\nPerimeter: {formatValue2} {currentLinearUnit}",
-        sideLengthFormatValueCurrentLinearUnitPerimeterFormatValue2: "Side Length: {formatValue} {currentLinearUnit}\nPerimeter: {formatValue2} {currentLinearUnit2}\nArea: {formatValue3} {currentAreaUnit}"
+        radiusFormatValueCurrentLinearUnitCircumferenceFormatValue2CurrentLinearUnit2: "รัศมี: {formatValue} {currentLinearUnit}ความต่อเนื่อง: {formatValue2} {currentLinearUnit2}พื้นที่: {formatValue3} {currentAreaUnit}",
+        areaFormatValueCurrentAreaUnitPerimeterFormatValue2CurrentLinearUnit: "พื้นที่: {formatValue} {currentAreaUnit}พื้นที่พื้นที่: {formatValue2} {currentLinearUnit}",
+        sideLengthFormatValueCurrentLinearUnitPerimeterFormatValue2: "ความยาวด้าน: {formatValue} {currentLinearUnit}พื้นที่พื้นที่: {formatValue2} {currentLinearUnit2}พื้นที่: {formatValue3} {currentAreaUnit}"
       })
     }
   }

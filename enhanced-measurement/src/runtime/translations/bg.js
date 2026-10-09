@@ -293,9 +293,9 @@ System.register([], function (e) {
         unknownError: "неизвестна грешка",
         unserializableError: "несериозна грешка",
         input: "Вход",
-        radiusFormatValueCurrentLinearUnitCircumferenceFormatValue2CurrentLinearUnit2: "Radius: {formatValue} {currentLinearUnit}\nCircumference: {formatValue2} {currentLinearUnit2}\nArea: {formatValue3} {currentAreaUnit}",
-        areaFormatValueCurrentAreaUnitPerimeterFormatValue2CurrentLinearUnit: "Area: {formatValue} {currentAreaUnit}\nPerimeter: {formatValue2} {currentLinearUnit}",
-        sideLengthFormatValueCurrentLinearUnitPerimeterFormatValue2: "Side Length: {formatValue} {currentLinearUnit}\nPerimeter: {formatValue2} {currentLinearUnit2}\nArea: {formatValue3} {currentAreaUnit}"
+        radiusFormatValueCurrentLinearUnitCircumferenceFormatValue2CurrentLinearUnit2: "Радиус: {formatValue} {currentLinearUnit}Обрязване: {formatValue2} {currentLinearUnit2}Зона: {formatValue3} {currentAreaUnit}",
+        areaFormatValueCurrentAreaUnitPerimeterFormatValue2CurrentLinearUnit: "Зона: {formatValue} {currentAreaUnit}Периметър: {formatValue2} {currentLinearUnit}",
+        sideLengthFormatValueCurrentLinearUnitPerimeterFormatValue2: "Дължина на страната: {formatValue} {currentLinearUnit}Периметър: {formatValue2} {currentLinearUnit2}Зона: {formatValue3} {currentAreaUnit}"
       })
     }
   }

@@ -293,9 +293,9 @@ System.register([], function (e) {
         unknownError: "nezināma kļūda",
         unserializableError: "nepārspējama kļūda",
         input: "Ievade",
-        radiusFormatValueCurrentLinearUnitCircumferenceFormatValue2CurrentLinearUnit2: "Radius: {formatValue} {currentLinearUnit}\nCircumference: {formatValue2} {currentLinearUnit2}\nArea: {formatValue3} {currentAreaUnit}",
-        areaFormatValueCurrentAreaUnitPerimeterFormatValue2CurrentLinearUnit: "Area: {formatValue} {currentAreaUnit}\nPerimeter: {formatValue2} {currentLinearUnit}",
-        sideLengthFormatValueCurrentLinearUnitPerimeterFormatValue2: "Side Length: {formatValue} {currentLinearUnit}\nPerimeter: {formatValue2} {currentLinearUnit2}\nArea: {formatValue3} {currentAreaUnit}"
+        radiusFormatValueCurrentLinearUnitCircumferenceFormatValue2CurrentLinearUnit2: "Rādiuss {formatValue} {currentLinearUnit}Apkārtraksts: {formatValue2} {currentLinearUnit2}Platība: {formatValue3} {currentAreaUnit}",
+        areaFormatValueCurrentAreaUnitPerimeterFormatValue2CurrentLinearUnit: "Platība: {formatValue} {currentAreaUnit}Perimetrs: {formatValue2} {currentLinearUnit}",
+        sideLengthFormatValueCurrentLinearUnitPerimeterFormatValue2: "Sānu garums: {formatValue} {currentLinearUnit}Perimetrs: {formatValue2} {currentLinearUnit2}Platība: {formatValue3} {currentAreaUnit}"
       })
     }
   }

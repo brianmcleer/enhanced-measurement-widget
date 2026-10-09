@@ -293,9 +293,9 @@ System.register([], function (e) {
         unknownError: "nieznany błąd",
         unserializableError: "błąd niezserializowalny",
         input: "Dane wejściowe",
-        radiusFormatValueCurrentLinearUnitCircumferenceFormatValue2CurrentLinearUnit2: "Radius: {formatValue} {currentLinearUnit}\nCircumference: {formatValue2} {currentLinearUnit2}\nArea: {formatValue3} {currentAreaUnit}",
-        areaFormatValueCurrentAreaUnitPerimeterFormatValue2CurrentLinearUnit: "Area: {formatValue} {currentAreaUnit}\nPerimeter: {formatValue2} {currentLinearUnit}",
-        sideLengthFormatValueCurrentLinearUnitPerimeterFormatValue2: "Side Length: {formatValue} {currentLinearUnit}\nPerimeter: {formatValue2} {currentLinearUnit2}\nArea: {formatValue3} {currentAreaUnit}"
+        radiusFormatValueCurrentLinearUnitCircumferenceFormatValue2CurrentLinearUnit2: "Promień: {formatValue} {currentLinearUnit}Obwód: {formatValue2} {currentLinearUnit2}Obszar: {formatValue3} {currentAreaUnit}",
+        areaFormatValueCurrentAreaUnitPerimeterFormatValue2CurrentLinearUnit: "Obszar: {formatValue} {currentAreaUnit}Obwód: {formatValue2} {currentLinearUnit}",
+        sideLengthFormatValueCurrentLinearUnitPerimeterFormatValue2: "Długość boku: {formatValue} {currentLinearUnit}Obwód: {formatValue2} {currentLinearUnit2}Obszar: {formatValue3} {currentAreaUnit}"
       })
     }
   }

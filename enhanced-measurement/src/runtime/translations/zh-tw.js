@@ -293,9 +293,9 @@ System.register([], function (e) {
         unknownError: "未知的錯誤",
         unserializableError: "不串連的錯誤",
         input: "輸入",
-        radiusFormatValueCurrentLinearUnitCircumferenceFormatValue2CurrentLinearUnit2: "Radius: {formatValue} {currentLinearUnit}\nCircumference: {formatValue2} {currentLinearUnit2}\nArea: {formatValue3} {currentAreaUnit}",
-        areaFormatValueCurrentAreaUnitPerimeterFormatValue2CurrentLinearUnit: "Area: {formatValue} {currentAreaUnit}\nPerimeter: {formatValue2} {currentLinearUnit}",
-        sideLengthFormatValueCurrentLinearUnitPerimeterFormatValue2: "Side Length: {formatValue} {currentLinearUnit}\nPerimeter: {formatValue2} {currentLinearUnit2}\nArea: {formatValue3} {currentAreaUnit}"
+        radiusFormatValueCurrentLinearUnitCircumferenceFormatValue2CurrentLinearUnit2: "半徑 : {formatValue} {currentLinearUnit}周圍 : {formatValue2} {currentLinearUnit2}區域 : {formatValue3} {currentAreaUnit}",
+        areaFormatValueCurrentAreaUnitPerimeterFormatValue2CurrentLinearUnit: "區域 : {formatValue} {currentAreaUnit}周圍 : {formatValue2} {currentLinearUnit}",
+        sideLengthFormatValueCurrentLinearUnitPerimeterFormatValue2: "邊長 : {formatValue} {currentLinearUnit}周圍 : {formatValue2} {currentLinearUnit2}區域 : {formatValue3} {currentAreaUnit}"
       })
     }
   }

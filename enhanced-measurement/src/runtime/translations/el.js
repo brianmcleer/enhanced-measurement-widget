@@ -293,9 +293,9 @@ System.register([], function (e) {
         unknownError: "άγνωστο σφάλμα",
         unserializableError: "σφάλμα μη ανιχνεύσιμο",
         input: "Είσοδος",
-        radiusFormatValueCurrentLinearUnitCircumferenceFormatValue2CurrentLinearUnit2: "Radius: {formatValue} {currentLinearUnit}\nCircumference: {formatValue2} {currentLinearUnit2}\nArea: {formatValue3} {currentAreaUnit}",
-        areaFormatValueCurrentAreaUnitPerimeterFormatValue2CurrentLinearUnit: "Area: {formatValue} {currentAreaUnit}\nPerimeter: {formatValue2} {currentLinearUnit}",
-        sideLengthFormatValueCurrentLinearUnitPerimeterFormatValue2: "Side Length: {formatValue} {currentLinearUnit}\nPerimeter: {formatValue2} {currentLinearUnit2}\nArea: {formatValue3} {currentAreaUnit}"
+        radiusFormatValueCurrentLinearUnitCircumferenceFormatValue2CurrentLinearUnit2: "Ακτίνα: {formatValue} {currentLinearUnit}Περίμετρος: {formatValue2} {currentLinearUnit2}Περιοχή: {formatValue3} {currentAreaUnit}",
+        areaFormatValueCurrentAreaUnitPerimeterFormatValue2CurrentLinearUnit: "Περιοχή: {formatValue} {currentAreaUnit}Περίμετρος: {formatValue2} {currentLinearUnit}",
+        sideLengthFormatValueCurrentLinearUnitPerimeterFormatValue2: "Μήκος πλευράς: {formatValue} {currentLinearUnit}Περίμετρος: {formatValue2} {currentLinearUnit2}Περιοχή: {formatValue3} {currentAreaUnit}"
       })
     }
   }

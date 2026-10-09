@@ -293,9 +293,9 @@ System.register([], function (e) {
         unknownError: "Erro desconhecido",
         unserializableError: "Erro inserializável",
         input: "Entrada",
-        radiusFormatValueCurrentLinearUnitCircumferenceFormatValue2CurrentLinearUnit2: "Radius: {formatValue} {currentLinearUnit}\nCircumference: {formatValue2} {currentLinearUnit2}\nArea: {formatValue3} {currentAreaUnit}",
-        areaFormatValueCurrentAreaUnitPerimeterFormatValue2CurrentLinearUnit: "Area: {formatValue} {currentAreaUnit}\nPerimeter: {formatValue2} {currentLinearUnit}",
-        sideLengthFormatValueCurrentLinearUnitPerimeterFormatValue2: "Side Length: {formatValue} {currentLinearUnit}\nPerimeter: {formatValue2} {currentLinearUnit2}\nArea: {formatValue3} {currentAreaUnit}"
+        radiusFormatValueCurrentLinearUnitCircumferenceFormatValue2CurrentLinearUnit2: "Raio: {formatValue} {currentLinearUnit}Circunferência: {formatValue2} {currentLinearUnit2}Área: {formatValue3} {currentAreaUnit}",
+        areaFormatValueCurrentAreaUnitPerimeterFormatValue2CurrentLinearUnit: "Área: {formatValue} {currentAreaUnit}Perímetro: {formatValue2} {currentLinearUnit}",
+        sideLengthFormatValueCurrentLinearUnitPerimeterFormatValue2: "Comprimento lateral: {formatValue} {currentLinearUnit}Perímetro: {formatValue2} {currentLinearUnit2}Área: {formatValue3} {currentAreaUnit}"
       })
     }
   }

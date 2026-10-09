@@ -293,9 +293,9 @@ System.register([], function (e) {
         unknownError: "未知错误",
         unserializableError: "无序错误",
         input: "输入",
-        radiusFormatValueCurrentLinearUnitCircumferenceFormatValue2CurrentLinearUnit2: "Radius: {formatValue} {currentLinearUnit}\nCircumference: {formatValue2} {currentLinearUnit2}\nArea: {formatValue3} {currentAreaUnit}",
-        areaFormatValueCurrentAreaUnitPerimeterFormatValue2CurrentLinearUnit: "Area: {formatValue} {currentAreaUnit}\nPerimeter: {formatValue2} {currentLinearUnit}",
-        sideLengthFormatValueCurrentLinearUnitPerimeterFormatValue2: "Side Length: {formatValue} {currentLinearUnit}\nPerimeter: {formatValue2} {currentLinearUnit2}\nArea: {formatValue3} {currentAreaUnit}"
+        radiusFormatValueCurrentLinearUnitCircumferenceFormatValue2CurrentLinearUnit2: "半径 : {formatValue} {currentLinearUnit}循环 : {formatValue2} {currentLinearUnit2}区域 : {formatValue3} {currentAreaUnit}",
+        areaFormatValueCurrentAreaUnitPerimeterFormatValue2CurrentLinearUnit: "区域 : {formatValue} {currentAreaUnit}周边 : {formatValue2} {currentLinearUnit}",
+        sideLengthFormatValueCurrentLinearUnitPerimeterFormatValue2: "边长 : {formatValue} {currentLinearUnit}周边 : {formatValue2} {currentLinearUnit2}区域 : {formatValue3} {currentAreaUnit}"
       })
     }
   }

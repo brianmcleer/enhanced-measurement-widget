@@ -293,9 +293,9 @@ System.register([], function (e) {
         unknownError: "neznana napaka",
         unserializableError: "Neizvedljiva napaka",
         input: "Vnos",
-        radiusFormatValueCurrentLinearUnitCircumferenceFormatValue2CurrentLinearUnit2: "Radius: {formatValue} {currentLinearUnit}\nCircumference: {formatValue2} {currentLinearUnit2}\nArea: {formatValue3} {currentAreaUnit}",
-        areaFormatValueCurrentAreaUnitPerimeterFormatValue2CurrentLinearUnit: "Area: {formatValue} {currentAreaUnit}\nPerimeter: {formatValue2} {currentLinearUnit}",
-        sideLengthFormatValueCurrentLinearUnitPerimeterFormatValue2: "Side Length: {formatValue} {currentLinearUnit}\nPerimeter: {formatValue2} {currentLinearUnit2}\nArea: {formatValue3} {currentAreaUnit}"
+        radiusFormatValueCurrentLinearUnitCircumferenceFormatValue2CurrentLinearUnit2: "Polmer: {formatValue} {currentLinearUnit}Obtožba: {formatValue2} {currentLinearUnit2}Območje: {formatValue3} {currentAreaUnit}",
+        areaFormatValueCurrentAreaUnitPerimeterFormatValue2CurrentLinearUnit: "Območje: {formatValue} {currentAreaUnit}Območje: {formatValue2} {currentLinearUnit}",
+        sideLengthFormatValueCurrentLinearUnitPerimeterFormatValue2: "Dolžina strani: {formatValue} {currentLinearUnit}Območje: {formatValue2} {currentLinearUnit2}Območje: {formatValue3} {currentAreaUnit}"
       })
     }
   }

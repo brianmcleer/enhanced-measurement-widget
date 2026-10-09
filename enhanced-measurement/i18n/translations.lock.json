@@ -302,16 +302,16 @@
       },
       "locales": {
         "ar": {
-          "file": "9fe71cdfa004",
+          "file": "49f674c3fb2e",
           "counts": {
             "esri": 55,
             "esri-check": 4,
             "community": 0,
             "manual": 0,
             "existing": 0,
-            "machine": 231,
+            "machine": 234,
             "stale": 0,
-            "missing": 3
+            "missing": 0
           },
           "entries": {
             "_widgetLabel": {
@@ -1468,20 +1468,35 @@
               "t": "المستوردة {measurementType}",
               "src": "machine",
               "h": "f3949a7c95c5"
+            },
+            "radiusFormatValueCurrentLinearUnitCircumferenceFormatValue2CurrentLinearUnit2": {
+              "t": "راديوس: {formatValue} {currentLinearUnit}الدائرة: {formatValue2} {currentLinearUnit2}المجال: {formatValue3} {currentAreaUnit}",
+              "src": "machine",
+              "h": "eecb8dae45c4"
+            },
+            "areaFormatValueCurrentAreaUnitPerimeterFormatValue2CurrentLinearUnit": {
+              "t": "المجال: {formatValue} {currentAreaUnit}Perimeter: {formatValue2} {currentLinearUnit}",
+              "src": "machine",
+              "h": "11a3d293fa73"
+            },
+            "sideLengthFormatValueCurrentLinearUnitPerimeterFormatValue2": {
+              "t": "Side Length: {formatValue} {currentLinearUnit}Perimeter: {formatValue2} {currentLinearUnit2}المجال: {formatValue3} {currentAreaUnit}",
+              "src": "machine",
+              "h": "599dbd8a3c31"
             }
           }
         },
         "bg": {
-          "file": "9cc22dd36644",
+          "file": "22333ece11a9",
           "counts": {
             "esri": 55,
             "esri-check": 4,
             "community": 0,
             "manual": 0,
             "existing": 0,
-            "machine": 231,
+            "machine": 234,
             "stale": 0,
-            "missing": 3
+            "missing": 0
           },
           "entries": {
             "_widgetLabel": {
@@ -2638,6 +2653,21 @@
               "t": "Внос {measurementType}",
               "src": "machine",
               "h": "f3949a7c95c5"
+            },
+            "radiusFormatValueCurrentLinearUnitCircumferenceFormatValue2CurrentLinearUnit2": {
+              "t": "Радиус: {formatValue} {currentLinearUnit}Обрязване: {formatValue2} {currentLinearUnit2}Зона: {formatValue3} {currentAreaUnit}",
+              "src": "machine",
+              "h": "eecb8dae45c4"
+            },
+            "areaFormatValueCurrentAreaUnitPerimeterFormatValue2CurrentLinearUnit": {
+              "t": "Зона: {formatValue} {currentAreaUnit}Периметър: {formatValue2} {currentLinearUnit}",
+              "src": "machine",
+              "h": "11a3d293fa73"
+            },
+            "sideLengthFormatValueCurrentLinearUnitPerimeterFormatValue2": {
+              "t": "Дължина на страната: {formatValue} {currentLinearUnit}Периметър: {formatValue2} {currentLinearUnit2}Зона: {formatValue3} {currentAreaUnit}",
+              "src": "machine",
+              "h": "599dbd8a3c31"
             }
           }
         },
@@ -2656,16 +2686,16 @@
           "entries": {}
         },
         "ca": {
-          "file": "dae7f230693f",
+          "file": "1f220d03db56",
           "counts": {
             "esri": 56,
             "esri-check": 1,
             "community": 0,
             "manual": 0,
             "existing": 0,
-            "machine": 233,
+            "machine": 236,
             "stale": 0,
-            "missing": 3
+            "missing": 0
           },
           "entries": {
             "_widgetLabel": {
@@ -3832,20 +3862,35 @@
               "t": "Importat {measurementType}",
               "src": "machine",
               "h": "f3949a7c95c5"
+            },
+            "radiusFormatValueCurrentLinearUnitCircumferenceFormatValue2CurrentLinearUnit2": {
+              "t": "Radi: {formatValue} {currentLinearUnit}Circumferència: {formatValue2} {currentLinearUnit2}Àrea: {formatValue3} {currentAreaUnit}",
+              "src": "machine",
+              "h": "eecb8dae45c4"
+            },
+            "areaFormatValueCurrentAreaUnitPerimeterFormatValue2CurrentLinearUnit": {
+              "t": "Àrea: {formatValue} {currentAreaUnit}Perímetre: {formatValue2} {currentLinearUnit}",
+              "src": "machine",
+              "h": "11a3d293fa73"
+            },
+            "sideLengthFormatValueCurrentLinearUnitPerimeterFormatValue2": {
+              "t": "Longitud lateral: {formatValue} {currentLinearUnit}Perímetre: {formatValue2} {currentLinearUnit2}Àrea: {formatValue3} {currentAreaUnit}",
+              "src": "machine",
+              "h": "599dbd8a3c31"
             }
           }
         },
         "cs": {
-          "file": "3085ecc4b16c",
+          "file": "0f5238bc6942",
           "counts": {
             "esri": 57,
             "esri-check": 1,
             "community": 0,
             "manual": 0,
             "existing": 0,
-            "machine": 232,
+            "machine": 235,
             "stale": 0,
-            "missing": 3
+            "missing": 0
           },
           "entries": {
             "_widgetLabel": {
@@ -5007,20 +5052,35 @@
               "t": "Dovezené {measurementType}",
               "src": "machine",
               "h": "f3949a7c95c5"
+            },
+            "radiusFormatValueCurrentLinearUnitCircumferenceFormatValue2CurrentLinearUnit2": {
+              "t": "Poloměr: {formatValue} {currentLinearUnit}Obvod: {formatValue2} {currentLinearUnit2}Oblast: {formatValue3} {currentAreaUnit}",
+              "src": "machine",
+              "h": "eecb8dae45c4"
+            },
+            "areaFormatValueCurrentAreaUnitPerimeterFormatValue2CurrentLinearUnit": {
+              "t": "Oblast: {formatValue} {currentAreaUnit}Perimetr: {formatValue2} {currentLinearUnit}",
+              "src": "machine",
+              "h": "11a3d293fa73"
+            },
+            "sideLengthFormatValueCurrentLinearUnitPerimeterFormatValue2": {
+              "t": "Boční délka: {formatValue} {currentLinearUnit}Perimetr: {formatValue2} {currentLinearUnit2}Oblast: {formatValue3} {currentAreaUnit}",
+              "src": "machine",
+              "h": "599dbd8a3c31"
             }
           }
         },
         "da": {
-          "file": "16941c9f0c3e",
+          "file": "5372b66eb687",
           "counts": {
             "esri": 53,
             "esri-check": 2,
             "community": 0,
             "manual": 0,
             "existing": 0,
-            "machine": 234,
+            "machine": 238,
             "stale": 0,
-            "missing": 4
+            "missing": 0
           },
           "entries": {
             "_widgetLabel": {
@@ -6192,20 +6252,40 @@
               "t": "Importeret {measurementType}",
               "src": "machine",
               "h": "f3949a7c95c5"
+            },
+            "input": {
+              "t": "Input",
+              "src": "machine",
+              "h": "b568d47f2e24"
+            },
+            "radiusFormatValueCurrentLinearUnitCircumferenceFormatValue2CurrentLinearUnit2": {
+              "t": "Radius: {formatValue} {currentLinearUnit}Omkreds: {formatValue2} {currentLinearUnit2}Område: {formatValue3} {currentAreaUnit}",
+              "src": "machine",
+              "h": "eecb8dae45c4"
+            },
+            "areaFormatValueCurrentAreaUnitPerimeterFormatValue2CurrentLinearUnit": {
+              "t": "Område: {formatValue} {currentAreaUnit}Område: {formatValue2} {currentLinearUnit}",
+              "src": "machine",
+              "h": "11a3d293fa73"
+            },
+            "sideLengthFormatValueCurrentLinearUnitPerimeterFormatValue2": {
+              "t": "Sidelængde: {formatValue} {currentLinearUnit}Område: {formatValue2} {currentLinearUnit2}Område: {formatValue3} {currentAreaUnit}",
+              "src": "machine",
+              "h": "599dbd8a3c31"
             }
           }
         },
         "de": {
-          "file": "d76f735f24ec",
+          "file": "4109faad9c93",
           "counts": {
             "esri": 56,
             "esri-check": 0,
             "community": 0,
             "manual": 0,
             "existing": 0,
-            "machine": 234,
+            "machine": 237,
             "stale": 0,
-            "missing": 3
+            "missing": 0
           },
           "entries": {
             "_widgetLabel": {
@@ -7377,20 +7457,35 @@
               "t": "Eingeführt {measurementType}",
               "src": "machine",
               "h": "f3949a7c95c5"
+            },
+            "radiusFormatValueCurrentLinearUnitCircumferenceFormatValue2CurrentLinearUnit2": {
+              "t": "Radius: {formatValue} {currentLinearUnit}Umfang: {formatValue2} {currentLinearUnit2}Fläche: {formatValue3} {currentAreaUnit}",
+              "src": "machine",
+              "h": "eecb8dae45c4"
+            },
+            "areaFormatValueCurrentAreaUnitPerimeterFormatValue2CurrentLinearUnit": {
+              "t": "Fläche: {formatValue} {currentAreaUnit}Umfang: {formatValue2} {currentLinearUnit}",
+              "src": "machine",
+              "h": "11a3d293fa73"
+            },
+            "sideLengthFormatValueCurrentLinearUnitPerimeterFormatValue2": {
+              "t": "Seitenlänge: {formatValue} {currentLinearUnit}Umfang: {formatValue2} {currentLinearUnit2}Fläche: {formatValue3} {currentAreaUnit}",
+              "src": "machine",
+              "h": "599dbd8a3c31"
             }
           }
         },
         "el": {
-          "file": "f3bbbb55a5f9",
+          "file": "aa2becafdf6c",
           "counts": {
             "esri": 56,
             "esri-check": 3,
             "community": 0,
             "manual": 0,
             "existing": 0,
-            "machine": 231,
+            "machine": 234,
             "stale": 0,
-            "missing": 3
+            "missing": 0
           },
           "entries": {
             "_widgetLabel": {
@@ -8547,20 +8642,35 @@
               "t": "Εισαγωγή {measurementType}",
               "src": "machine",
               "h": "f3949a7c95c5"
+            },
+            "radiusFormatValueCurrentLinearUnitCircumferenceFormatValue2CurrentLinearUnit2": {
+              "t": "Ακτίνα: {formatValue} {currentLinearUnit}Περίμετρος: {formatValue2} {currentLinearUnit2}Περιοχή: {formatValue3} {currentAreaUnit}",
+              "src": "machine",
+              "h": "eecb8dae45c4"
+            },
+            "areaFormatValueCurrentAreaUnitPerimeterFormatValue2CurrentLinearUnit": {
+              "t": "Περιοχή: {formatValue} {currentAreaUnit}Περίμετρος: {formatValue2} {currentLinearUnit}",
+              "src": "machine",
+              "h": "11a3d293fa73"
+            },
+            "sideLengthFormatValueCurrentLinearUnitPerimeterFormatValue2": {
+              "t": "Μήκος πλευράς: {formatValue} {currentLinearUnit}Περίμετρος: {formatValue2} {currentLinearUnit2}Περιοχή: {formatValue3} {currentAreaUnit}",
+              "src": "machine",
+              "h": "599dbd8a3c31"
             }
           }
         },
         "es": {
-          "file": "a5c1ca17c2f2",
+          "file": "37fe0bd946c7",
           "counts": {
             "esri": 57,
             "esri-check": 1,
             "community": 0,
             "manual": 0,
             "existing": 0,
-            "machine": 232,
+            "machine": 235,
             "stale": 0,
-            "missing": 3
+            "missing": 0
           },
           "entries": {
             "_widgetLabel": {
@@ -9722,20 +9832,35 @@
               "t": "Importados {measurementType}",
               "src": "machine",
               "h": "f3949a7c95c5"
+            },
+            "radiusFormatValueCurrentLinearUnitCircumferenceFormatValue2CurrentLinearUnit2": {
+              "t": "Radius: {formatValue} {currentLinearUnit}Circunferencia: {formatValue2} {currentLinearUnit2}Zona: {formatValue3} {currentAreaUnit}",
+              "src": "machine",
+              "h": "eecb8dae45c4"
+            },
+            "areaFormatValueCurrentAreaUnitPerimeterFormatValue2CurrentLinearUnit": {
+              "t": "Zona: {formatValue} {currentAreaUnit}Perímetro: {formatValue2} {currentLinearUnit}",
+              "src": "machine",
+              "h": "11a3d293fa73"
+            },
+            "sideLengthFormatValueCurrentLinearUnitPerimeterFormatValue2": {
+              "t": "Longitud lateral: {formatValue} {currentLinearUnit}Perímetro: {formatValue2} {currentLinearUnit2}Zona: {formatValue3} {currentAreaUnit}",
+              "src": "machine",
+              "h": "599dbd8a3c31"
             }
           }
         },
         "et": {
-          "file": "9dc9314ef2d8",
+          "file": "daed055f6abf",
           "counts": {
             "esri": 53,
             "esri-check": 6,
             "community": 0,
             "manual": 0,
             "existing": 0,
-            "machine": 231,
+            "machine": 234,
             "stale": 0,
-            "missing": 3
+            "missing": 0
           },
           "entries": {
             "_widgetLabel": {
@@ -10892,20 +11017,35 @@
               "t": "Imporditud {measurementType}",
               "src": "machine",
               "h": "f3949a7c95c5"
+            },
+            "radiusFormatValueCurrentLinearUnitCircumferenceFormatValue2CurrentLinearUnit2": {
+              "t": "Radius: {formatValue} {currentLinearUnit}Ümbermõõt: {formatValue2} {currentLinearUnit2}Piirkond: {formatValue3} {currentAreaUnit}",
+              "src": "machine",
+              "h": "eecb8dae45c4"
+            },
+            "areaFormatValueCurrentAreaUnitPerimeterFormatValue2CurrentLinearUnit": {
+              "t": "Piirkond: {formatValue} {currentAreaUnit}Perimeeter: {formatValue2} {currentLinearUnit}",
+              "src": "machine",
+              "h": "11a3d293fa73"
+            },
+            "sideLengthFormatValueCurrentLinearUnitPerimeterFormatValue2": {
+              "t": "Külgpikkus: {formatValue} {currentLinearUnit}Perimeeter: {formatValue2} {currentLinearUnit2}Piirkond: {formatValue3} {currentAreaUnit}",
+              "src": "machine",
+              "h": "599dbd8a3c31"
             }
           }
         },
         "fi": {
-          "file": "7026255cb7af",
+          "file": "5dec9217de32",
           "counts": {
             "esri": 58,
             "esri-check": 1,
             "community": 0,
             "manual": 0,
             "existing": 0,
-            "machine": 231,
+            "machine": 234,
             "stale": 0,
-            "missing": 3
+            "missing": 0
           },
           "entries": {
             "_widgetLabel": {
@@ -12062,20 +12202,35 @@
               "t": "Tuotu {measurementType}",
               "src": "machine",
               "h": "f3949a7c95c5"
+            },
+            "radiusFormatValueCurrentLinearUnitCircumferenceFormatValue2CurrentLinearUnit2": {
+              "t": "Säde: {formatValue} {currentLinearUnit}Ympyrä: {formatValue2} {currentLinearUnit2}Alue: {formatValue3} {currentAreaUnit}",
+              "src": "machine",
+              "h": "eecb8dae45c4"
+            },
+            "areaFormatValueCurrentAreaUnitPerimeterFormatValue2CurrentLinearUnit": {
+              "t": "Alue: {formatValue} {currentAreaUnit}Alue: {formatValue2} {currentLinearUnit}",
+              "src": "machine",
+              "h": "11a3d293fa73"
+            },
+            "sideLengthFormatValueCurrentLinearUnitPerimeterFormatValue2": {
+              "t": "Sivun pituus: {formatValue} {currentLinearUnit}Alue: {formatValue2} {currentLinearUnit2}Alue: {formatValue3} {currentAreaUnit}",
+              "src": "machine",
+              "h": "599dbd8a3c31"
             }
           }
         },
         "fr": {
-          "file": "f91d3b07567c",
+          "file": "b82734d4f71d",
           "counts": {
             "esri": 49,
             "esri-check": 1,
             "community": 0,
             "manual": 0,
             "existing": 0,
-            "machine": 240,
+            "machine": 243,
             "stale": 0,
-            "missing": 3
+            "missing": 0
           },
           "entries": {
             "_widgetLabel": {
@@ -13277,20 +13432,35 @@
               "t": "Importé {measurementType}",
               "src": "machine",
               "h": "f3949a7c95c5"
+            },
+            "radiusFormatValueCurrentLinearUnitCircumferenceFormatValue2CurrentLinearUnit2": {
+              "t": "Rayon: {formatValue} {currentLinearUnit}Circonférence: {formatValue2} {currentLinearUnit2}Domaine: {formatValue3} {currentAreaUnit}",
+              "src": "machine",
+              "h": "eecb8dae45c4"
+            },
+            "areaFormatValueCurrentAreaUnitPerimeterFormatValue2CurrentLinearUnit": {
+              "t": "Domaine: {formatValue} {currentAreaUnit}Périmètre: {formatValue2} {currentLinearUnit}",
+              "src": "machine",
+              "h": "11a3d293fa73"
+            },
+            "sideLengthFormatValueCurrentLinearUnitPerimeterFormatValue2": {
+              "t": "Longueur latérale: {formatValue} {currentLinearUnit}Périmètre: {formatValue2} {currentLinearUnit2}Domaine: {formatValue3} {currentAreaUnit}",
+              "src": "machine",
+              "h": "599dbd8a3c31"
             }
           }
         },
         "he": {
-          "file": "81c5e6f66bd0",
+          "file": "90a6bebf3a5e",
           "counts": {
             "esri": 53,
             "esri-check": 6,
             "community": 0,
             "manual": 0,
             "existing": 0,
-            "machine": 231,
+            "machine": 234,
             "stale": 0,
-            "missing": 3
+            "missing": 0
           },
           "entries": {
             "_widgetLabel": {
@@ -14447,6 +14617,21 @@
               "t": "יבוא {measurementType}",
               "src": "machine",
               "h": "f3949a7c95c5"
+            },
+            "radiusFormatValueCurrentLinearUnitCircumferenceFormatValue2CurrentLinearUnit2": {
+              "t": "רדוס: {formatValue} {currentLinearUnit}המונחים: {formatValue2} {currentLinearUnit2}שטח: {formatValue3} {currentAreaUnit}",
+              "src": "machine",
+              "h": "eecb8dae45c4"
+            },
+            "areaFormatValueCurrentAreaUnitPerimeterFormatValue2CurrentLinearUnit": {
+              "t": "שטח: {formatValue} {currentAreaUnit}המונחים: {formatValue2} {currentLinearUnit}",
+              "src": "machine",
+              "h": "11a3d293fa73"
+            },
+            "sideLengthFormatValueCurrentLinearUnitPerimeterFormatValue2": {
+              "t": "אורך הצד: {formatValue} {currentLinearUnit}המונחים: {formatValue2} {currentLinearUnit2}שטח: {formatValue3} {currentAreaUnit}",
+              "src": "machine",
+              "h": "599dbd8a3c31"
             }
           }
         },
@@ -14465,16 +14650,16 @@
           "entries": {}
         },
         "hu": {
-          "file": "0555d452ab9f",
+          "file": "5520d9ccdb5a",
           "counts": {
             "esri": 57,
             "esri-check": 2,
             "community": 0,
             "manual": 0,
             "existing": 0,
-            "machine": 231,
+            "machine": 234,
             "stale": 0,
-            "missing": 3
+            "missing": 0
           },
           "entries": {
             "_widgetLabel": {
@@ -15631,20 +15816,35 @@
               "t": "Importált {measurementType}",
               "src": "machine",
               "h": "f3949a7c95c5"
+            },
+            "radiusFormatValueCurrentLinearUnitCircumferenceFormatValue2CurrentLinearUnit2": {
+              "t": "Radius: {formatValue} {currentLinearUnit}Kerület: {formatValue2} {currentLinearUnit2}Terület: {formatValue3} {currentAreaUnit}",
+              "src": "machine",
+              "h": "eecb8dae45c4"
+            },
+            "areaFormatValueCurrentAreaUnitPerimeterFormatValue2CurrentLinearUnit": {
+              "t": "Terület: {formatValue} {currentAreaUnit}Periméter: {formatValue2} {currentLinearUnit}",
+              "src": "machine",
+              "h": "11a3d293fa73"
+            },
+            "sideLengthFormatValueCurrentLinearUnitPerimeterFormatValue2": {
+              "t": "Oldalhossz: {formatValue} {currentLinearUnit}Periméter: {formatValue2} {currentLinearUnit2}Terület: {formatValue3} {currentAreaUnit}",
+              "src": "machine",
+              "h": "599dbd8a3c31"
             }
           }
         },
         "id": {
-          "file": "f7d38045d3ca",
+          "file": "66c99c94251d",
           "counts": {
             "esri": 55,
             "esri-check": 1,
             "community": 0,
             "manual": 0,
             "existing": 0,
-            "machine": 233,
+            "machine": 237,
             "stale": 0,
-            "missing": 4
+            "missing": 0
           },
           "entries": {
             "_widgetLabel": {
@@ -16811,20 +17011,40 @@
               "t": "Diimpor {measurementType}",
               "src": "machine",
               "h": "f3949a7c95c5"
+            },
+            "input": {
+              "t": "Masukan",
+              "src": "machine",
+              "h": "b568d47f2e24"
+            },
+            "radiusFormatValueCurrentLinearUnitCircumferenceFormatValue2CurrentLinearUnit2": {
+              "t": "Radius: {formatValue} {currentLinearUnit}Sirkuit: {formatValue2} {currentLinearUnit2}Area: {formatValue3} {currentAreaUnit}",
+              "src": "machine",
+              "h": "eecb8dae45c4"
+            },
+            "areaFormatValueCurrentAreaUnitPerimeterFormatValue2CurrentLinearUnit": {
+              "t": "Area: {formatValue} {currentAreaUnit}Perimeter: {formatValue2} {currentLinearUnit}",
+              "src": "machine",
+              "h": "11a3d293fa73"
+            },
+            "sideLengthFormatValueCurrentLinearUnitPerimeterFormatValue2": {
+              "t": "Panjang Sisi: {formatValue} {currentLinearUnit}Perimeter: {formatValue2} {currentLinearUnit2}Area: {formatValue3} {currentAreaUnit}",
+              "src": "machine",
+              "h": "599dbd8a3c31"
             }
           }
         },
         "it": {
-          "file": "e7d95a343658",
+          "file": "f441522f0bfc",
           "counts": {
             "esri": 56,
             "esri-check": 1,
             "community": 0,
             "manual": 0,
             "existing": 0,
-            "machine": 232,
+            "machine": 236,
             "stale": 0,
-            "missing": 4
+            "missing": 0
           },
           "entries": {
             "_widgetLabel": {
@@ -17986,20 +18206,40 @@
               "t": "Importato {measurementType}",
               "src": "machine",
               "h": "f3949a7c95c5"
+            },
+            "input": {
+              "t": "Input",
+              "src": "machine",
+              "h": "b568d47f2e24"
+            },
+            "radiusFormatValueCurrentLinearUnitCircumferenceFormatValue2CurrentLinearUnit2": {
+              "t": "Radius: {formatValue} {currentLinearUnit}Circonferenza: {formatValue2} {currentLinearUnit2}Area: {formatValue3} {currentAreaUnit}",
+              "src": "machine",
+              "h": "eecb8dae45c4"
+            },
+            "areaFormatValueCurrentAreaUnitPerimeterFormatValue2CurrentLinearUnit": {
+              "t": "Area: {formatValue} {currentAreaUnit}Perimetro: {formatValue2} {currentLinearUnit}",
+              "src": "machine",
+              "h": "11a3d293fa73"
+            },
+            "sideLengthFormatValueCurrentLinearUnitPerimeterFormatValue2": {
+              "t": "Lunghezza laterale: {formatValue} {currentLinearUnit}Perimetro: {formatValue2} {currentLinearUnit2}Area: {formatValue3} {currentAreaUnit}",
+              "src": "machine",
+              "h": "599dbd8a3c31"
             }
           }
         },
         "ja": {
-          "file": "507f2b9a1fd5",
+          "file": "7d02b3216d41",
           "counts": {
             "esri": 58,
             "esri-check": 1,
             "community": 0,
             "manual": 0,
             "existing": 0,
-            "machine": 231,
+            "machine": 234,
             "stale": 0,
-            "missing": 3
+            "missing": 0
           },
           "entries": {
             "_widgetLabel": {
@@ -19156,20 +19396,35 @@
               "t": "インポート {measurementType}",
               "src": "machine",
               "h": "f3949a7c95c5"
+            },
+            "radiusFormatValueCurrentLinearUnitCircumferenceFormatValue2CurrentLinearUnit2": {
+              "t": "半径: {formatValue} {currentLinearUnit}周囲: {formatValue2} {currentLinearUnit2}エリア: {formatValue3} {currentAreaUnit}",
+              "src": "machine",
+              "h": "eecb8dae45c4"
+            },
+            "areaFormatValueCurrentAreaUnitPerimeterFormatValue2CurrentLinearUnit": {
+              "t": "エリア: {formatValue} {currentAreaUnit}周囲: {formatValue2} {currentLinearUnit}",
+              "src": "machine",
+              "h": "11a3d293fa73"
+            },
+            "sideLengthFormatValueCurrentLinearUnitPerimeterFormatValue2": {
+              "t": "側面の長さ: {formatValue} {currentLinearUnit}周囲: {formatValue2} {currentLinearUnit2}エリア: {formatValue3} {currentAreaUnit}",
+              "src": "machine",
+              "h": "599dbd8a3c31"
             }
           }
         },
         "ko": {
-          "file": "2a65a7ba1989",
+          "file": "f1d358da8352",
           "counts": {
             "esri": 58,
             "esri-check": 1,
             "community": 0,
             "manual": 0,
             "existing": 0,
-            "machine": 231,
+            "machine": 234,
             "stale": 0,
-            "missing": 3
+            "missing": 0
           },
           "entries": {
             "_widgetLabel": {
@@ -20326,20 +20581,35 @@
               "t": "관련 상품 {measurementType}",
               "src": "machine",
               "h": "f3949a7c95c5"
+            },
+            "radiusFormatValueCurrentLinearUnitCircumferenceFormatValue2CurrentLinearUnit2": {
+              "t": "반경: {formatValue} {currentLinearUnit}공급 능력: {formatValue2} {currentLinearUnit2}지역: {formatValue3} {currentAreaUnit}",
+              "src": "machine",
+              "h": "eecb8dae45c4"
+            },
+            "areaFormatValueCurrentAreaUnitPerimeterFormatValue2CurrentLinearUnit": {
+              "t": "지역: {formatValue} {currentAreaUnit}둘레: {formatValue2} {currentLinearUnit}",
+              "src": "machine",
+              "h": "11a3d293fa73"
+            },
+            "sideLengthFormatValueCurrentLinearUnitPerimeterFormatValue2": {
+              "t": "옆 길이: {formatValue} {currentLinearUnit}둘레: {formatValue2} {currentLinearUnit2}지역: {formatValue3} {currentAreaUnit}",
+              "src": "machine",
+              "h": "599dbd8a3c31"
             }
           }
         },
         "lt": {
-          "file": "583d27f237f9",
+          "file": "2c1d6f9d0194",
           "counts": {
             "esri": 57,
             "esri-check": 2,
             "community": 0,
             "manual": 0,
             "existing": 0,
-            "machine": 231,
+            "machine": 234,
             "stale": 0,
-            "missing": 3
+            "missing": 0
           },
           "entries": {
             "_widgetLabel": {
@@ -21496,20 +21766,35 @@
               "t": "Importuoti {measurementType}",
               "src": "machine",
               "h": "f3949a7c95c5"
+            },
+            "radiusFormatValueCurrentLinearUnitCircumferenceFormatValue2CurrentLinearUnit2": {
+              "t": "Spindulys: {formatValue} {currentLinearUnit}Trukmė: {formatValue2} {currentLinearUnit2}Plotas: {formatValue3} {currentAreaUnit}",
+              "src": "machine",
+              "h": "eecb8dae45c4"
+            },
+            "areaFormatValueCurrentAreaUnitPerimeterFormatValue2CurrentLinearUnit": {
+              "t": "Plotas: {formatValue} {currentAreaUnit}Perimetras: {formatValue2} {currentLinearUnit}",
+              "src": "machine",
+              "h": "11a3d293fa73"
+            },
+            "sideLengthFormatValueCurrentLinearUnitPerimeterFormatValue2": {
+              "t": "Šoninis ilgis: {formatValue} {currentLinearUnit}Perimetras: {formatValue2} {currentLinearUnit2}Plotas: {formatValue3} {currentAreaUnit}",
+              "src": "machine",
+              "h": "599dbd8a3c31"
             }
           }
         },
         "lv": {
-          "file": "982fe0f85f8f",
+          "file": "20f481315e14",
           "counts": {
             "esri": 57,
             "esri-check": 2,
             "community": 0,
             "manual": 0,
             "existing": 0,
-            "machine": 231,
+            "machine": 234,
             "stale": 0,
-            "missing": 3
+            "missing": 0
           },
           "entries": {
             "_widgetLabel": {
@@ -22666,20 +22951,35 @@
               "t": "Importēts {measurementType}",
               "src": "machine",
               "h": "f3949a7c95c5"
+            },
+            "radiusFormatValueCurrentLinearUnitCircumferenceFormatValue2CurrentLinearUnit2": {
+              "t": "Rādiuss {formatValue} {currentLinearUnit}Apkārtraksts: {formatValue2} {currentLinearUnit2}Platība: {formatValue3} {currentAreaUnit}",
+              "src": "machine",
+              "h": "eecb8dae45c4"
+            },
+            "areaFormatValueCurrentAreaUnitPerimeterFormatValue2CurrentLinearUnit": {
+              "t": "Platība: {formatValue} {currentAreaUnit}Perimetrs: {formatValue2} {currentLinearUnit}",
+              "src": "machine",
+              "h": "11a3d293fa73"
+            },
+            "sideLengthFormatValueCurrentLinearUnitPerimeterFormatValue2": {
+              "t": "Sānu garums: {formatValue} {currentLinearUnit}Perimetrs: {formatValue2} {currentLinearUnit2}Platība: {formatValue3} {currentAreaUnit}",
+              "src": "machine",
+              "h": "599dbd8a3c31"
             }
           }
         },
         "no": {
-          "file": "6f9b9f2aeb15",
+          "file": "b4cf0c4c535e",
           "counts": {
             "esri": 54,
             "esri-check": 2,
             "community": 0,
             "manual": 0,
             "existing": 0,
-            "machine": 234,
+            "machine": 237,
             "stale": 0,
-            "missing": 3
+            "missing": 0
           },
           "entries": {
             "_widgetLabel": {
@@ -23851,20 +24151,35 @@
               "t": "Importert {measurementType}",
               "src": "machine",
               "h": "f3949a7c95c5"
+            },
+            "radiusFormatValueCurrentLinearUnitCircumferenceFormatValue2CurrentLinearUnit2": {
+              "t": "Radius: {formatValue} {currentLinearUnit}Omkrets: {formatValue2} {currentLinearUnit2}Område: {formatValue3} {currentAreaUnit}",
+              "src": "machine",
+              "h": "eecb8dae45c4"
+            },
+            "areaFormatValueCurrentAreaUnitPerimeterFormatValue2CurrentLinearUnit": {
+              "t": "Område: {formatValue} {currentAreaUnit}Perimeter: {formatValue2} {currentLinearUnit}",
+              "src": "machine",
+              "h": "11a3d293fa73"
+            },
+            "sideLengthFormatValueCurrentLinearUnitPerimeterFormatValue2": {
+              "t": "Sidelengde: {formatValue} {currentLinearUnit}Perimeter: {formatValue2} {currentLinearUnit2}Område: {formatValue3} {currentAreaUnit}",
+              "src": "machine",
+              "h": "599dbd8a3c31"
             }
           }
         },
         "nl": {
-          "file": "685e1e870de6",
+          "file": "54dbf7d4b735",
           "counts": {
             "esri": 57,
             "esri-check": 0,
             "community": 0,
             "manual": 0,
             "existing": 0,
-            "machine": 233,
+            "machine": 236,
             "stale": 0,
-            "missing": 3
+            "missing": 0
           },
           "entries": {
             "_widgetLabel": {
@@ -25031,20 +25346,35 @@
               "t": "Geïmporteerd {measurementType}",
               "src": "machine",
               "h": "f3949a7c95c5"
+            },
+            "radiusFormatValueCurrentLinearUnitCircumferenceFormatValue2CurrentLinearUnit2": {
+              "t": "Straal: {formatValue} {currentLinearUnit}Omtrek: {formatValue2} {currentLinearUnit2}Gebied: {formatValue3} {currentAreaUnit}",
+              "src": "machine",
+              "h": "eecb8dae45c4"
+            },
+            "areaFormatValueCurrentAreaUnitPerimeterFormatValue2CurrentLinearUnit": {
+              "t": "Gebied: {formatValue} {currentAreaUnit}Omtrek: {formatValue2} {currentLinearUnit}",
+              "src": "machine",
+              "h": "11a3d293fa73"
+            },
+            "sideLengthFormatValueCurrentLinearUnitPerimeterFormatValue2": {
+              "t": "Zijlengte: {formatValue} {currentLinearUnit}Omtrek: {formatValue2} {currentLinearUnit2}Gebied: {formatValue3} {currentAreaUnit}",
+              "src": "machine",
+              "h": "599dbd8a3c31"
             }
           }
         },
         "pl": {
-          "file": "3b2ba2a5a675",
+          "file": "4b7aaa020f22",
           "counts": {
             "esri": 57,
             "esri-check": 2,
             "community": 0,
             "manual": 0,
             "existing": 0,
-            "machine": 231,
+            "machine": 234,
             "stale": 0,
-            "missing": 3
+            "missing": 0
           },
           "entries": {
             "_widgetLabel": {
@@ -26201,20 +26531,35 @@
               "t": "Przywożone {measurementType}",
               "src": "machine",
               "h": "f3949a7c95c5"
+            },
+            "radiusFormatValueCurrentLinearUnitCircumferenceFormatValue2CurrentLinearUnit2": {
+              "t": "Promień: {formatValue} {currentLinearUnit}Obwód: {formatValue2} {currentLinearUnit2}Obszar: {formatValue3} {currentAreaUnit}",
+              "src": "machine",
+              "h": "eecb8dae45c4"
+            },
+            "areaFormatValueCurrentAreaUnitPerimeterFormatValue2CurrentLinearUnit": {
+              "t": "Obszar: {formatValue} {currentAreaUnit}Obwód: {formatValue2} {currentLinearUnit}",
+              "src": "machine",
+              "h": "11a3d293fa73"
+            },
+            "sideLengthFormatValueCurrentLinearUnitPerimeterFormatValue2": {
+              "t": "Długość boku: {formatValue} {currentLinearUnit}Obwód: {formatValue2} {currentLinearUnit2}Obszar: {formatValue3} {currentAreaUnit}",
+              "src": "machine",
+              "h": "599dbd8a3c31"
             }
           }
         },
         "pt-br": {
-          "file": "2ced6bc2d70e",
+          "file": "b00c08a4780f",
           "counts": {
             "esri": 53,
             "esri-check": 2,
             "community": 0,
             "manual": 0,
             "existing": 0,
-            "machine": 235,
+            "machine": 238,
             "stale": 0,
-            "missing": 3
+            "missing": 0
           },
           "entries": {
             "_widgetLabel": {
@@ -27391,20 +27736,35 @@
               "t": "Importado {measurementType}",
               "src": "machine",
               "h": "f3949a7c95c5"
+            },
+            "radiusFormatValueCurrentLinearUnitCircumferenceFormatValue2CurrentLinearUnit2": {
+              "t": "Raio: {formatValue} {currentLinearUnit}Circunferência: {formatValue2} {currentLinearUnit2}Área: {formatValue3} {currentAreaUnit}",
+              "src": "machine",
+              "h": "eecb8dae45c4"
+            },
+            "areaFormatValueCurrentAreaUnitPerimeterFormatValue2CurrentLinearUnit": {
+              "t": "Área: {formatValue} {currentAreaUnit}Perímetro: {formatValue2} {currentLinearUnit}",
+              "src": "machine",
+              "h": "11a3d293fa73"
+            },
+            "sideLengthFormatValueCurrentLinearUnitPerimeterFormatValue2": {
+              "t": "Comprimento lateral: {formatValue} {currentLinearUnit}Perímetro: {formatValue2} {currentLinearUnit2}Área: {formatValue3} {currentAreaUnit}",
+              "src": "machine",
+              "h": "599dbd8a3c31"
             }
           }
         },
         "pt-pt": {
-          "file": "fea681669bb3",
+          "file": "bccfe51de0c9",
           "counts": {
             "esri": 54,
             "esri-check": 1,
             "community": 0,
             "manual": 0,
             "existing": 0,
-            "machine": 235,
+            "machine": 238,
             "stale": 0,
-            "missing": 3
+            "missing": 0
           },
           "entries": {
             "_widgetLabel": {
@@ -28581,20 +28941,35 @@
               "t": "Importado {measurementType}",
               "src": "machine",
               "h": "f3949a7c95c5"
+            },
+            "radiusFormatValueCurrentLinearUnitCircumferenceFormatValue2CurrentLinearUnit2": {
+              "t": "Raio: {formatValue} {currentLinearUnit}Circunferência: {formatValue2} {currentLinearUnit2}Área: {formatValue3} {currentAreaUnit}",
+              "src": "machine",
+              "h": "eecb8dae45c4"
+            },
+            "areaFormatValueCurrentAreaUnitPerimeterFormatValue2CurrentLinearUnit": {
+              "t": "Área: {formatValue} {currentAreaUnit}Perímetro: {formatValue2} {currentLinearUnit}",
+              "src": "machine",
+              "h": "11a3d293fa73"
+            },
+            "sideLengthFormatValueCurrentLinearUnitPerimeterFormatValue2": {
+              "t": "Comprimento Lateral: {formatValue} {currentLinearUnit}Perímetro: {formatValue2} {currentLinearUnit2}Área: {formatValue3} {currentAreaUnit}",
+              "src": "machine",
+              "h": "599dbd8a3c31"
             }
           }
         },
         "ro": {
-          "file": "692175c387ac",
+          "file": "af9ad3db6080",
           "counts": {
             "esri": 55,
             "esri-check": 1,
             "community": 0,
             "manual": 0,
             "existing": 0,
-            "machine": 234,
+            "machine": 237,
             "stale": 0,
-            "missing": 3
+            "missing": 0
           },
           "entries": {
             "_widgetLabel": {
@@ -29766,20 +30141,35 @@
               "t": "Importat {measurementType}",
               "src": "machine",
               "h": "f3949a7c95c5"
+            },
+            "radiusFormatValueCurrentLinearUnitCircumferenceFormatValue2CurrentLinearUnit2": {
+              "t": "Radius: {formatValue} {currentLinearUnit}Circumferinţa: {formatValue2} {currentLinearUnit2}Zonă: {formatValue3} {currentAreaUnit}",
+              "src": "machine",
+              "h": "eecb8dae45c4"
+            },
+            "areaFormatValueCurrentAreaUnitPerimeterFormatValue2CurrentLinearUnit": {
+              "t": "Zonă: {formatValue} {currentAreaUnit}Perimetru: {formatValue2} {currentLinearUnit}",
+              "src": "machine",
+              "h": "11a3d293fa73"
+            },
+            "sideLengthFormatValueCurrentLinearUnitPerimeterFormatValue2": {
+              "t": "Lungime laterală: {formatValue} {currentLinearUnit}Perimetru: {formatValue2} {currentLinearUnit2}Zonă: {formatValue3} {currentAreaUnit}",
+              "src": "machine",
+              "h": "599dbd8a3c31"
             }
           }
         },
         "ru": {
-          "file": "bdfa81af53ea",
+          "file": "d6daa2b55e8a",
           "counts": {
             "esri": 58,
             "esri-check": 1,
             "community": 0,
             "manual": 0,
             "existing": 0,
-            "machine": 231,
+            "machine": 234,
             "stale": 0,
-            "missing": 3
+            "missing": 0
           },
           "entries": {
             "_widgetLabel": {
@@ -30936,20 +31326,35 @@
               "t": "импортный {measurementType}",
               "src": "machine",
               "h": "f3949a7c95c5"
+            },
+            "radiusFormatValueCurrentLinearUnitCircumferenceFormatValue2CurrentLinearUnit2": {
+              "t": "Радиус: {formatValue} {currentLinearUnit}Круглый стол: {formatValue2} {currentLinearUnit2}Район: {formatValue3} {currentAreaUnit}",
+              "src": "machine",
+              "h": "eecb8dae45c4"
+            },
+            "areaFormatValueCurrentAreaUnitPerimeterFormatValue2CurrentLinearUnit": {
+              "t": "Район: {formatValue} {currentAreaUnit}Периметр: {formatValue2} {currentLinearUnit}",
+              "src": "machine",
+              "h": "11a3d293fa73"
+            },
+            "sideLengthFormatValueCurrentLinearUnitPerimeterFormatValue2": {
+              "t": "Длина стороны: {formatValue} {currentLinearUnit}Периметр: {formatValue2} {currentLinearUnit2}Район: {formatValue3} {currentAreaUnit}",
+              "src": "machine",
+              "h": "599dbd8a3c31"
             }
           }
         },
         "sk": {
-          "file": "ece9aa9acf45",
+          "file": "cb014d0b4407",
           "counts": {
             "esri": 57,
             "esri-check": 1,
             "community": 0,
             "manual": 0,
             "existing": 0,
-            "machine": 232,
+            "machine": 235,
             "stale": 0,
-            "missing": 3
+            "missing": 0
           },
           "entries": {
             "_widgetLabel": {
@@ -32111,20 +32516,35 @@
               "t": "Dovoz {measurementType}",
               "src": "machine",
               "h": "f3949a7c95c5"
+            },
+            "radiusFormatValueCurrentLinearUnitCircumferenceFormatValue2CurrentLinearUnit2": {
+              "t": "Polomer: {formatValue} {currentLinearUnit}Obvod: {formatValue2} {currentLinearUnit2}Oblasť: {formatValue3} {currentAreaUnit}",
+              "src": "machine",
+              "h": "eecb8dae45c4"
+            },
+            "areaFormatValueCurrentAreaUnitPerimeterFormatValue2CurrentLinearUnit": {
+              "t": "Oblasť: {formatValue} {currentAreaUnit}Obvod: {formatValue2} {currentLinearUnit}",
+              "src": "machine",
+              "h": "11a3d293fa73"
+            },
+            "sideLengthFormatValueCurrentLinearUnitPerimeterFormatValue2": {
+              "t": "Dĺžka strany: {formatValue} {currentLinearUnit}Obvod: {formatValue2} {currentLinearUnit2}Oblasť: {formatValue3} {currentAreaUnit}",
+              "src": "machine",
+              "h": "599dbd8a3c31"
             }
           }
         },
         "sl": {
-          "file": "082ca0da8774",
+          "file": "08d725f2b3be",
           "counts": {
             "esri": 58,
             "esri-check": 1,
             "community": 0,
             "manual": 0,
             "existing": 0,
-            "machine": 231,
+            "machine": 234,
             "stale": 0,
-            "missing": 3
+            "missing": 0
           },
           "entries": {
             "_widgetLabel": {
@@ -33281,6 +33701,21 @@
               "t": "Uvoženo {measurementType}",
               "src": "machine",
               "h": "f3949a7c95c5"
+            },
+            "radiusFormatValueCurrentLinearUnitCircumferenceFormatValue2CurrentLinearUnit2": {
+              "t": "Polmer: {formatValue} {currentLinearUnit}Obtožba: {formatValue2} {currentLinearUnit2}Območje: {formatValue3} {currentAreaUnit}",
+              "src": "machine",
+              "h": "eecb8dae45c4"
+            },
+            "areaFormatValueCurrentAreaUnitPerimeterFormatValue2CurrentLinearUnit": {
+              "t": "Območje: {formatValue} {currentAreaUnit}Območje: {formatValue2} {currentLinearUnit}",
+              "src": "machine",
+              "h": "11a3d293fa73"
+            },
+            "sideLengthFormatValueCurrentLinearUnitPerimeterFormatValue2": {
+              "t": "Dolžina strani: {formatValue} {currentLinearUnit}Območje: {formatValue2} {currentLinearUnit2}Območje: {formatValue3} {currentAreaUnit}",
+              "src": "machine",
+              "h": "599dbd8a3c31"
             }
           }
         },
@@ -33299,16 +33734,16 @@
           "entries": {}
         },
         "sv": {
-          "file": "f9be7e900268",
+          "file": "3149442c799c",
           "counts": {
             "esri": 56,
             "esri-check": 2,
             "community": 0,
             "manual": 0,
             "existing": 0,
-            "machine": 232,
+            "machine": 235,
             "stale": 0,
-            "missing": 3
+            "missing": 0
           },
           "entries": {
             "_widgetLabel": {
@@ -34470,20 +34905,35 @@
               "t": "Importerad {measurementType}",
               "src": "machine",
               "h": "f3949a7c95c5"
+            },
+            "radiusFormatValueCurrentLinearUnitCircumferenceFormatValue2CurrentLinearUnit2": {
+              "t": "Radius: {formatValue} {currentLinearUnit}Omständighet: {formatValue2} {currentLinearUnit2}Område: {formatValue3} {currentAreaUnit}",
+              "src": "machine",
+              "h": "eecb8dae45c4"
+            },
+            "areaFormatValueCurrentAreaUnitPerimeterFormatValue2CurrentLinearUnit": {
+              "t": "Område: {formatValue} {currentAreaUnit}Perimeter: {formatValue2} {currentLinearUnit}",
+              "src": "machine",
+              "h": "11a3d293fa73"
+            },
+            "sideLengthFormatValueCurrentLinearUnitPerimeterFormatValue2": {
+              "t": "Side Length: {formatValue} {currentLinearUnit}Perimeter: {formatValue2} {currentLinearUnit2}Område: {formatValue3} {currentAreaUnit}",
+              "src": "machine",
+              "h": "599dbd8a3c31"
             }
           }
         },
         "th": {
-          "file": "57aaec57c5eb",
+          "file": "a3e299b7dcac",
           "counts": {
             "esri": 58,
             "esri-check": 1,
             "community": 0,
             "manual": 0,
             "existing": 0,
-            "machine": 231,
+            "machine": 234,
             "stale": 0,
-            "missing": 3
+            "missing": 0
           },
           "entries": {
             "_widgetLabel": {
@@ -35640,20 +36090,35 @@
               "t": "นําเข้า {measurementType}",
               "src": "machine",
               "h": "f3949a7c95c5"
+            },
+            "radiusFormatValueCurrentLinearUnitCircumferenceFormatValue2CurrentLinearUnit2": {
+              "t": "รัศมี: {formatValue} {currentLinearUnit}ความต่อเนื่อง: {formatValue2} {currentLinearUnit2}พื้นที่: {formatValue3} {currentAreaUnit}",
+              "src": "machine",
+              "h": "eecb8dae45c4"
+            },
+            "areaFormatValueCurrentAreaUnitPerimeterFormatValue2CurrentLinearUnit": {
+              "t": "พื้นที่: {formatValue} {currentAreaUnit}พื้นที่พื้นที่: {formatValue2} {currentLinearUnit}",
+              "src": "machine",
+              "h": "11a3d293fa73"
+            },
+            "sideLengthFormatValueCurrentLinearUnitPerimeterFormatValue2": {
+              "t": "ความยาวด้าน: {formatValue} {currentLinearUnit}พื้นที่พื้นที่: {formatValue2} {currentLinearUnit2}พื้นที่: {formatValue3} {currentAreaUnit}",
+              "src": "machine",
+              "h": "599dbd8a3c31"
             }
           }
         },
         "tr": {
-          "file": "9690d4ef5628",
+          "file": "10ecfd602a29",
           "counts": {
             "esri": 58,
             "esri-check": 1,
             "community": 0,
             "manual": 0,
             "existing": 0,
-            "machine": 231,
+            "machine": 234,
             "stale": 0,
-            "missing": 3
+            "missing": 0
           },
           "entries": {
             "_widgetLabel": {
@@ -36810,20 +37275,35 @@
               "t": "İthalat {measurementType}",
               "src": "machine",
               "h": "f3949a7c95c5"
+            },
+            "radiusFormatValueCurrentLinearUnitCircumferenceFormatValue2CurrentLinearUnit2": {
+              "t": "Radius: {formatValue} {currentLinearUnit}Circumference: {formatValue2} {currentLinearUnit2}Alan: {formatValue3} {currentAreaUnit}",
+              "src": "machine",
+              "h": "eecb8dae45c4"
+            },
+            "areaFormatValueCurrentAreaUnitPerimeterFormatValue2CurrentLinearUnit": {
+              "t": "Alan: {formatValue} {currentAreaUnit}Perimeter: {formatValue2} {currentLinearUnit}",
+              "src": "machine",
+              "h": "11a3d293fa73"
+            },
+            "sideLengthFormatValueCurrentLinearUnitPerimeterFormatValue2": {
+              "t": "Side Uzunluk: {formatValue} {currentLinearUnit}Perimeter: {formatValue2} {currentLinearUnit2}Alan: {formatValue3} {currentAreaUnit}",
+              "src": "machine",
+              "h": "599dbd8a3c31"
             }
           }
         },
         "zh-cn": {
-          "file": "6d51f43bcf4c",
+          "file": "412b9bf019e9",
           "counts": {
             "esri": 58,
             "esri-check": 1,
             "community": 0,
             "manual": 0,
             "existing": 0,
-            "machine": 231,
+            "machine": 234,
             "stale": 0,
-            "missing": 3
+            "missing": 0
           },
           "entries": {
             "_widgetLabel": {
@@ -37980,20 +38460,35 @@
               "t": "已导入 {measurementType}",
               "src": "machine",
               "h": "f3949a7c95c5"
+            },
+            "radiusFormatValueCurrentLinearUnitCircumferenceFormatValue2CurrentLinearUnit2": {
+              "t": "半径 : {formatValue} {currentLinearUnit}循环 : {formatValue2} {currentLinearUnit2}区域 : {formatValue3} {currentAreaUnit}",
+              "src": "machine",
+              "h": "eecb8dae45c4"
+            },
+            "areaFormatValueCurrentAreaUnitPerimeterFormatValue2CurrentLinearUnit": {
+              "t": "区域 : {formatValue} {currentAreaUnit}周边 : {formatValue2} {currentLinearUnit}",
+              "src": "machine",
+              "h": "11a3d293fa73"
+            },
+            "sideLengthFormatValueCurrentLinearUnitPerimeterFormatValue2": {
+              "t": "边长 : {formatValue} {currentLinearUnit}周边 : {formatValue2} {currentLinearUnit2}区域 : {formatValue3} {currentAreaUnit}",
+              "src": "machine",
+              "h": "599dbd8a3c31"
             }
           }
         },
         "uk": {
-          "file": "c23adcfe7848",
+          "file": "e7432749fcc5",
           "counts": {
             "esri": 57,
             "esri-check": 2,
             "community": 0,
             "manual": 0,
             "existing": 0,
-            "machine": 231,
+            "machine": 234,
             "stale": 0,
-            "missing": 3
+            "missing": 0
           },
           "entries": {
             "_widgetLabel": {
@@ -39150,20 +39645,35 @@
               "t": "Імпорт {measurementType}",
               "src": "machine",
               "h": "f3949a7c95c5"
+            },
+            "radiusFormatValueCurrentLinearUnitCircumferenceFormatValue2CurrentLinearUnit2": {
+              "t": "Радій: {formatValue} {currentLinearUnit}Посилання: {formatValue2} {currentLinearUnit2}Площа: {formatValue3} {currentAreaUnit}",
+              "src": "machine",
+              "h": "eecb8dae45c4"
+            },
+            "areaFormatValueCurrentAreaUnitPerimeterFormatValue2CurrentLinearUnit": {
+              "t": "Площа: {formatValue} {currentAreaUnit}Периметр: {formatValue2} {currentLinearUnit}",
+              "src": "machine",
+              "h": "11a3d293fa73"
+            },
+            "sideLengthFormatValueCurrentLinearUnitPerimeterFormatValue2": {
+              "t": "Довжина стороні: {formatValue} {currentLinearUnit}Периметр: {formatValue2} {currentLinearUnit2}Площа: {formatValue3} {currentAreaUnit}",
+              "src": "machine",
+              "h": "599dbd8a3c31"
             }
           }
         },
         "vi": {
-          "file": "b93a8fb47157",
+          "file": "4729954aca2c",
           "counts": {
             "esri": 57,
             "esri-check": 2,
             "community": 0,
             "manual": 0,
             "existing": 0,
-            "machine": 231,
+            "machine": 234,
             "stale": 0,
-            "missing": 3
+            "missing": 0
           },
           "entries": {
             "_widgetLabel": {
@@ -40320,20 +40830,35 @@
               "t": "Nhập {measurementType}",
               "src": "machine",
               "h": "f3949a7c95c5"
+            },
+            "radiusFormatValueCurrentLinearUnitCircumferenceFormatValue2CurrentLinearUnit2": {
+              "t": "Bán kính: {formatValue} {currentLinearUnit}Phân loại: {formatValue2} {currentLinearUnit2}Vùng: {formatValue3} {currentAreaUnit}",
+              "src": "machine",
+              "h": "eecb8dae45c4"
+            },
+            "areaFormatValueCurrentAreaUnitPerimeterFormatValue2CurrentLinearUnit": {
+              "t": "Vùng: {formatValue} {currentAreaUnit}Vòng tròn: {formatValue2} {currentLinearUnit}",
+              "src": "machine",
+              "h": "11a3d293fa73"
+            },
+            "sideLengthFormatValueCurrentLinearUnitPerimeterFormatValue2": {
+              "t": "Chiều dài Mặt: {formatValue} {currentLinearUnit}Vòng tròn: {formatValue2} {currentLinearUnit2}Vùng: {formatValue3} {currentAreaUnit}",
+              "src": "machine",
+              "h": "599dbd8a3c31"
             }
           }
         },
         "zh-hk": {
-          "file": "835e283a1908",
+          "file": "fa69d60c8743",
           "counts": {
             "esri": 58,
             "esri-check": 1,
             "community": 0,
             "manual": 0,
             "existing": 0,
-            "machine": 231,
+            "machine": 234,
             "stale": 0,
-            "missing": 3
+            "missing": 0
           },
           "entries": {
             "_widgetLabel": {
@@ -41490,20 +42015,35 @@
               "t": "已匯入 {measurementType}",
               "src": "machine",
               "h": "f3949a7c95c5"
+            },
+            "radiusFormatValueCurrentLinearUnitCircumferenceFormatValue2CurrentLinearUnit2": {
+              "t": "半徑 : {formatValue} {currentLinearUnit}周圍 : {formatValue2} {currentLinearUnit2}區域 : {formatValue3} {currentAreaUnit}",
+              "src": "machine",
+              "h": "eecb8dae45c4"
+            },
+            "areaFormatValueCurrentAreaUnitPerimeterFormatValue2CurrentLinearUnit": {
+              "t": "區域 : {formatValue} {currentAreaUnit}周圍 : {formatValue2} {currentLinearUnit}",
+              "src": "machine",
+              "h": "11a3d293fa73"
+            },
+            "sideLengthFormatValueCurrentLinearUnitPerimeterFormatValue2": {
+              "t": "邊長 : {formatValue} {currentLinearUnit}周圍 : {formatValue2} {currentLinearUnit2}區域 : {formatValue3} {currentAreaUnit}",
+              "src": "machine",
+              "h": "599dbd8a3c31"
             }
           }
         },
         "zh-tw": {
-          "file": "835e283a1908",
+          "file": "fa69d60c8743",
           "counts": {
             "esri": 58,
             "esri-check": 1,
             "community": 0,
             "manual": 0,
             "existing": 0,
-            "machine": 231,
+            "machine": 234,
             "stale": 0,
-            "missing": 3
+            "missing": 0
           },
           "entries": {
             "_widgetLabel": {
@@ -42660,6 +43200,21 @@
               "t": "已匯入 {measurementType}",
               "src": "machine",
               "h": "f3949a7c95c5"
+            },
+            "radiusFormatValueCurrentLinearUnitCircumferenceFormatValue2CurrentLinearUnit2": {
+              "t": "半徑 : {formatValue} {currentLinearUnit}周圍 : {formatValue2} {currentLinearUnit2}區域 : {formatValue3} {currentAreaUnit}",
+              "src": "machine",
+              "h": "eecb8dae45c4"
+            },
+            "areaFormatValueCurrentAreaUnitPerimeterFormatValue2CurrentLinearUnit": {
+              "t": "區域 : {formatValue} {currentAreaUnit}周圍 : {formatValue2} {currentLinearUnit}",
+              "src": "machine",
+              "h": "11a3d293fa73"
+            },
+            "sideLengthFormatValueCurrentLinearUnitPerimeterFormatValue2": {
+              "t": "邊長 : {formatValue} {currentLinearUnit}周圍 : {formatValue2} {currentLinearUnit2}區域 : {formatValue3} {currentAreaUnit}",
+              "src": "machine",
+              "h": "599dbd8a3c31"
             }
           }
         }

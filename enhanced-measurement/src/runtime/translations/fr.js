@@ -293,9 +293,9 @@ System.register([], function (e) {
         unknownError: "erreur inconnue",
         unserializableError: "Erreur non sérialisable",
         input: "Entrée",
-        radiusFormatValueCurrentLinearUnitCircumferenceFormatValue2CurrentLinearUnit2: "Radius: {formatValue} {currentLinearUnit}\nCircumference: {formatValue2} {currentLinearUnit2}\nArea: {formatValue3} {currentAreaUnit}",
-        areaFormatValueCurrentAreaUnitPerimeterFormatValue2CurrentLinearUnit: "Area: {formatValue} {currentAreaUnit}\nPerimeter: {formatValue2} {currentLinearUnit}",
-        sideLengthFormatValueCurrentLinearUnitPerimeterFormatValue2: "Side Length: {formatValue} {currentLinearUnit}\nPerimeter: {formatValue2} {currentLinearUnit2}\nArea: {formatValue3} {currentAreaUnit}"
+        radiusFormatValueCurrentLinearUnitCircumferenceFormatValue2CurrentLinearUnit2: "Rayon: {formatValue} {currentLinearUnit}Circonférence: {formatValue2} {currentLinearUnit2}Domaine: {formatValue3} {currentAreaUnit}",
+        areaFormatValueCurrentAreaUnitPerimeterFormatValue2CurrentLinearUnit: "Domaine: {formatValue} {currentAreaUnit}Périmètre: {formatValue2} {currentLinearUnit}",
+        sideLengthFormatValueCurrentLinearUnitPerimeterFormatValue2: "Longueur latérale: {formatValue} {currentLinearUnit}Périmètre: {formatValue2} {currentLinearUnit2}Domaine: {formatValue3} {currentAreaUnit}"
       })
     }
   }

@@ -293,9 +293,9 @@ System.register([], function (e) {
         unknownError: "未知のエラー",
         unserializableError: "unserializable エラー",
         input: "入力",
-        radiusFormatValueCurrentLinearUnitCircumferenceFormatValue2CurrentLinearUnit2: "Radius: {formatValue} {currentLinearUnit}\nCircumference: {formatValue2} {currentLinearUnit2}\nArea: {formatValue3} {currentAreaUnit}",
-        areaFormatValueCurrentAreaUnitPerimeterFormatValue2CurrentLinearUnit: "Area: {formatValue} {currentAreaUnit}\nPerimeter: {formatValue2} {currentLinearUnit}",
-        sideLengthFormatValueCurrentLinearUnitPerimeterFormatValue2: "Side Length: {formatValue} {currentLinearUnit}\nPerimeter: {formatValue2} {currentLinearUnit2}\nArea: {formatValue3} {currentAreaUnit}"
+        radiusFormatValueCurrentLinearUnitCircumferenceFormatValue2CurrentLinearUnit2: "半径: {formatValue} {currentLinearUnit}周囲: {formatValue2} {currentLinearUnit2}エリア: {formatValue3} {currentAreaUnit}",
+        areaFormatValueCurrentAreaUnitPerimeterFormatValue2CurrentLinearUnit: "エリア: {formatValue} {currentAreaUnit}周囲: {formatValue2} {currentLinearUnit}",
+        sideLengthFormatValueCurrentLinearUnitPerimeterFormatValue2: "側面の長さ: {formatValue} {currentLinearUnit}周囲: {formatValue2} {currentLinearUnit2}エリア: {formatValue3} {currentAreaUnit}"
       })
     }
   }

@@ -293,9 +293,9 @@ System.register([], function (e) {
         unknownError: "lỗi không rõ",
         unserializableError: "Lỗi không thể gửi đi được",
         input: "Đầu vào",
-        radiusFormatValueCurrentLinearUnitCircumferenceFormatValue2CurrentLinearUnit2: "Radius: {formatValue} {currentLinearUnit}\nCircumference: {formatValue2} {currentLinearUnit2}\nArea: {formatValue3} {currentAreaUnit}",
-        areaFormatValueCurrentAreaUnitPerimeterFormatValue2CurrentLinearUnit: "Area: {formatValue} {currentAreaUnit}\nPerimeter: {formatValue2} {currentLinearUnit}",
-        sideLengthFormatValueCurrentLinearUnitPerimeterFormatValue2: "Side Length: {formatValue} {currentLinearUnit}\nPerimeter: {formatValue2} {currentLinearUnit2}\nArea: {formatValue3} {currentAreaUnit}"
+        radiusFormatValueCurrentLinearUnitCircumferenceFormatValue2CurrentLinearUnit2: "Bán kính: {formatValue} {currentLinearUnit}Phân loại: {formatValue2} {currentLinearUnit2}Vùng: {formatValue3} {currentAreaUnit}",
+        areaFormatValueCurrentAreaUnitPerimeterFormatValue2CurrentLinearUnit: "Vùng: {formatValue} {currentAreaUnit}Vòng tròn: {formatValue2} {currentLinearUnit}",
+        sideLengthFormatValueCurrentLinearUnitPerimeterFormatValue2: "Chiều dài Mặt: {formatValue} {currentLinearUnit}Vòng tròn: {formatValue2} {currentLinearUnit2}Vùng: {formatValue3} {currentAreaUnit}"
       })
     }
   }

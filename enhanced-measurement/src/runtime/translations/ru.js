@@ -293,9 +293,9 @@ System.register([], function (e) {
         unknownError: "Неизвестная ошибка",
         unserializableError: "несериализируемая ошибка",
         input: "Входные данные",
-        radiusFormatValueCurrentLinearUnitCircumferenceFormatValue2CurrentLinearUnit2: "Radius: {formatValue} {currentLinearUnit}\nCircumference: {formatValue2} {currentLinearUnit2}\nArea: {formatValue3} {currentAreaUnit}",
-        areaFormatValueCurrentAreaUnitPerimeterFormatValue2CurrentLinearUnit: "Area: {formatValue} {currentAreaUnit}\nPerimeter: {formatValue2} {currentLinearUnit}",
-        sideLengthFormatValueCurrentLinearUnitPerimeterFormatValue2: "Side Length: {formatValue} {currentLinearUnit}\nPerimeter: {formatValue2} {currentLinearUnit2}\nArea: {formatValue3} {currentAreaUnit}"
+        radiusFormatValueCurrentLinearUnitCircumferenceFormatValue2CurrentLinearUnit2: "Радиус: {formatValue} {currentLinearUnit}Круглый стол: {formatValue2} {currentLinearUnit2}Район: {formatValue3} {currentAreaUnit}",
+        areaFormatValueCurrentAreaUnitPerimeterFormatValue2CurrentLinearUnit: "Район: {formatValue} {currentAreaUnit}Периметр: {formatValue2} {currentLinearUnit}",
+        sideLengthFormatValueCurrentLinearUnitPerimeterFormatValue2: "Длина стороны: {formatValue} {currentLinearUnit}Периметр: {formatValue2} {currentLinearUnit2}Район: {formatValue3} {currentAreaUnit}"
       })
     }
   }

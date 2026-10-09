@@ -293,9 +293,9 @@ System.register([], function (e) {
         unknownError: "neznáma chyba",
         unserializableError: "neserializovateľná chyba",
         input: "Vstup",
-        radiusFormatValueCurrentLinearUnitCircumferenceFormatValue2CurrentLinearUnit2: "Radius: {formatValue} {currentLinearUnit}\nCircumference: {formatValue2} {currentLinearUnit2}\nArea: {formatValue3} {currentAreaUnit}",
-        areaFormatValueCurrentAreaUnitPerimeterFormatValue2CurrentLinearUnit: "Area: {formatValue} {currentAreaUnit}\nPerimeter: {formatValue2} {currentLinearUnit}",
-        sideLengthFormatValueCurrentLinearUnitPerimeterFormatValue2: "Side Length: {formatValue} {currentLinearUnit}\nPerimeter: {formatValue2} {currentLinearUnit2}\nArea: {formatValue3} {currentAreaUnit}"
+        radiusFormatValueCurrentLinearUnitCircumferenceFormatValue2CurrentLinearUnit2: "Polomer: {formatValue} {currentLinearUnit}Obvod: {formatValue2} {currentLinearUnit2}Oblasť: {formatValue3} {currentAreaUnit}",
+        areaFormatValueCurrentAreaUnitPerimeterFormatValue2CurrentLinearUnit: "Oblasť: {formatValue} {currentAreaUnit}Obvod: {formatValue2} {currentLinearUnit}",
+        sideLengthFormatValueCurrentLinearUnitPerimeterFormatValue2: "Dĺžka strany: {formatValue} {currentLinearUnit}Obvod: {formatValue2} {currentLinearUnit2}Oblasť: {formatValue3} {currentAreaUnit}"
       })
     }
   }

@@ -293,9 +293,9 @@ System.register([], function (e) {
         unknownError: "error desconegut",
         unserializableError: "Error no llegible",
         input: "Entrada",
-        radiusFormatValueCurrentLinearUnitCircumferenceFormatValue2CurrentLinearUnit2: "Radius: {formatValue} {currentLinearUnit}\nCircumference: {formatValue2} {currentLinearUnit2}\nArea: {formatValue3} {currentAreaUnit}",
-        areaFormatValueCurrentAreaUnitPerimeterFormatValue2CurrentLinearUnit: "Area: {formatValue} {currentAreaUnit}\nPerimeter: {formatValue2} {currentLinearUnit}",
-        sideLengthFormatValueCurrentLinearUnitPerimeterFormatValue2: "Side Length: {formatValue} {currentLinearUnit}\nPerimeter: {formatValue2} {currentLinearUnit2}\nArea: {formatValue3} {currentAreaUnit}"
+        radiusFormatValueCurrentLinearUnitCircumferenceFormatValue2CurrentLinearUnit2: "Radi: {formatValue} {currentLinearUnit}Circumferència: {formatValue2} {currentLinearUnit2}Àrea: {formatValue3} {currentAreaUnit}",
+        areaFormatValueCurrentAreaUnitPerimeterFormatValue2CurrentLinearUnit: "Àrea: {formatValue} {currentAreaUnit}Perímetre: {formatValue2} {currentLinearUnit}",
+        sideLengthFormatValueCurrentLinearUnitPerimeterFormatValue2: "Longitud lateral: {formatValue} {currentLinearUnit}Perímetre: {formatValue2} {currentLinearUnit2}Àrea: {formatValue3} {currentAreaUnit}"
       })
     }
   }

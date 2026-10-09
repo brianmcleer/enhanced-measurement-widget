@@ -293,9 +293,9 @@ System.register([], function (e) {
         unknownError: "알 수없는 오류",
         unserializableError: "unserializable 오류",
         input: "입력",
-        radiusFormatValueCurrentLinearUnitCircumferenceFormatValue2CurrentLinearUnit2: "Radius: {formatValue} {currentLinearUnit}\nCircumference: {formatValue2} {currentLinearUnit2}\nArea: {formatValue3} {currentAreaUnit}",
-        areaFormatValueCurrentAreaUnitPerimeterFormatValue2CurrentLinearUnit: "Area: {formatValue} {currentAreaUnit}\nPerimeter: {formatValue2} {currentLinearUnit}",
-        sideLengthFormatValueCurrentLinearUnitPerimeterFormatValue2: "Side Length: {formatValue} {currentLinearUnit}\nPerimeter: {formatValue2} {currentLinearUnit2}\nArea: {formatValue3} {currentAreaUnit}"
+        radiusFormatValueCurrentLinearUnitCircumferenceFormatValue2CurrentLinearUnit2: "반경: {formatValue} {currentLinearUnit}공급 능력: {formatValue2} {currentLinearUnit2}지역: {formatValue3} {currentAreaUnit}",
+        areaFormatValueCurrentAreaUnitPerimeterFormatValue2CurrentLinearUnit: "지역: {formatValue} {currentAreaUnit}둘레: {formatValue2} {currentLinearUnit}",
+        sideLengthFormatValueCurrentLinearUnitPerimeterFormatValue2: "옆 길이: {formatValue} {currentLinearUnit}둘레: {formatValue2} {currentLinearUnit2}지역: {formatValue3} {currentAreaUnit}"
       })
     }
   }

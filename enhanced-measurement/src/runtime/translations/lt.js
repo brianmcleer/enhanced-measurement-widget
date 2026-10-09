@@ -293,9 +293,9 @@ System.register([], function (e) {
         unknownError: "nežinoma klaida",
         unserializableError: "nenustatoma klaida",
         input: "Įvestis",
-        radiusFormatValueCurrentLinearUnitCircumferenceFormatValue2CurrentLinearUnit2: "Radius: {formatValue} {currentLinearUnit}\nCircumference: {formatValue2} {currentLinearUnit2}\nArea: {formatValue3} {currentAreaUnit}",
-        areaFormatValueCurrentAreaUnitPerimeterFormatValue2CurrentLinearUnit: "Area: {formatValue} {currentAreaUnit}\nPerimeter: {formatValue2} {currentLinearUnit}",
-        sideLengthFormatValueCurrentLinearUnitPerimeterFormatValue2: "Side Length: {formatValue} {currentLinearUnit}\nPerimeter: {formatValue2} {currentLinearUnit2}\nArea: {formatValue3} {currentAreaUnit}"
+        radiusFormatValueCurrentLinearUnitCircumferenceFormatValue2CurrentLinearUnit2: "Spindulys: {formatValue} {currentLinearUnit}Trukmė: {formatValue2} {currentLinearUnit2}Plotas: {formatValue3} {currentAreaUnit}",
+        areaFormatValueCurrentAreaUnitPerimeterFormatValue2CurrentLinearUnit: "Plotas: {formatValue} {currentAreaUnit}Perimetras: {formatValue2} {currentLinearUnit}",
+        sideLengthFormatValueCurrentLinearUnitPerimeterFormatValue2: "Šoninis ilgis: {formatValue} {currentLinearUnit}Perimetras: {formatValue2} {currentLinearUnit2}Plotas: {formatValue3} {currentAreaUnit}"
       })
     }
   }

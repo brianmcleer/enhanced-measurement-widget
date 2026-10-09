@@ -293,9 +293,9 @@ System.register([], function (e) {
         unknownError: "Невідома помилка",
         unserializableError: "несеріалізована помилка",
         input: "Введення",
-        radiusFormatValueCurrentLinearUnitCircumferenceFormatValue2CurrentLinearUnit2: "Radius: {formatValue} {currentLinearUnit}\nCircumference: {formatValue2} {currentLinearUnit2}\nArea: {formatValue3} {currentAreaUnit}",
-        areaFormatValueCurrentAreaUnitPerimeterFormatValue2CurrentLinearUnit: "Area: {formatValue} {currentAreaUnit}\nPerimeter: {formatValue2} {currentLinearUnit}",
-        sideLengthFormatValueCurrentLinearUnitPerimeterFormatValue2: "Side Length: {formatValue} {currentLinearUnit}\nPerimeter: {formatValue2} {currentLinearUnit2}\nArea: {formatValue3} {currentAreaUnit}"
+        radiusFormatValueCurrentLinearUnitCircumferenceFormatValue2CurrentLinearUnit2: "Радій: {formatValue} {currentLinearUnit}Посилання: {formatValue2} {currentLinearUnit2}Площа: {formatValue3} {currentAreaUnit}",
+        areaFormatValueCurrentAreaUnitPerimeterFormatValue2CurrentLinearUnit: "Площа: {formatValue} {currentAreaUnit}Периметр: {formatValue2} {currentLinearUnit}",
+        sideLengthFormatValueCurrentLinearUnitPerimeterFormatValue2: "Довжина стороні: {formatValue} {currentLinearUnit}Периметр: {formatValue2} {currentLinearUnit2}Площа: {formatValue3} {currentAreaUnit}"
       })
     }
   }

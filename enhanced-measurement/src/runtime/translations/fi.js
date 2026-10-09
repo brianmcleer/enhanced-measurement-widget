@@ -293,9 +293,9 @@ System.register([], function (e) {
         unknownError: "tuntematon virhe",
         unserializableError: "epätavallinen virhe",
         input: "Lähtöaineisto",
-        radiusFormatValueCurrentLinearUnitCircumferenceFormatValue2CurrentLinearUnit2: "Radius: {formatValue} {currentLinearUnit}\nCircumference: {formatValue2} {currentLinearUnit2}\nArea: {formatValue3} {currentAreaUnit}",
-        areaFormatValueCurrentAreaUnitPerimeterFormatValue2CurrentLinearUnit: "Area: {formatValue} {currentAreaUnit}\nPerimeter: {formatValue2} {currentLinearUnit}",
-        sideLengthFormatValueCurrentLinearUnitPerimeterFormatValue2: "Side Length: {formatValue} {currentLinearUnit}\nPerimeter: {formatValue2} {currentLinearUnit2}\nArea: {formatValue3} {currentAreaUnit}"
+        radiusFormatValueCurrentLinearUnitCircumferenceFormatValue2CurrentLinearUnit2: "Säde: {formatValue} {currentLinearUnit}Ympyrä: {formatValue2} {currentLinearUnit2}Alue: {formatValue3} {currentAreaUnit}",
+        areaFormatValueCurrentAreaUnitPerimeterFormatValue2CurrentLinearUnit: "Alue: {formatValue} {currentAreaUnit}Alue: {formatValue2} {currentLinearUnit}",
+        sideLengthFormatValueCurrentLinearUnitPerimeterFormatValue2: "Sivun pituus: {formatValue} {currentLinearUnit}Alue: {formatValue2} {currentLinearUnit2}Alue: {formatValue3} {currentAreaUnit}"
       })
     }
   }

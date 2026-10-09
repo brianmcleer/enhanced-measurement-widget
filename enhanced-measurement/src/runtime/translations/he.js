@@ -293,9 +293,9 @@ System.register([], function (e) {
         unknownError: "טעות לא ידועה",
         unserializableError: "טעות בלתי אפשרית",
         input: "קלט",
-        radiusFormatValueCurrentLinearUnitCircumferenceFormatValue2CurrentLinearUnit2: "Radius: {formatValue} {currentLinearUnit}\nCircumference: {formatValue2} {currentLinearUnit2}\nArea: {formatValue3} {currentAreaUnit}",
-        areaFormatValueCurrentAreaUnitPerimeterFormatValue2CurrentLinearUnit: "Area: {formatValue} {currentAreaUnit}\nPerimeter: {formatValue2} {currentLinearUnit}",
-        sideLengthFormatValueCurrentLinearUnitPerimeterFormatValue2: "Side Length: {formatValue} {currentLinearUnit}\nPerimeter: {formatValue2} {currentLinearUnit2}\nArea: {formatValue3} {currentAreaUnit}"
+        radiusFormatValueCurrentLinearUnitCircumferenceFormatValue2CurrentLinearUnit2: "רדוס: {formatValue} {currentLinearUnit}המונחים: {formatValue2} {currentLinearUnit2}שטח: {formatValue3} {currentAreaUnit}",
+        areaFormatValueCurrentAreaUnitPerimeterFormatValue2CurrentLinearUnit: "שטח: {formatValue} {currentAreaUnit}המונחים: {formatValue2} {currentLinearUnit}",
+        sideLengthFormatValueCurrentLinearUnitPerimeterFormatValue2: "אורך הצד: {formatValue} {currentLinearUnit}המונחים: {formatValue2} {currentLinearUnit2}שטח: {formatValue3} {currentAreaUnit}"
       })
     }
   }
