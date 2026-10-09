@@ -25,6 +25,18 @@ import {
     CardBody,
     Tooltip
 } from 'jimu-ui';
+import __i18nDefaults from './translations/default'
+import { __setIntl, __tc } from './i18n-t'
+let __i18nIntl: any = null
+/** Module translator: app language via the widget intl, English from default.ts, {name} values filled. */
+const __t = (id: string, values?: { [key: string]: any }): string => {
+  const msg: string = (__i18nDefaults as any)[id] ?? id
+  if (__i18nIntl && typeof __i18nIntl.formatMessage === 'function') {
+    try { return __i18nIntl.formatMessage({ id, defaultMessage: msg }, values) } catch (e) { }
+  }
+  return msg.replace(/\{(\w+)\}/g, (m: string, k: string) => (values && values[k] != null ? String(values[k]) : m))
+}
+
 
 interface CustomLinearUnit {
     name: string;
@@ -365,80 +377,80 @@ export default class Setting extends React.PureComponent<SettingProps, SettingSt
     };
 
     linearUnitOptions = [
-        { value: 'meters', label: 'Meters' },
-        { value: 'kilometers', label: 'Kilometers' },
-        { value: 'feet', label: 'Feet' },
-        { value: 'miles', label: 'Miles' },
-        { value: 'yards', label: 'Yards' },
-        { value: 'nautical-miles', label: 'Nautical Miles' }
+        { value: 'meters', label: __t("meters") },
+        { value: 'kilometers', label: __t("kilometers") },
+        { value: 'feet', label: __t("feet") },
+        { value: 'miles', label: __t("miles") },
+        { value: 'yards', label: __t("yards") },
+        { value: 'nautical-miles', label: __t("nauticalMiles") }
     ];
 
     areaUnitOptions = [
-        { value: 'square-meters', label: 'Square Meters' },
-        { value: 'square-kilometers', label: 'Square Kilometers' },
-        { value: 'square-feet', label: 'Square Feet' },
-        { value: 'square-miles', label: 'Square Miles' },
-        { value: 'acres', label: 'Acres' },
-        { value: 'hectares', label: 'Hectares' }
+        { value: 'square-meters', label: __t("squareMeters") },
+        { value: 'square-kilometers', label: __t("squareKilometers") },
+        { value: 'square-feet', label: __t("squareFeet") },
+        { value: 'square-miles', label: __t("squareMiles") },
+        { value: 'acres', label: __t("acres") },
+        { value: 'hectares', label: __t("hectares") }
     ];
 
     defaultToolOptions = [
-        { value: 'none', label: 'None (Manual Selection)' },
-        { value: 'point', label: 'Point Measurement' },
-        { value: 'distance', label: 'Distance Measurement' },
-        { value: 'area', label: 'Area Measurement' },
-        { value: 'circle', label: 'Circle Measurement' },
-        { value: 'rectangle', label: 'Rectangle Measurement' },
-        { value: 'triangle', label: 'Triangle Measurement' },
-        { value: 'freehand-polyline', label: 'Freehand Line' },
-        { value: 'freehand-polygon', label: 'Freehand Area' }
+        { value: 'none', label: __t("noneManualSelection") },
+        { value: 'point', label: __t("pointMeasurement") },
+        { value: 'distance', label: __t("distanceMeasurement") },
+        { value: 'area', label: __t("areaMeasurement") },
+        { value: 'circle', label: __t("circleMeasurement") },
+        { value: 'rectangle', label: __t("rectangleMeasurement") },
+        { value: 'triangle', label: __t("triangleMeasurement") },
+        { value: 'freehand-polyline', label: __t("uiFreehandLine") },
+        { value: 'freehand-polygon', label: __t("uiFreehandArea") }
     ];
 
     coordinateFormatOptions = [
-        { value: 'decimal', label: 'Decimal Degrees (DD)' },
-        { value: 'dms', label: 'Degrees Minutes Seconds (DMS)' },
-        { value: 'ddm', label: 'Degrees Decimal Minutes (DDM)' }
+        { value: 'decimal', label: __t("decimalDegreesDd") },
+        { value: 'dms', label: __t("degreesMinutesSecondsDms") },
+        { value: 'ddm', label: __t("degreesDecimalMinutesDdm") }
     ];
 
     exportFormatOptions = [
         { value: 'json', label: 'JSON' },
         { value: 'csv', label: 'CSV' },
-        { value: 'geojson', label: 'GeoJSON' },
+        { value: 'geojson', label: __t("geoJSON") },
         { value: 'pdf', label: 'PDF' }
     ];
 
     labelPositionOptions = [
-        { value: 'center', label: 'Center' },
-        { value: 'top', label: 'Top' },
-        { value: 'bottom', label: 'Bottom' }
+        { value: 'center', label: __t("center") },
+        { value: 'top', label: __t("top") },
+        { value: 'bottom', label: __t("bottom") }
     ];
 
     fontFamilyOptions = [
-        { value: 'Arial', label: 'Arial' },
-        { value: 'Helvetica', label: 'Helvetica' },
-        { value: 'Times New Roman', label: 'Times New Roman' },
-        { value: 'Courier New', label: 'Courier New' },
-        { value: 'Georgia', label: 'Georgia' },
-        { value: 'Verdana', label: 'Verdana' },
-        { value: 'Trebuchet MS', label: 'Trebuchet MS' },
-        { value: 'Palatino', label: 'Palatino' },
-        { value: 'Garamond', label: 'Garamond' },
-        { value: 'Comic Sans MS', label: 'Comic Sans MS' },
-        { value: 'Tahoma', label: 'Tahoma' },
-        { value: 'Impact', label: 'Impact' }
+        { value: 'Arial', label: __t("arial") },
+        { value: 'Helvetica', label: __t("helvetica") },
+        { value: 'Times New Roman', label: __t("timesNewRoman") },
+        { value: 'Courier New', label: __t("courierNew") },
+        { value: 'Georgia', label: __t("georgia") },
+        { value: 'Verdana', label: __t("verdana") },
+        { value: 'Trebuchet MS', label: __t("trebuchetMs") },
+        { value: 'Palatino', label: __t("palatino") },
+        { value: 'Garamond', label: __t("garamond") },
+        { value: 'Comic Sans MS', label: __t("comicSansMs") },
+        { value: 'Tahoma', label: __t("tahoma") },
+        { value: 'Impact', label: __t("impact") }
     ];
 
     fontWeightOptions = [
-        { value: 'normal', label: 'Normal' },
-        { value: 'bold', label: 'Bold' },
-        { value: 'bolder', label: 'Bolder' },
-        { value: 'lighter', label: 'Lighter' }
+        { value: 'normal', label: __t("normal") },
+        { value: 'bold', label: __t("bold") },
+        { value: 'bolder', label: __t("bolder") },
+        { value: 'lighter', label: __t("lighter") }
     ];
 
     fontStyleOptions = [
-        { value: 'normal', label: 'Normal' },
-        { value: 'italic', label: 'Italic' },
-        { value: 'oblique', label: 'Oblique' }
+        { value: 'normal', label: __t("normal") },
+        { value: 'italic', label: __t("italic") },
+        { value: 'oblique', label: __t("oblique") }
     ];
 
     onMapWidgetSelected = (useMapWidgetIds: string[]) => {
@@ -1466,7 +1478,7 @@ export default class Setting extends React.PureComponent<SettingProps, SettingSt
         try {
             this.props.onSettingChange({ id: this.props.id, config: newConfig });
         } catch (err: any) {
-            return { success: false, details: [], error: err?.message || 'Failed to apply imported configuration.' };
+            return { success: false, details: [], error: __tc(err?.message, "failedToApplyImportedConfiguration") };
         }
 
         const details: string[] = [];
@@ -1538,7 +1550,7 @@ export default class Setting extends React.PureComponent<SettingProps, SettingSt
             this.setImportExportStatusMessage('success', `Settings imported${detailsText}.`);
             this.setState({ importXmlPaste: '' });
         } catch (err: any) {
-            this.setImportExportStatusMessage('error', err?.message || 'Failed to parse XML.');
+            this.setImportExportStatusMessage('error', __tc(err?.message, "failedToParseXml"));
         }
     };
 
@@ -1672,7 +1684,7 @@ export default class Setting extends React.PureComponent<SettingProps, SettingSt
     // ==================== End XML Import/Export ====================
 
     onResetToDefaults = () => {
-        if (confirm('Are you sure you want to reset all settings to their default values?')) {
+        if (confirm(__t("uiAreYouSureYouWantTo"))) {
             this.props.onSettingChange({
                 id: this.props.id,
                 config: Immutable({})
@@ -1681,67 +1693,68 @@ export default class Setting extends React.PureComponent<SettingProps, SettingSt
     };
 
     render() {
+    __setIntl((this.props as any).intl)
+    __i18nIntl = (this.props as any).intl
         const config = this.props.config || Immutable({});
 
         return (
             <div className="widget-setting-measurement" css={this.getStyles()} style={{ padding: '20px' }}>
-                <SettingSection title="Settings Import/Export">
+                <SettingSection title={__t("uiSettingsImportExport")}>
                     <SettingRow flow="wrap" label="">
                         <div style={{ width: '100%' }}>
                             <p className="ie-section-description">
-                                Export or import widget configuration as XML to quickly replicate settings across Experience Builder applications.
-                                The Map Widget connection is not included in exports.
+                                {__t("uiExportOrImportWidgetConfigurationAs")}
                             </p>
 
                             {/* ── Export ─────────────────────────────────────────────── */}
-                            <div className="ie-subsection-label">EXPORT</div>
+                            <div className="ie-subsection-label">{__t("uiExport")}</div>
                             <div className="ie-button-row">
                                 <button
                                     className="ie-btn ie-btn-primary"
                                     onClick={this.onExportSettingsToXml}
-                                    aria-label="Download settings as XML file"
-                                    title="Download an XML file"
+                                    aria-label={__t("uiDownloadSettingsAsXmlFile")}
+                                    title={__t("uiDownloadAnXmlFile")}
                                 >
                                     <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 16 16" width="16" height="16" fill="currentColor">
                                         <path d="M8 1a.5.5 0 0 1 .5.5v9.793l2.646-2.647a.5.5 0 0 1 .708.708l-3.5 3.5a.5.5 0 0 1-.708 0l-3.5-3.5a.5.5 0 1 1 .708-.708L7.5 11.293V1.5A.5.5 0 0 1 8 1z" />
                                         <path d="M2 13.5a.5.5 0 0 1 .5-.5h11a.5.5 0 0 1 0 1h-11a.5.5 0 0 1-.5-.5z" />
                                     </svg>
-                                    Download
+                                    {__t("uiDownload")}
                                 </button>
                                 <button
                                     className="ie-btn"
                                     onClick={this.onGenerateExportPreview}
-                                    aria-label="Show XML in textarea below"
-                                    title="Preview the XML"
+                                    aria-label={__t("uiShowXmlInTextareaBelow")}
+                                    title={__t("uiPreviewTheXml")}
                                 >
                                     <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 16 16" width="16" height="16" fill="currentColor">
                                         <path d="M16 8s-3-5.5-8-5.5S0 8 0 8s3 5.5 8 5.5S16 8 16 8zM1.173 8a13.134 13.134 0 0 1 1.66-2.043C4.12 4.668 5.88 3.5 8 3.5c2.12 0 3.879 1.168 5.168 2.457A13.134 13.134 0 0 1 14.828 8c-.058.087-.122.183-.195.288-.335.48-.83 1.12-1.465 1.755C11.879 11.332 10.119 12.5 8 12.5c-2.12 0-3.879-1.168-5.168-2.457A13.134 13.134 0 0 1 1.172 8z" />
                                         <path d="M8 5.5a2.5 2.5 0 1 0 0 5 2.5 2.5 0 0 0 0-5zM4.5 8a3.5 3.5 0 1 1 7 0 3.5 3.5 0 0 1-7 0z" />
                                     </svg>
-                                    Preview
+                                    {__t("uiPreview")}
                                 </button>
                                 {this.state.exportXmlPreview && (
                                     <button
                                         className="ie-btn"
                                         onClick={this.onCopyExportXml}
-                                        aria-label="Copy XML to clipboard"
-                                        title="Copy to clipboard"
+                                        aria-label={__t("uiCopyXmlToClipboard")}
+                                        title={__t("uiCopyToClipboard")}
                                     >
                                         <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 16 16" width="16" height="16" fill="currentColor">
                                             <path d="M4 1.5H3a2 2 0 0 0-2 2V14a2 2 0 0 0 2 2h10a2 2 0 0 0 2-2V3.5a2 2 0 0 0-2-2h-1v1h1a1 1 0 0 1 1 1V14a1 1 0 0 1-1 1H3a1 1 0 0 1-1-1V3.5a1 1 0 0 1 1-1h1v-1z" />
                                             <path d="M9.5 1a.5.5 0 0 1 .5.5v1a.5.5 0 0 1-.5.5h-3a.5.5 0 0 1-.5-.5v-1a.5.5 0 0 1 .5-.5h3zm-3-1A1.5 1.5 0 0 0 5 1.5v1A1.5 1.5 0 0 0 6.5 4h3A1.5 1.5 0 0 0 11 2.5v-1A1.5 1.5 0 0 0 9.5 0h-3z" />
                                         </svg>
-                                        Copy
+                                        {__t("uiCopy")}
                                     </button>
                                 )}
                                 {this.state.exportXmlPreview && (
                                     <button
                                         className="ie-btn ie-btn-tertiary"
                                         onClick={() => this.setState({ exportXmlPreview: '' })}
-                                        aria-label="Clear preview"
-                                        title="Clear preview"
+                                        aria-label={__t("uiClearPreview")}
+                                        title={__t("uiClearPreview")}
                                     >
-                                        Clear
+                                        {__t("uiClear")}
                                     </button>
                                 )}
                             </div>
@@ -1752,42 +1765,42 @@ export default class Setting extends React.PureComponent<SettingProps, SettingSt
                                     readOnly
                                     spellCheck={false}
                                     className="ie-textarea"
-                                    aria-label="Generated XML"
+                                    aria-label={__t("uiGeneratedXml")}
                                 />
                             )}
 
                             {/* ── Import ─────────────────────────────────────────────── */}
-                            <div className="ie-subsection-label" style={{ marginTop: '14px' }}>IMPORT</div>
+                            <div className="ie-subsection-label" style={{ marginTop: '14px' }}>{__t("uiImport")}</div>
                             <div className="ie-button-row">
                                 <button
                                     className="ie-btn"
                                     onClick={() => this.importInputRef?.click()}
-                                    aria-label="Load XML from file"
-                                    title="Read an XML file from disk"
+                                    aria-label={__t("uiLoadXmlFromFile")}
+                                    title={__t("uiReadAnXmlFileFromDisk")}
                                 >
                                     <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 16 16" width="16" height="16" fill="currentColor">
                                         <path d="M8 15a.5.5 0 0 1-.5-.5V4.707L4.854 7.354a.5.5 0 1 1-.708-.708l3.5-3.5a.5.5 0 0 1 .708 0l3.5 3.5a.5.5 0 0 1-.708.708L8.5 4.707V14.5a.5.5 0 0 1-.5.5z" />
                                         <path d="M2 2.5a.5.5 0 0 1 .5-.5h11a.5.5 0 0 1 0 1h-11a.5.5 0 0 1-.5-.5z" />
                                     </svg>
-                                    Load
+                                    {__t("uiLoad")}
                                 </button>
                                 <button
                                     className="ie-btn ie-btn-primary"
                                     onClick={this.onApplyImportPaste}
                                     disabled={!this.state.importXmlPaste.trim()}
-                                    aria-label="Apply pasted XML configuration"
-                                    title="Parse and apply the XML below"
+                                    aria-label={__t("uiApplyPastedXmlConfiguration")}
+                                    title={__t("uiParseAndApplyTheXmlBelow")}
                                 >
-                                    Apply
+                                    {__t("uiApply")}
                                 </button>
                                 {this.state.importXmlPaste && (
                                     <button
                                         className="ie-btn ie-btn-tertiary"
                                         onClick={this.onClearImportPaste}
-                                        aria-label="Clear paste area"
-                                        title="Clear"
+                                        aria-label={__t("uiClearPasteArea")}
+                                        title={__t("uiClear")}
                                     >
-                                        Clear
+                                        {__t("uiClear")}
                                     </button>
                                 )}
                                 <input
@@ -1802,10 +1815,10 @@ export default class Setting extends React.PureComponent<SettingProps, SettingSt
                             <textarea
                                 value={this.state.importXmlPaste}
                                 onChange={(e) => this.setState({ importXmlPaste: e.target.value })}
-                                placeholder="Paste exported XML here, or use Load File above."
+                                placeholder={__t("uiPasteExportedXmlHereOrUse")}
                                 spellCheck={false}
                                 className="ie-textarea"
-                                aria-label="Paste XML to import"
+                                aria-label={__t("uiPasteXmlToImport")}
                             />
 
                             {this.state.importExportStatus && (
@@ -1815,19 +1828,16 @@ export default class Setting extends React.PureComponent<SettingProps, SettingSt
                             )}
 
                             <div className="ie-info-panel">
-                                <strong>Exported settings include:</strong> Default units, custom units (linear &amp; area),
-                                tool enablement, button text, measurement display options, label styling,
-                                color palette, symbol styling, UI layout, toggle states, storage options,
-                                and all other widget configuration.
+                                <strong>{__t("uiExportedSettingsInclude")}</strong> {__t("uiDefaultUnitsCustomUnitsLinearArea")}
                                 <br /><br />
-                                <strong>Not exported:</strong> Map widget connection (it stays bound to this Experience).
+                                <strong>{__t("uiNotExported")}</strong> {__t("uiMapWidgetConnectionItStaysBound")}
                             </div>
                         </div>
                     </SettingRow>
                 </SettingSection>
 
                 <SettingSection>
-                    <SettingRow flow="wrap" label="Select Map Widget">
+                    <SettingRow flow="wrap" label={__t("uiSelectMapWidget")}>
                         <MapWidgetSelector
                             onSelect={this.onMapWidgetSelected}
                             useMapWidgetIds={this.props.useMapWidgetIds}
@@ -1835,7 +1845,7 @@ export default class Setting extends React.PureComponent<SettingProps, SettingSt
                     </SettingRow>
                 </SettingSection>
 
-                <SettingSection title="Tool Enablement">
+                <SettingSection title={__t("uiToolEnablement")}>
                     <SettingRow>
                         <div style={{
                             padding: '12px',
@@ -1845,67 +1855,67 @@ export default class Setting extends React.PureComponent<SettingProps, SettingSt
                             fontSize: '13px',
                             color: '#495057'
                         }}>
-                            <strong>Note:</strong> Enable or disable individual measurement tools. Disabled tools will not appear in the widget interface.
+                            <strong>{__t("uiNote")}</strong> {__t("uiEnableOrDisableIndividualMeasurementTools")}
                         </div>
                     </SettingRow>
 
-                    <SettingRow flow="wrap" label="Enable Point Tool">
+                    <SettingRow flow="wrap" label={__t("uiEnablePointTool")}>
                         <Switch
                             checked={config.enablePointTool !== false}
                             onChange={this.onEnablePointToolChange}
                         />
                     </SettingRow>
 
-                    <SettingRow flow="wrap" label="Enable Distance Tool (Line)">
+                    <SettingRow flow="wrap" label={__t("uiEnableDistanceToolLine")}>
                         <Switch
                             checked={config.enableDistanceTool !== false}
                             onChange={this.onEnableDistanceToolChange}
                         />
                     </SettingRow>
 
-                    <SettingRow flow="wrap" label="Enable Freehand Polyline Tool">
+                    <SettingRow flow="wrap" label={__t("uiEnableFreehandPolylineTool")}>
                         <Switch
                             checked={config.enableFreehandPolylineTool !== false}
                             onChange={this.onEnableFreehandPolylineToolChange}
                         />
                     </SettingRow>
 
-                    <SettingRow flow="wrap" label="Enable Area Tool (Polygon)">
+                    <SettingRow flow="wrap" label={__t("uiEnableAreaToolPolygon")}>
                         <Switch
                             checked={config.enableAreaTool !== false}
                             onChange={this.onEnableAreaToolChange}
                         />
                     </SettingRow>
 
-                    <SettingRow flow="wrap" label="Enable Freehand Polygon Tool">
+                    <SettingRow flow="wrap" label={__t("uiEnableFreehandPolygonTool")}>
                         <Switch
                             checked={config.enableFreehandPolygonTool !== false}
                             onChange={this.onEnableFreehandPolygonToolChange}
                         />
                     </SettingRow>
 
-                    <SettingRow flow="wrap" label="Enable Rectangle Tool">
+                    <SettingRow flow="wrap" label={__t("uiEnableRectangleTool")}>
                         <Switch
                             checked={config.enableRectangleTool !== false}
                             onChange={this.onEnableRectangleToolChange}
                         />
                     </SettingRow>
 
-                    <SettingRow flow="wrap" label="Enable Circle Tool">
+                    <SettingRow flow="wrap" label={__t("uiEnableCircleTool")}>
                         <Switch
                             checked={config.enableCircleTool !== false}
                             onChange={this.onEnableCircleToolChange}
                         />
                     </SettingRow>
 
-                    <SettingRow flow="wrap" label="Enable Triangle Tool">
+                    <SettingRow flow="wrap" label={__t("uiEnableTriangleTool")}>
                         <Switch
                             checked={config.enableTriangleTool !== false}
                             onChange={this.onEnableTriangleToolChange}
                         />
                     </SettingRow>
 
-                    <SettingRow flow="wrap" label="Default Tool">
+                    <SettingRow flow="wrap" label={__t("uiDefaultTool")}>
                         <Select
                             value={config.defaultTool || 'none'}
                             onChange={this.onDefaultToolChange}
@@ -1917,7 +1927,7 @@ export default class Setting extends React.PureComponent<SettingProps, SettingSt
                         </Select>
                     </SettingRow>
 
-                    <SettingRow flow="wrap" label="Auto-start Default Tool">
+                    <SettingRow flow="wrap" label={__t("uiAutoStartDefaultTool")}>
                         <Switch
                             checked={config.autoStartTool === true}
                             onChange={this.onAutoStartToolChange}
@@ -1925,7 +1935,7 @@ export default class Setting extends React.PureComponent<SettingProps, SettingSt
                     </SettingRow>
                 </SettingSection>
 
-                <SettingSection title="Tool Button Customization">
+                <SettingSection title={__t("uiToolButtonCustomization")}>
                     <SettingRow>
                         <div style={{
                             padding: '12px',
@@ -1935,94 +1945,94 @@ export default class Setting extends React.PureComponent<SettingProps, SettingSt
                             fontSize: '13px',
                             color: '#495057'
                         }}>
-                            <strong>Note:</strong> Customize the text displayed on each tool button. Leave blank to use default values.
+                            <strong>{__t("uiNote")}</strong> {__t("uiCustomizeTheTextDisplayedOnEach")}
                         </div>
                     </SettingRow>
 
-                    <SettingRow flow="wrap" label="Point Button Text">
+                    <SettingRow flow="wrap" label={__t("uiPointButtonText")}>
                         <TextInput
-                            value={config.pointButtonText || 'Point'}
+                            value={__tc(config.pointButtonText, "uiPoint")}
                             onChange={this.onPointButtonTextChange}
                             style={{ width: '100%' }}
-                            placeholder="Point"
+                            placeholder={__t("uiPoint")}
                         />
                     </SettingRow>
 
-                    <SettingRow flow="wrap" label="Line Button Text">
+                    <SettingRow flow="wrap" label={__t("uiLineButtonText")}>
                         <TextInput
-                            value={config.lineButtonText || 'Line'}
+                            value={__tc(config.lineButtonText, "uiLine")}
                             onChange={this.onLineButtonTextChange}
                             style={{ width: '100%' }}
-                            placeholder="Line"
+                            placeholder={__t("uiLine")}
                         />
                     </SettingRow>
 
-                    <SettingRow flow="wrap" label="Freehand Line Button Text">
+                    <SettingRow flow="wrap" label={__t("uiFreehandLineButtonText")}>
                         <TextInput
-                            value={config.freehandLineButtonText || 'Freehand Line'}
+                            value={__tc(config.freehandLineButtonText, "uiFreehandLine")}
                             onChange={this.onFreehandLineButtonTextChange}
                             style={{ width: '100%' }}
-                            placeholder="Freehand Line"
+                            placeholder={__t("uiFreehandLine")}
                         />
                     </SettingRow>
 
-                    <SettingRow flow="wrap" label="Area Button Text">
+                    <SettingRow flow="wrap" label={__t("uiAreaButtonText")}>
                         <TextInput
-                            value={config.areaButtonText || 'Area'}
+                            value={__tc(config.areaButtonText, "uiArea")}
                             onChange={this.onAreaButtonTextChange}
                             style={{ width: '100%' }}
-                            placeholder="Area"
+                            placeholder={__t("uiArea")}
                         />
                     </SettingRow>
 
-                    <SettingRow flow="wrap" label="Freehand Area Button Text">
+                    <SettingRow flow="wrap" label={__t("uiFreehandAreaButtonText")}>
                         <TextInput
-                            value={config.freehandAreaButtonText || 'Freehand Area'}
+                            value={__tc(config.freehandAreaButtonText, "uiFreehandArea")}
                             onChange={this.onFreehandAreaButtonTextChange}
                             style={{ width: '100%' }}
-                            placeholder="Freehand Area"
+                            placeholder={__t("uiFreehandArea")}
                         />
                     </SettingRow>
 
-                    <SettingRow flow="wrap" label="Rectangle Button Text">
+                    <SettingRow flow="wrap" label={__t("uiRectangleButtonText")}>
                         <TextInput
-                            value={config.rectangleButtonText || 'Rectangle'}
+                            value={__tc(config.rectangleButtonText, "uiRectangle")}
                             onChange={this.onRectangleButtonTextChange}
                             style={{ width: '100%' }}
-                            placeholder="Rectangle"
+                            placeholder={__t("uiRectangle")}
                         />
                     </SettingRow>
 
-                    <SettingRow flow="wrap" label="Circle Button Text">
+                    <SettingRow flow="wrap" label={__t("uiCircleButtonText")}>
                         <TextInput
-                            value={config.circleButtonText || 'Circle'}
+                            value={__tc(config.circleButtonText, "uiCircle")}
                             onChange={this.onCircleButtonTextChange}
                             style={{ width: '100%' }}
-                            placeholder="Circle"
+                            placeholder={__t("uiCircle")}
                         />
                     </SettingRow>
 
-                    <SettingRow flow="wrap" label="Triangle Button Text">
+                    <SettingRow flow="wrap" label={__t("uiTriangleButtonText")}>
                         <TextInput
-                            value={config.triangleButtonText || 'Triangle'}
+                            value={__tc(config.triangleButtonText, "uiTriangle")}
                             onChange={this.onTriangleButtonTextChange}
                             style={{ width: '100%' }}
-                            placeholder="Triangle"
+                            placeholder={__t("uiTriangle")}
                         />
                     </SettingRow>
 
-                    <SettingRow flow="wrap" label="Clear All Button Text">
+                    <SettingRow flow="wrap" label={__t("uiClearAllButtonText")}>
                         <TextInput
-                            value={config.clearAllButtonText || 'Clear All'}
+                            value={__tc(config.clearAllButtonText, "uiClearAll")}
                             onChange={this.onClearAllButtonTextChange}
                             style={{ width: '100%' }}
-                            placeholder="Clear All"
+                            placeholder={__t("uiClearAll")}
                         />
                     </SettingRow>
                 </SettingSection>
 
-                <SettingSection title="Default Units">
-                    <SettingRow flow="wrap" label="Default Linear Unit">
+                <SettingSection title={__t("uiDefaultUnits")}>
+                    <SettingRow flow="wrap" label={__t("uiDefaultLinearUnit")}>
                         <Select
                             value={config.defaultLinearUnit || 'miles'}
                             onChange={this.onLinearUnitChange}
@@ -2037,7 +2047,7 @@ export default class Setting extends React.PureComponent<SettingProps, SettingSt
                         </Select>
                     </SettingRow>
 
-                    <SettingRow flow="wrap" label="Default Area Unit">
+                    <SettingRow flow="wrap" label={__t("uiDefaultAreaUnit")}>
                         <Select
                             value={config.defaultAreaUnit || 'acres'}
                             onChange={this.onAreaUnitChange}
@@ -2052,7 +2062,7 @@ export default class Setting extends React.PureComponent<SettingProps, SettingSt
                         </Select>
                     </SettingRow>
 
-                    <SettingRow flow="wrap" label="Decimal Precision">
+                    <SettingRow flow="wrap" label={__t("uiDecimalPrecision")}>
                         <NumericInput
                             value={config.decimalPrecision ?? 2}
                             onChange={this.onDecimalPrecisionChange}
@@ -2063,18 +2073,18 @@ export default class Setting extends React.PureComponent<SettingProps, SettingSt
                     </SettingRow>
                 </SettingSection>
 
-                <SettingSection title="Custom Units">
+                <SettingSection title={__t("uiCustomUnits")}>
                     <SettingRow flow="wrap" label="">
                         <div style={{ width: '100%' }}>
                             <p className="custom-unit-description">
-                                Define custom linear and area units with conversion factors. Units marked for dropdown will appear in the runtime unit selectors.
+                                {__t("uiDefineCustomLinearAndAreaUnits")}
                             </p>
 
                             {/* ===== Custom Linear Units ===== */}
                             <div className="custom-unit-header">
-                                <span className="custom-unit-header-label">Custom Linear Units</span>
+                                <span className="custom-unit-header-label">{__t("uiCustomLinearUnits")}</span>
                                 <Button size="sm" type="primary" onClick={this.onAddCustomLinearUnit}>
-                                    + Add Unit
+                                    {__t("uiAddUnit")}
                                 </Button>
                             </div>
 
@@ -2084,21 +2094,21 @@ export default class Setting extends React.PureComponent<SettingProps, SettingSt
                                         <div className="custom-unit-card-info">
                                             <div className="custom-unit-card-name">{unit.label || unit.name}</div>
                                             <div className="custom-unit-card-detail">
-                                                {unit.name} &mdash; 1 {unit.label} = {unit.toMeters} meters
+                                                {unit.name} &mdash; 1 {unit.label} = {unit.toMeters} {__t("uiMeters")}
                                             </div>
                                         </div>
                                         <div className="custom-unit-card-actions">
                                             <Checkbox
                                                 checked={unit.addToDropdown !== false}
                                                 onChange={() => this.onToggleLinearUnitDropdown(index)}
-                                                aria-label={`Show ${unit.label} in dropdown`}
-                                                title="Show in dropdown"
+                                                aria-label={__t("uiShowInDropdown", { label: unit.label })}
+                                                title={__t("uiShowInDropdown2")}
                                             />
                                             <Button size="sm" onClick={() => this.setState({
                                                 editingLinearUnit: { ...unit },
                                                 editingLinearUnitIndex: index
                                             })}>
-                                                Edit
+                                                {__t("uiEdit")}
                                             </Button>
                                             <Button size="sm" type="danger" onClick={() => this.onRemoveCustomLinearUnit(index)}>
                                                 &times;
@@ -2114,11 +2124,11 @@ export default class Setting extends React.PureComponent<SettingProps, SettingSt
                                         <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 16 16" width="14" height="14" fill="currentColor">
                                             <path d="M12.146.146a.5.5 0 0 1 .708 0l3 3a.5.5 0 0 1 0 .708l-10 10a.5.5 0 0 1-.168.11l-5 2a.5.5 0 0 1-.65-.65l2-5a.5.5 0 0 1 .11-.168l10-10z" />
                                         </svg>
-                                        {this.state.editingLinearUnitIndex < (config.customLinearUnits || []).length ? 'Edit' : 'New'} Linear Unit
+                                        {this.state.editingLinearUnitIndex < (config.customLinearUnits || []).length ? __t("uiEdit") : __t("new")} {__t("uiLinearUnit")}
                                     </div>
                                     <div className="custom-unit-field-group">
                                         <div>
-                                            <Label className="custom-unit-field-label">Unit Key (e.g., chains)</Label>
+                                            <Label className="custom-unit-field-label">{__t("uiUnitKeyEGChains")}</Label>
                                             <TextInput
                                                 value={this.state.editingLinearUnit.name}
                                                 onChange={(e) => this.setState({
@@ -2129,18 +2139,18 @@ export default class Setting extends React.PureComponent<SettingProps, SettingSt
                                             />
                                         </div>
                                         <div>
-                                            <Label className="custom-unit-field-label">Display Label (e.g., Chains)</Label>
+                                            <Label className="custom-unit-field-label">{__t("uiDisplayLabelEGChains")}</Label>
                                             <TextInput
                                                 value={this.state.editingLinearUnit.label}
                                                 onChange={(e) => this.setState({
                                                     editingLinearUnit: { ...this.state.editingLinearUnit, label: e.target.value }
                                                 })}
-                                                placeholder="Chains"
+                                                placeholder={__t("uiChains")}
                                                 style={{ width: '100%' }}
                                             />
                                         </div>
                                         <div>
-                                            <Label className="custom-unit-field-label">Meters per unit (e.g., 1 chain = 20.1168 meters)</Label>
+                                            <Label className="custom-unit-field-label">{__t("uiMetersPerUnitEG1")}</Label>
                                             <NumericInput
                                                 value={this.state.editingLinearUnit.toMeters}
                                                 onChange={(val) => this.setState({
@@ -2159,7 +2169,7 @@ export default class Setting extends React.PureComponent<SettingProps, SettingSt
                                                 })}
                                             />
                                             <Label className="custom-unit-field-label" style={{ display: 'inline', marginLeft: '6px' }}>
-                                                Add to linear unit dropdown
+                                                {__t("uiAddToLinearUnitDropdown")}
                                             </Label>
                                         </div>
                                         <div className="custom-unit-edit-actions">
@@ -2169,13 +2179,13 @@ export default class Setting extends React.PureComponent<SettingProps, SettingSt
                                                 onClick={this.onSaveCustomLinearUnit}
                                                 disabled={!this.state.editingLinearUnit.name || !this.state.editingLinearUnit.label}
                                             >
-                                                Save
+                                                {__t("uiSave")}
                                             </Button>
                                             <Button
                                                 size="sm"
                                                 onClick={() => this.setState({ editingLinearUnit: null, editingLinearUnitIndex: -1 })}
                                             >
-                                                Cancel
+                                                {__t("uiCancel")}
                                             </Button>
                                         </div>
                                     </div>
@@ -2185,9 +2195,9 @@ export default class Setting extends React.PureComponent<SettingProps, SettingSt
                             {/* ===== Custom Area Units ===== */}
                             <div className="section-spacer">
                                 <div className="custom-unit-header">
-                                    <span className="custom-unit-header-label">Custom Area Units</span>
+                                    <span className="custom-unit-header-label">{__t("uiCustomAreaUnits")}</span>
                                     <Button size="sm" type="primary" onClick={this.onAddCustomAreaUnit}>
-                                        + Add Unit
+                                        {__t("uiAddUnit")}
                                     </Button>
                                 </div>
 
@@ -2197,21 +2207,21 @@ export default class Setting extends React.PureComponent<SettingProps, SettingSt
                                             <div className="custom-unit-card-info">
                                                 <div className="custom-unit-card-name">{unit.label || unit.name}</div>
                                                 <div className="custom-unit-card-detail">
-                                                    {unit.name} &mdash; 1 {unit.label} = {unit.toSquareMeters} sq m
+                                                    {unit.name} &mdash; 1 {unit.label} = {unit.toSquareMeters} {__t("uiSqM")}
                                                 </div>
                                             </div>
                                             <div className="custom-unit-card-actions">
                                                 <Checkbox
                                                     checked={unit.addToDropdown !== false}
                                                     onChange={() => this.onToggleAreaUnitDropdown(index)}
-                                                    aria-label={`Show ${unit.label} in dropdown`}
-                                                    title="Show in dropdown"
+                                                    aria-label={__t("uiShowInDropdown", { label: unit.label })}
+                                                    title={__t("uiShowInDropdown2")}
                                                 />
                                                 <Button size="sm" onClick={() => this.setState({
                                                     editingAreaUnit: { ...unit },
                                                     editingAreaUnitIndex: index
                                                 })}>
-                                                    Edit
+                                                    {__t("uiEdit")}
                                                 </Button>
                                                 <Button size="sm" type="danger" onClick={() => this.onRemoveCustomAreaUnit(index)}>
                                                     &times;
@@ -2227,11 +2237,11 @@ export default class Setting extends React.PureComponent<SettingProps, SettingSt
                                             <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 16 16" width="14" height="14" fill="currentColor">
                                                 <path d="M12.146.146a.5.5 0 0 1 .708 0l3 3a.5.5 0 0 1 0 .708l-10 10a.5.5 0 0 1-.168.11l-5 2a.5.5 0 0 1-.65-.65l2-5a.5.5 0 0 1 .11-.168l10-10z" />
                                             </svg>
-                                            {this.state.editingAreaUnitIndex < (config.customAreaUnits || []).length ? 'Edit' : 'New'} Area Unit
+                                            {this.state.editingAreaUnitIndex < (config.customAreaUnits || []).length ? __t("uiEdit") : __t("new")} {__t("uiAreaUnit")}
                                         </div>
                                         <div className="custom-unit-field-group">
                                             <div>
-                                                <Label className="custom-unit-field-label">Unit Key (e.g., square-chains)</Label>
+                                                <Label className="custom-unit-field-label">{__t("uiUnitKeyEGSquareChains")}</Label>
                                                 <TextInput
                                                     value={this.state.editingAreaUnit.name}
                                                     onChange={(e) => this.setState({
@@ -2242,18 +2252,18 @@ export default class Setting extends React.PureComponent<SettingProps, SettingSt
                                                 />
                                             </div>
                                             <div>
-                                                <Label className="custom-unit-field-label">Display Label (e.g., Square Chains)</Label>
+                                                <Label className="custom-unit-field-label">{__t("uiDisplayLabelEGSquareChains")}</Label>
                                                 <TextInput
                                                     value={this.state.editingAreaUnit.label}
                                                     onChange={(e) => this.setState({
                                                         editingAreaUnit: { ...this.state.editingAreaUnit, label: e.target.value }
                                                     })}
-                                                    placeholder="Square Chains"
+                                                    placeholder={__t("uiSquareChains")}
                                                     style={{ width: '100%' }}
                                                 />
                                             </div>
                                             <div>
-                                                <Label className="custom-unit-field-label">Square meters per unit (e.g., 1 sq chain = 404.6856 sq m)</Label>
+                                                <Label className="custom-unit-field-label">{__t("uiSquareMetersPerUnitEG")}</Label>
                                                 <NumericInput
                                                     value={this.state.editingAreaUnit.toSquareMeters}
                                                     onChange={(val) => this.setState({
@@ -2272,7 +2282,7 @@ export default class Setting extends React.PureComponent<SettingProps, SettingSt
                                                     })}
                                                 />
                                                 <Label className="custom-unit-field-label" style={{ display: 'inline', marginLeft: '6px' }}>
-                                                    Add to area unit dropdown
+                                                    {__t("uiAddToAreaUnitDropdown")}
                                                 </Label>
                                             </div>
                                             <div className="custom-unit-edit-actions">
@@ -2282,13 +2292,13 @@ export default class Setting extends React.PureComponent<SettingProps, SettingSt
                                                     onClick={this.onSaveCustomAreaUnit}
                                                     disabled={!this.state.editingAreaUnit.name || !this.state.editingAreaUnit.label}
                                                 >
-                                                    Save
+                                                    {__t("uiSave")}
                                                 </Button>
                                                 <Button
                                                     size="sm"
                                                     onClick={() => this.setState({ editingAreaUnit: null, editingAreaUnitIndex: -1 })}
                                                 >
-                                                    Cancel
+                                                    {__t("uiCancel")}
                                                 </Button>
                                             </div>
                                         </div>
@@ -2298,41 +2308,41 @@ export default class Setting extends React.PureComponent<SettingProps, SettingSt
 
                             {/* ===== Reference ===== */}
                             <div className="custom-unit-reference">
-                                <strong>Common Historical Units Reference:</strong>
+                                <strong>{__t("uiCommonHistoricalUnitsReference")}</strong>
                                 <div style={{ marginTop: '6px' }}>
-                                    <strong>Linear:</strong> Chain = 20.1168m, Rod/Perch = 5.0292m, Link = 0.201168m, Furlong = 201.168m, Fathom = 1.8288m, League = 4828.032m
+                                    <strong>{__t("uiLinear")}</strong> {__t("uiChain201168mRodPerch5")}
                                 </div>
                                 <div>
-                                    <strong>Area:</strong> Sq Chain = 404.6856 sq m, Sq Rod = 25.2929 sq m, Rood = 1011.7141 sq m, Sq Link = 0.04047 sq m
+                                    <strong>{__t("uiArea2")}</strong> {__t("uiSqChain4046856SqM")}
                                 </div>
                             </div>
                         </div>
                     </SettingRow>
                 </SettingSection>
 
-                <SettingSection title="Measurement Display">
-                    <SettingRow flow="wrap" label="Show Live Measurement">
+                <SettingSection title={__t("uiMeasurementDisplay")}>
+                    <SettingRow flow="wrap" label={__t("uiShowLiveMeasurement")}>
                         <Switch
                             checked={config.showLiveMeasurement !== false}
                             onChange={this.onShowLiveMeasurementChange}
                         />
                     </SettingRow>
 
-                    <SettingRow flow="wrap" label="Auto-label Measurements">
+                    <SettingRow flow="wrap" label={__t("uiAutoLabelMeasurements")}>
                         <Switch
                             checked={config.autoLabelMeasurements !== false}
                             onChange={this.onAutoLabelMeasurementsChange}
                         />
                     </SettingRow>
 
-                    <SettingRow flow="wrap" label="Show Coordinates">
+                    <SettingRow flow="wrap" label={__t("uiShowCoordinates")}>
                         <Switch
                             checked={config.showCoordinates !== false}
                             onChange={this.onShowCoordinatesChange}
                         />
                     </SettingRow>
 
-                    <SettingRow flow="wrap" label="Coordinate Format">
+                    <SettingRow flow="wrap" label={__t("uiCoordinateFormat")}>
                         <Select
                             value={config.coordinateFormat || 'decimal'}
                             onChange={this.onCoordinateFormatChange}
@@ -2344,21 +2354,21 @@ export default class Setting extends React.PureComponent<SettingProps, SettingSt
                         </Select>
                     </SettingRow>
 
-                    <SettingRow flow="wrap" label="Show Total Distance">
+                    <SettingRow flow="wrap" label={__t("uiShowTotalDistance")}>
                         <Switch
                             checked={config.showTotalDistance !== false}
                             onChange={this.onShowTotalDistanceChange}
                         />
                     </SettingRow>
 
-                    <SettingRow flow="wrap" label="Continuous Drawing">
+                    <SettingRow flow="wrap" label={__t("uiContinuousDrawing")}>
                         <Switch
                             checked={config.continuousDrawing === true}
                             onChange={this.onContinuousDrawingChange}
                         />
                     </SettingRow>
 
-                    <SettingRow flow="wrap" label="Auto-clear on Tool Switch">
+                    <SettingRow flow="wrap" label={__t("uiAutoClearOnToolSwitch")}>
                         <Switch
                             checked={config.autoClearOnToolSwitch === true}
                             onChange={this.onAutoClearOnToolSwitchChange}
@@ -2366,7 +2376,7 @@ export default class Setting extends React.PureComponent<SettingProps, SettingSt
                     </SettingRow>
                 </SettingSection>
 
-                <SettingSection title="UI Toggle Controls Visibility">
+                <SettingSection title={__t("uiUiToggleControlsVisibility")}>
                     <SettingRow>
                         <div style={{
                             padding: '12px',
@@ -2376,18 +2386,18 @@ export default class Setting extends React.PureComponent<SettingProps, SettingSt
                             fontSize: '13px',
                             color: '#495057'
                         }}>
-                            <strong>Note:</strong> Control which toggle switches are visible to users in the widget interface.
+                            <strong>{__t("uiNote")}</strong> {__t("uiControlWhichToggleSwitchesAreVisible")}
                         </div>
                     </SettingRow>
 
-                    <SettingRow flow="wrap" label="Show Segment Labels Toggle">
+                    <SettingRow flow="wrap" label={__t("uiShowSegmentLabelsToggle")}>
                         <Switch
                             checked={config.showSegmentLabelsToggle !== false}
                             onChange={this.onShowSegmentLabelsToggleChange}
                         />
                     </SettingRow>
 
-                    <SettingRow flow="wrap" label="Show Offset Labels Toggle">
+                    <SettingRow flow="wrap" label={__t("uiShowOffsetLabelsToggle")}>
                         <Switch
                             checked={config.showOffsetLabelsToggle !== false}
                             onChange={(evt) => {
@@ -2399,35 +2409,35 @@ export default class Setting extends React.PureComponent<SettingProps, SettingSt
                         />
                     </SettingRow>
 
-                    <SettingRow flow="wrap" label="Show Tooltips Toggle">
+                    <SettingRow flow="wrap" label={__t("uiShowTooltipsToggle")}>
                         <Switch
                             checked={config.showTooltipsToggle !== false}
                             onChange={this.onShowTooltipsToggleChange}
                         />
                     </SettingRow>
 
-                    <SettingRow flow="wrap" label="Show Snapping Toggle">
+                    <SettingRow flow="wrap" label={__t("uiShowSnappingToggle")}>
                         <Switch
                             checked={config.showSnappingToggle !== false}
                             onChange={this.onShowSnappingToggleChange}
                         />
                     </SettingRow>
 
-                    <SettingRow flow="wrap" label="Show Statistics Panel Toggle">
+                    <SettingRow flow="wrap" label={__t("uiShowStatisticsPanelToggle")}>
                         <Switch
                             checked={config.showStatisticsToggle !== false}
                             onChange={this.onShowStatisticsToggleChange}
                         />
                     </SettingRow>
 
-                    <SettingRow flow="wrap" label="Show Unit Selector">
+                    <SettingRow flow="wrap" label={__t("uiShowUnitSelector")}>
                         <Switch
                             checked={config.showUnitToggle !== false}
                             onChange={this.onShowUnitToggleChange}
                         />
                     </SettingRow>
 
-                    <SettingRow flow="wrap" label="Show Coordinate Mode Selector">
+                    <SettingRow flow="wrap" label={__t("uiShowCoordinateModeSelector")}>
                         <Switch
                             checked={config.showCoordinateModeToggle !== false}
                             onChange={this.onShowCoordinateModeToggleChange}
@@ -2435,7 +2445,7 @@ export default class Setting extends React.PureComponent<SettingProps, SettingSt
                     </SettingRow>
                 </SettingSection>
 
-                <SettingSection title="Toggle Text Customization">
+                <SettingSection title={__t("uiToggleTextCustomization")}>
                     <SettingRow>
                         <div style={{
                             padding: '12px',
@@ -2445,39 +2455,39 @@ export default class Setting extends React.PureComponent<SettingProps, SettingSt
                             fontSize: '13px',
                             color: '#495057'
                         }}>
-                            <strong>Note:</strong> Customize the label text for toggle switches in the widget.
+                            <strong>{__t("uiNote")}</strong> {__t("uiCustomizeTheLabelTextForToggle")}
                         </div>
                     </SettingRow>
 
-                    <SettingRow flow="wrap" label="Segment Labels Toggle Text">
+                    <SettingRow flow="wrap" label={__t("uiSegmentLabelsToggleText")}>
                         <TextInput
-                            value={config.segmentLabelText || 'Show Segment Labels'}
+                            value={__tc(config.segmentLabelText, "uiShowSegmentLabels")}
                             onChange={this.onSegmentLabelTextChange}
                             style={{ width: '100%' }}
-                            placeholder="Show Segment Labels"
+                            placeholder={__t("uiShowSegmentLabels")}
                         />
                     </SettingRow>
 
-                    <SettingRow flow="wrap" label="Tooltips Toggle Text">
+                    <SettingRow flow="wrap" label={__t("uiTooltipsToggleText")}>
                         <TextInput
-                            value={config.tooltipsToggleText || 'Show Tooltips'}
+                            value={__tc(config.tooltipsToggleText, "uiShowTooltips")}
                             onChange={this.onTooltipsToggleTextChange}
                             style={{ width: '100%' }}
-                            placeholder="Show Tooltips"
+                            placeholder={__t("uiShowTooltips")}
                         />
                     </SettingRow>
 
-                    <SettingRow flow="wrap" label="Snapping Toggle Text">
+                    <SettingRow flow="wrap" label={__t("uiSnappingToggleText")}>
                         <TextInput
-                            value={config.snappingToggleText || 'Enable Snapping'}
+                            value={__tc(config.snappingToggleText, "uiEnableSnapping")}
                             onChange={this.onSnappingToggleTextChange}
                             style={{ width: '100%' }}
-                            placeholder="Enable Snapping"
+                            placeholder={__t("uiEnableSnapping")}
                         />
                     </SettingRow>
                 </SettingSection>
 
-                <SettingSection title="Default Toggle States">
+                <SettingSection title={__t("uiDefaultToggleStates")}>
                     <SettingRow>
                         <div style={{
                             padding: '12px',
@@ -2487,25 +2497,25 @@ export default class Setting extends React.PureComponent<SettingProps, SettingSt
                             fontSize: '13px',
                             color: '#495057'
                         }}>
-                            <strong>Note:</strong> Set the default state (on/off) for toggles when the widget loads.
+                            <strong>{__t("uiNote")}</strong> {__t("uiSetTheDefaultStateOnOff")}
                         </div>
                     </SettingRow>
 
-                    <SettingRow flow="wrap" label="Default Segment Labels State">
+                    <SettingRow flow="wrap" label={__t("uiDefaultSegmentLabelsState")}>
                         <Switch
                             checked={config.defaultSegmentLabelsState !== false}
                             onChange={this.onDefaultSegmentLabelsStateChange}
                         />
                     </SettingRow>
 
-                    <SettingRow flow="wrap" label="Default Tooltips State">
+                    <SettingRow flow="wrap" label={__t("uiDefaultTooltipsState")}>
                         <Switch
                             checked={config.defaultTooltipsState !== false}
                             onChange={this.onDefaultTooltipsStateChange}
                         />
                     </SettingRow>
 
-                    <SettingRow flow="wrap" label="Default Snapping State">
+                    <SettingRow flow="wrap" label={__t("uiDefaultSnappingState")}>
                         <Switch
                             checked={config.defaultSnappingState === true}
                             onChange={this.onDefaultSnappingStateChange}
@@ -2513,7 +2523,7 @@ export default class Setting extends React.PureComponent<SettingProps, SettingSt
                     </SettingRow>
                 </SettingSection>
 
-                <SettingSection title="Power Features">
+                <SettingSection title={__t("uiPowerFeatures")}>
                     <SettingRow>
                         <div style={{
                             padding: '12px',
@@ -2523,11 +2533,11 @@ export default class Setting extends React.PureComponent<SettingProps, SettingSt
                             fontSize: '13px',
                             color: '#495057'
                         }}>
-                            <strong>Note:</strong> Advanced end-user features. Session persistence stores measurements in the browser's local storage and offers a restore prompt on reload.
+                            <strong>{__t("uiNote")}</strong> {__t("uiAdvancedEndUserFeaturesSessionPersistence")}
                         </div>
                     </SettingRow>
 
-                    <SettingRow flow="wrap" label="Session persistence (restore after reload)">
+                    <SettingRow flow="wrap" label={__t("uiSessionPersistenceRestoreAfterReload")}>
                         <Switch
                             checked={config.enablePersistence === true}
                             onChange={(evt) => {
@@ -2539,7 +2549,7 @@ export default class Setting extends React.PureComponent<SettingProps, SettingSt
                         />
                     </SettingRow>
 
-                    <SettingRow flow="wrap" label="Live measurement readout while drawing">
+                    <SettingRow flow="wrap" label={__t("uiLiveMeasurementReadoutWhileDrawing")}>
                         <Switch
                             checked={config.showLiveMeasurement !== false}
                             onChange={(evt) => {
@@ -2551,7 +2561,7 @@ export default class Setting extends React.PureComponent<SettingProps, SettingSt
                         />
                     </SettingRow>
 
-                    <SettingRow flow="wrap" label="Multi-select mode (bulk delete/export)">
+                    <SettingRow flow="wrap" label={__t("uiMultiSelectModeBulkDeleteExport")}>
                         <Switch
                             checked={config.enableMultiSelect !== false}
                             onChange={(evt) => {
@@ -2563,7 +2573,7 @@ export default class Setting extends React.PureComponent<SettingProps, SettingSt
                         />
                     </SettingRow>
 
-                    <SettingRow flow="wrap" label="Sort options in measurement list">
+                    <SettingRow flow="wrap" label={__t("uiSortOptionsInMeasurementList")}>
                         <Switch
                             checked={config.enableSortOptions !== false}
                             onChange={(evt) => {
@@ -2575,7 +2585,7 @@ export default class Setting extends React.PureComponent<SettingProps, SettingSt
                         />
                     </SettingRow>
 
-                    <SettingRow flow="wrap" label="Highlight a segment on the map when it is pointed at or clicked in the list">
+                    <SettingRow flow="wrap" label={__t("uiHighlightASegmentOnTheMap")}>
                         <Switch
                             checked={config.enableSegmentHighlight !== false}
                             onChange={(evt) => {
@@ -2587,7 +2597,7 @@ export default class Setting extends React.PureComponent<SettingProps, SettingSt
                         />
                     </SettingRow>
 
-                    <SettingRow flow="wrap" label="Delete segments from drawn lines and shapes">
+                    <SettingRow flow="wrap" label={__t("uiDeleteSegmentsFromDrawnLinesAnd")}>
                         <Switch
                             checked={config.enableSegmentDelete !== false}
                             onChange={(evt) => {
@@ -2600,7 +2610,7 @@ export default class Setting extends React.PureComponent<SettingProps, SettingSt
                     </SettingRow>
                 </SettingSection>
 
-                <SettingSection title="Default Panel Expansion">
+                <SettingSection title={__t("uiDefaultPanelExpansion")}>
                     <SettingRow>
                         <div style={{
                             padding: '12px',
@@ -2610,25 +2620,25 @@ export default class Setting extends React.PureComponent<SettingProps, SettingSt
                             fontSize: '13px',
                             color: '#495057'
                         }}>
-                            <strong>Note:</strong> Choose which collapsible panels start <em>expanded</em> when the widget loads. End users can still toggle them after.
+                            <strong>{__t("uiNote")}</strong> {__t("uiChooseWhichCollapsiblePanelsStart")} <em>{__t("uiExpanded")}</em> {__t("uiWhenTheWidgetLoadsEndUsers")}
                         </div>
                     </SettingRow>
 
-                    <SettingRow flow="wrap" label="Display Options panel expanded">
+                    <SettingRow flow="wrap" label={__t("uiDisplayOptionsPanelExpanded")}>
                         <Switch
                             checked={config.defaultDisplayOptionsState === true}
                             onChange={this.onDefaultDisplayOptionsStateChange}
                         />
                     </SettingRow>
 
-                    <SettingRow flow="wrap" label="Units & Coordinates panel expanded">
+                    <SettingRow flow="wrap" label={__t("uiUnitsCoordinatesPanelExpanded")}>
                         <Switch
                             checked={config.defaultUnitsState === true}
                             onChange={this.onDefaultUnitsStateChange}
                         />
                     </SettingRow>
 
-                    <SettingRow flow="wrap" label="Summary Statistics panel expanded">
+                    <SettingRow flow="wrap" label={__t("uiSummaryStatisticsPanelExpanded")}>
                         <Switch
                             checked={config.defaultStatisticsState === true}
                             onChange={this.onDefaultStatisticsStateChange}
@@ -2636,22 +2646,22 @@ export default class Setting extends React.PureComponent<SettingProps, SettingSt
                     </SettingRow>
                 </SettingSection>
 
-                <SettingSection title="Segment Label Styling">
-                    <SettingRow flow="wrap" label="Enable Segment Labeling">
+                <SettingSection title={__t("uiSegmentLabelStyling")}>
+                    <SettingRow flow="wrap" label={__t("uiEnableSegmentLabeling")}>
                         <Switch
                             checked={config.enableSegmentLabeling !== false}
                             onChange={this.onEnableSegmentLabelingChange}
                         />
                     </SettingRow>
 
-                    <SettingRow flow="wrap" label="Show Segment Labels by Default">
+                    <SettingRow flow="wrap" label={__t("uiShowSegmentLabelsByDefault")}>
                         <Switch
                             checked={config.showSegmentLabels !== false}
                             onChange={this.onShowSegmentLabelsChange}
                         />
                     </SettingRow>
 
-                    <SettingRow flow="wrap" label="Offset Labels on by default (segment labels sit clear of the line or shape edge)">
+                    <SettingRow flow="wrap" label={__t("uiOffsetLabelsOnByDefaultSegment")}>
                         <Switch
                             checked={config.offsetSegmentLabels !== false}
                             onChange={(evt) => {
@@ -2663,23 +2673,23 @@ export default class Setting extends React.PureComponent<SettingProps, SettingSt
                         />
                     </SettingRow>
 
-                    <SettingRow flow="wrap" label="Auto-save Segments">
+                    <SettingRow flow="wrap" label={__t("uiAutoSaveSegments")}>
                         <Switch
                             checked={config.autoSaveSegments === true}
                             onChange={this.onAutoSaveSegmentsChange}
                         />
                     </SettingRow>
 
-                    <SettingRow flow="wrap" label="Segment Label Prefix">
+                    <SettingRow flow="wrap" label={__t("uiSegmentLabelPrefix")}>
                         <TextInput
-                            value={config.segmentLabelPrefix || 'Segment'}
+                            value={__tc(config.segmentLabelPrefix, "uiSegment")}
                             onChange={this.onSegmentLabelPrefixChange}
                             style={{ width: '100%' }}
-                            placeholder="Segment"
+                            placeholder={__t("uiSegment")}
                         />
                     </SettingRow>
 
-                    <SettingRow flow="wrap" label="Font Size">
+                    <SettingRow flow="wrap" label={__t("uiFontSize")}>
                         <NumericInput
                             value={config.segmentLabelFontSize || 10}
                             onChange={this.onSegmentLabelFontSizeChange}
@@ -2689,9 +2699,9 @@ export default class Setting extends React.PureComponent<SettingProps, SettingSt
                         />
                     </SettingRow>
 
-                    <SettingRow flow="wrap" label="Font Family">
+                    <SettingRow flow="wrap" label={__t("uiFontFamily")}>
                         <Select
-                            value={config.segmentLabelFontFamily || 'Arial'}
+                            value={__tc(config.segmentLabelFontFamily, "arial")}
                             onChange={this.onSegmentLabelFontFamilyChange}
                             style={{ width: '100%' }}
                         >
@@ -2701,7 +2711,7 @@ export default class Setting extends React.PureComponent<SettingProps, SettingSt
                         </Select>
                     </SettingRow>
 
-                    <SettingRow flow="wrap" label="Font Weight">
+                    <SettingRow flow="wrap" label={__t("uiFontWeight")}>
                         <Select
                             value={config.segmentLabelFontWeight || 'normal'}
                             onChange={this.onSegmentLabelFontWeightChange}
@@ -2713,7 +2723,7 @@ export default class Setting extends React.PureComponent<SettingProps, SettingSt
                         </Select>
                     </SettingRow>
 
-                    <SettingRow flow="wrap" label="Font Style">
+                    <SettingRow flow="wrap" label={__t("uiFontStyle")}>
                         <Select
                             value={config.segmentLabelFontStyle || 'normal'}
                             onChange={this.onSegmentLabelFontStyleChange}
@@ -2725,7 +2735,7 @@ export default class Setting extends React.PureComponent<SettingProps, SettingSt
                         </Select>
                     </SettingRow>
 
-                    <SettingRow flow="wrap" label="Text Color">
+                    <SettingRow flow="wrap" label={__t("uiTextColor")}>
                         <input
                             type="color"
                             value={config.segmentLabelColor || '#ffffff'}
@@ -2734,7 +2744,7 @@ export default class Setting extends React.PureComponent<SettingProps, SettingSt
                         />
                     </SettingRow>
 
-                    <SettingRow flow="wrap" label="Halo Color">
+                    <SettingRow flow="wrap" label={__t("uiHaloColor")}>
                         <input
                             type="color"
                             value={config.segmentLabelHaloColor || '#000000'}
@@ -2743,7 +2753,7 @@ export default class Setting extends React.PureComponent<SettingProps, SettingSt
                         />
                     </SettingRow>
 
-                    <SettingRow flow="wrap" label="Halo Size">
+                    <SettingRow flow="wrap" label={__t("uiHaloSize")}>
                         <NumericInput
                             value={config.segmentLabelHaloSize ?? 1.5}
                             onChange={this.onSegmentLabelHaloSizeChange}
@@ -2755,8 +2765,8 @@ export default class Setting extends React.PureComponent<SettingProps, SettingSt
                     </SettingRow>
                 </SettingSection>
 
-                <SettingSection title="Main Label Styling">
-                    <SettingRow flow="wrap" label="Font Size">
+                <SettingSection title={__t("uiMainLabelStyling")}>
+                    <SettingRow flow="wrap" label={__t("uiFontSize")}>
                         <NumericInput
                             value={config.labelFontSize || 12}
                             onChange={this.onLabelFontSizeChange}
@@ -2766,9 +2776,9 @@ export default class Setting extends React.PureComponent<SettingProps, SettingSt
                         />
                     </SettingRow>
 
-                    <SettingRow flow="wrap" label="Font Family">
+                    <SettingRow flow="wrap" label={__t("uiFontFamily")}>
                         <Select
-                            value={config.labelFontFamily || 'Arial'}
+                            value={__tc(config.labelFontFamily, "arial")}
                             onChange={this.onLabelFontFamilyChange}
                             style={{ width: '100%' }}
                         >
@@ -2778,7 +2788,7 @@ export default class Setting extends React.PureComponent<SettingProps, SettingSt
                         </Select>
                     </SettingRow>
 
-                    <SettingRow flow="wrap" label="Font Weight">
+                    <SettingRow flow="wrap" label={__t("uiFontWeight")}>
                         <Select
                             value={config.labelFontWeight || 'bold'}
                             onChange={this.onLabelFontWeightChange}
@@ -2790,7 +2800,7 @@ export default class Setting extends React.PureComponent<SettingProps, SettingSt
                         </Select>
                     </SettingRow>
 
-                    <SettingRow flow="wrap" label="Font Style">
+                    <SettingRow flow="wrap" label={__t("uiFontStyle")}>
                         <Select
                             value={config.labelFontStyle || 'normal'}
                             onChange={this.onLabelFontStyleChange}
@@ -2802,7 +2812,7 @@ export default class Setting extends React.PureComponent<SettingProps, SettingSt
                         </Select>
                     </SettingRow>
 
-                    <SettingRow flow="wrap" label="Text Color">
+                    <SettingRow flow="wrap" label={__t("uiTextColor")}>
                         <input
                             type="color"
                             value={config.labelColor || '#ffffff'}
@@ -2811,7 +2821,7 @@ export default class Setting extends React.PureComponent<SettingProps, SettingSt
                         />
                     </SettingRow>
 
-                    <SettingRow flow="wrap" label="Halo Color">
+                    <SettingRow flow="wrap" label={__t("uiHaloColor")}>
                         <input
                             type="color"
                             value={config.labelHaloColor || '#000000'}
@@ -2820,7 +2830,7 @@ export default class Setting extends React.PureComponent<SettingProps, SettingSt
                         />
                     </SettingRow>
 
-                    <SettingRow flow="wrap" label="Halo Size">
+                    <SettingRow flow="wrap" label={__t("uiHaloSize")}>
                         <NumericInput
                             value={config.labelHaloSize ?? 2}
                             onChange={this.onLabelHaloSizeChange}
@@ -2831,7 +2841,7 @@ export default class Setting extends React.PureComponent<SettingProps, SettingSt
                         />
                     </SettingRow>
 
-                    <SettingRow flow="wrap" label="Label Position">
+                    <SettingRow flow="wrap" label={__t("uiLabelPosition")}>
                         <Select
                             value={config.labelPosition || 'center'}
                             onChange={this.onLabelPositionChange}
@@ -2843,14 +2853,14 @@ export default class Setting extends React.PureComponent<SettingProps, SettingSt
                         </Select>
                     </SettingRow>
 
-                    <SettingRow flow="wrap" label="Show Live Labels">
+                    <SettingRow flow="wrap" label={__t("uiShowLiveLabels")}>
                         <Switch
                             checked={config.showLiveLabels !== false}
                             onChange={this.onShowLiveLabelsChange}
                         />
                     </SettingRow>
 
-                    <SettingRow flow="wrap" label="Live Label Font Size">
+                    <SettingRow flow="wrap" label={__t("uiLiveLabelFontSize")}>
                         <NumericInput
                             value={config.liveLabelFontSize || 14}
                             onChange={this.onLiveLabelFontSizeChange}
@@ -2862,53 +2872,53 @@ export default class Setting extends React.PureComponent<SettingProps, SettingSt
                 </SettingSection>
 
                 <SettingSection title="Import/Export">
-                    <SettingRow flow="wrap" label="Enable Import/Export">
+                    <SettingRow flow="wrap" label={__t("uiEnableImportExport")}>
                         <Switch
                             checked={config.enableImportExport !== false}
                             onChange={this.onEnableImportExportChange}
                         />
                     </SettingRow>
 
-                    <SettingRow flow="wrap" label="Show Export All Button">
+                    <SettingRow flow="wrap" label={__t("uiShowExportAllButton")}>
                         <Switch
                             checked={config.showExportButton !== false}
                             onChange={this.onShowExportButtonChange}
                         />
                     </SettingRow>
 
-                    <SettingRow flow="wrap" label="Show Import Button">
+                    <SettingRow flow="wrap" label={__t("uiShowImportButton")}>
                         <Switch
                             checked={config.showImportButton !== false}
                             onChange={this.onShowImportButtonChange}
                         />
                     </SettingRow>
 
-                    <SettingRow flow="wrap" label="Export Button Text">
+                    <SettingRow flow="wrap" label={__t("uiExportButtonText")}>
                         <TextInput
-                            value={config.exportButtonText || 'Export All'}
+                            value={__tc(config.exportButtonText, "uiExportAll")}
                             onChange={this.onExportButtonTextChange}
                             style={{ width: '100%' }}
-                            placeholder="Export All"
+                            placeholder={__t("uiExportAll")}
                         />
                     </SettingRow>
 
-                    <SettingRow flow="wrap" label="Import Button Text">
+                    <SettingRow flow="wrap" label={__t("uiImportButtonText")}>
                         <TextInput
-                            value={config.importButtonText || 'Import GeoJSON'}
+                            value={__tc(config.importButtonText, "uiImportGeojson")}
                             onChange={this.onImportButtonTextChange}
                             style={{ width: '100%' }}
-                            placeholder="Import GeoJSON"
+                            placeholder={__t("uiImportGeojson")}
                         />
                     </SettingRow>
 
-                    <SettingRow flow="wrap" label="Enable Export">
+                    <SettingRow flow="wrap" label={__t("uiEnableExport")}>
                         <Switch
                             checked={config.enableExport !== false}
                             onChange={this.onEnableExportChange}
                         />
                     </SettingRow>
 
-                    <SettingRow flow="wrap" label="Default Export Format">
+                    <SettingRow flow="wrap" label={__t("uiDefaultExportFormat")}>
                         <Select
                             value={config.defaultExportFormat || 'geojson'}
                             onChange={this.onDefaultExportFormatChange}
@@ -2920,7 +2930,7 @@ export default class Setting extends React.PureComponent<SettingProps, SettingSt
                         </Select>
                     </SettingRow>
 
-                    <SettingRow flow="wrap" label="Include Timestamp in Export">
+                    <SettingRow flow="wrap" label={__t("uiIncludeTimestampInExport")}>
                         <Switch
                             checked={config.includeTimestampInExport !== false}
                             onChange={this.onIncludeTimestampInExportChange}
@@ -2928,15 +2938,15 @@ export default class Setting extends React.PureComponent<SettingProps, SettingSt
                     </SettingRow>
                 </SettingSection>
 
-                <SettingSection title="Storage & Persistence">
-                    <SettingRow flow="wrap" label="Enable Local Storage">
+                <SettingSection title={__t("uiStoragePersistence")}>
+                    <SettingRow flow="wrap" label={__t("uiEnableLocalStorage")}>
                         <Switch
                             checked={config.enableStorage === true}
                             onChange={this.onEnableStorageChange}
                         />
                     </SettingRow>
 
-                    <SettingRow flow="wrap" label="Max Stored Measurements">
+                    <SettingRow flow="wrap" label={__t("uiMaxStoredMeasurements")}>
                         <NumericInput
                             value={config.maxStoredMeasurements || 100}
                             onChange={this.onMaxStoredMeasurementsChange}
@@ -2946,7 +2956,7 @@ export default class Setting extends React.PureComponent<SettingProps, SettingSt
                         />
                     </SettingRow>
 
-                    <SettingRow flow="wrap" label="Persist Measurements">
+                    <SettingRow flow="wrap" label={__t("uiPersistMeasurements")}>
                         <Switch
                             checked={config.persistMeasurements === true}
                             onChange={this.onPersistMeasurementsChange}
@@ -2955,33 +2965,33 @@ export default class Setting extends React.PureComponent<SettingProps, SettingSt
                 </SettingSection>
 
                 <SettingSection title="Undo/Redo">
-                    <SettingRow flow="wrap" label="Enable Undo/Redo">
+                    <SettingRow flow="wrap" label={__t("uiEnableUndoRedo")}>
                         <Switch
                             checked={config.enableUndoRedo !== false}
                             onChange={this.onEnableUndoRedoChange}
                         />
                     </SettingRow>
 
-                    <SettingRow flow="wrap" label="Undo Button Text">
+                    <SettingRow flow="wrap" label={__t("uiUndoButtonText")}>
                         <TextInput
-                            value={config.undoButtonText || 'Undo'}
+                            value={__tc(config.undoButtonText, "uiUndo")}
                             onChange={this.onUndoButtonTextChange}
                             style={{ width: '100%' }}
-                            placeholder="Undo"
+                            placeholder={__t("uiUndo")}
                         />
                     </SettingRow>
 
-                    <SettingRow flow="wrap" label="Redo Button Text">
+                    <SettingRow flow="wrap" label={__t("uiRedoButtonText")}>
                         <TextInput
-                            value={config.redoButtonText || 'Redo'}
+                            value={__tc(config.redoButtonText, "uiRedo")}
                             onChange={this.onRedoButtonTextChange}
                             style={{ width: '100%' }}
-                            placeholder="Redo"
+                            placeholder={__t("uiRedo")}
                         />
                     </SettingRow>
                 </SettingSection>
 
-                <SettingSection title="Color Palette">
+                <SettingSection title={__t("uiColorPalette")}>
                     <SettingRow>
                         <div style={{
                             padding: '12px',
@@ -2991,7 +3001,7 @@ export default class Setting extends React.PureComponent<SettingProps, SettingSt
                             fontSize: '13px',
                             color: '#495057'
                         }}>
-                            <strong>Note:</strong> Customize the 10 colors used for measurement graphics. These colors cycle through as measurements are created.
+                            <strong>{__t("uiNote")}</strong> {__t("uiCustomizeThe10ColorsUsedFor")}
                         </div>
                     </SettingRow>
 
@@ -3002,7 +3012,7 @@ export default class Setting extends React.PureComponent<SettingProps, SettingSt
                         ];
                         const palette = config.colorPalette || defaultColors;
                         return (
-                            <SettingRow key={index} flow="wrap" label={`Color ${index + 1}`}>
+                            <SettingRow key={index} flow="wrap" label={__t("uiColor", { value: index + 1 })}>
                                 <input
                                     type="color"
                                     value={palette[index] || defaultColors[index]}
@@ -3014,8 +3024,8 @@ export default class Setting extends React.PureComponent<SettingProps, SettingSt
                     })}
                 </SettingSection>
 
-                <SettingSection title="Symbol Styling">
-                    <SettingRow flow="wrap" label="Point Size (pixels)">
+                <SettingSection title={__t("uiSymbolStyling")}>
+                    <SettingRow flow="wrap" label={__t("uiPointSizePixels")}>
                         <NumericInput
                             value={config.pointSize || 8}
                             onChange={this.onPointSizeChange}
@@ -3025,7 +3035,7 @@ export default class Setting extends React.PureComponent<SettingProps, SettingSt
                         />
                     </SettingRow>
 
-                    <SettingRow flow="wrap" label="Point Color">
+                    <SettingRow flow="wrap" label={__t("uiPointColor")}>
                         <input
                             type="color"
                             value={config.pointColor || '#3b82f6'}
@@ -3034,7 +3044,7 @@ export default class Setting extends React.PureComponent<SettingProps, SettingSt
                         />
                     </SettingRow>
 
-                    <SettingRow flow="wrap" label="Point Outline Width (pixels)">
+                    <SettingRow flow="wrap" label={__t("uiPointOutlineWidthPixels")}>
                         <NumericInput
                             value={config.pointOutlineWidth || 2}
                             onChange={this.onPointOutlineWidthChange}
@@ -3044,7 +3054,7 @@ export default class Setting extends React.PureComponent<SettingProps, SettingSt
                         />
                     </SettingRow>
 
-                    <SettingRow flow="wrap" label="Point Outline Color">
+                    <SettingRow flow="wrap" label={__t("uiPointOutlineColor")}>
                         <input
                             type="color"
                             value={config.pointOutlineColor || '#ffffff'}
@@ -3053,7 +3063,7 @@ export default class Setting extends React.PureComponent<SettingProps, SettingSt
                         />
                     </SettingRow>
 
-                    <SettingRow flow="wrap" label="Polygon Outline Width (pixels)">
+                    <SettingRow flow="wrap" label={__t("uiPolygonOutlineWidthPixels")}>
                         <NumericInput
                             value={config.outlineWidth || 2}
                             onChange={this.onOutlineWidthChange}
@@ -3063,7 +3073,7 @@ export default class Setting extends React.PureComponent<SettingProps, SettingSt
                         />
                     </SettingRow>
 
-                    <SettingRow flow="wrap" label="Polygon Outline Color">
+                    <SettingRow flow="wrap" label={__t("uiPolygonOutlineColor")}>
                         <input
                             type="color"
                             value={config.outlineColor || '#000000'}
@@ -3072,7 +3082,7 @@ export default class Setting extends React.PureComponent<SettingProps, SettingSt
                         />
                     </SettingRow>
 
-                    <SettingRow flow="wrap" label="Fill Opacity (%)">
+                    <SettingRow flow="wrap" label={__t("uiFillOpacity")}>
                         <NumericInput
                             value={Math.round((config.fillOpacity ?? 0.3) * 100)}
                             onChange={this.onFillOpacityChange}
@@ -3083,8 +3093,8 @@ export default class Setting extends React.PureComponent<SettingProps, SettingSt
                     </SettingRow>
                 </SettingSection>
 
-                <SettingSection title="User Interface">
-                    <SettingRow flow="wrap" label="Always Show Button Text">
+                <SettingSection title={__t("uiUserInterface")}>
+                    <SettingRow flow="wrap" label={__t("uiAlwaysShowButtonText")}>
                         <Switch
                             checked={config.alwaysShowButtonText === true}
                             onChange={(evt) => {
@@ -3096,7 +3106,7 @@ export default class Setting extends React.PureComponent<SettingProps, SettingSt
                         />
                     </SettingRow>
 
-                    <SettingRow flow="wrap" label="Show Widget Title">
+                    <SettingRow flow="wrap" label={__t("uiShowWidgetTitle")}>
                         <Switch
                             checked={config.showWidgetTitle !== false}
                             onChange={this.onShowWidgetTitleChange}
@@ -3104,114 +3114,114 @@ export default class Setting extends React.PureComponent<SettingProps, SettingSt
                     </SettingRow>
 
                     {config.showWidgetTitle !== false && (
-                        <SettingRow flow="wrap" label="Widget Title">
+                        <SettingRow flow="wrap" label={__t("uiWidgetTitle")}>
                             <TextInput
-                                value={config.widgetTitle || 'Measurement Tools'}
+                                value={__tc(config.widgetTitle, "uiMeasurementTools")}
                                 onChange={this.onWidgetTitleChange}
                                 style={{ width: '100%' }}
-                                placeholder="Measurement Tools"
+                                placeholder={__t("uiMeasurementTools")}
                             />
                         </SettingRow>
                     )}
 
-                    <SettingRow flow="wrap" label="Show Hint Message">
+                    <SettingRow flow="wrap" label={__t("uiShowHintMessage")}>
                         <Switch
                             checked={config.showHintMessage !== false}
                             onChange={this.onShowHintMessageChange}
                         />
                     </SettingRow>
 
-                    <SettingRow flow="wrap" label="Show Clear All Button">
+                    <SettingRow flow="wrap" label={__t("uiShowClearAllButton")}>
                         <Switch
                             checked={config.showClearAllButton !== false}
                             onChange={this.onShowClearAllButtonChange}
                         />
                     </SettingRow>
 
-                    <SettingRow flow="wrap" label="Show Print-Ready Button">
+                    <SettingRow flow="wrap" label={__t("uiShowPrintReadyButton")}>
                         <Switch
                             checked={config.showPrintReadyButton !== false}
                             onChange={this.onShowPrintReadyButtonChange}
                         />
                     </SettingRow>
 
-                    <SettingRow flow="wrap" label="Compact Mode">
+                    <SettingRow flow="wrap" label={__t("uiCompactMode")}>
                         <Switch
                             checked={config.compactMode === true}
                             onChange={this.onCompactModeChange}
                         />
                     </SettingRow>
 
-                    <SettingRow flow="wrap" label="Button Layout">
+                    <SettingRow flow="wrap" label={__t("uiButtonLayout")}>
                         <Select
                             value={config.buttonLayout || '4-column'}
                             onChange={this.onButtonLayoutChange}
                             style={{ width: '100%' }}
                         >
-                            <option value="2-column">2 Columns</option>
-                            <option value="3-column">3 Columns</option>
-                            <option value="4-column">4 Columns</option>
-                            <option value="vertical">Vertical (1 Column)</option>
+                            <option value="2-column">{__t("ui2Columns")}</option>
+                            <option value="3-column">{__t("ui3Columns")}</option>
+                            <option value="4-column">{__t("ui4Columns")}</option>
+                            <option value="vertical">{__t("uiVertical1Column")}</option>
                         </Select>
                     </SettingRow>
 
-                    <SettingRow flow="wrap" label="Show Icons on Buttons">
+                    <SettingRow flow="wrap" label={__t("uiShowIconsOnButtons")}>
                         <Switch
                             checked={config.showIconsOnButtons !== false}
                             onChange={this.onShowIconsOnButtonsChange}
                         />
                     </SettingRow>
 
-                    <SettingRow flow="wrap" label="Measurements Header Text">
+                    <SettingRow flow="wrap" label={__t("uiMeasurementsHeaderText")}>
                         <TextInput
-                            value={config.measurementsHeaderText || 'Measurements'}
+                            value={__tc(config.measurementsHeaderText, "uiMeasurements")}
                             onChange={this.onMeasurementsHeaderTextChange}
                             style={{ width: '100%' }}
-                            placeholder="Measurements"
+                            placeholder={__t("uiMeasurements")}
                         />
                     </SettingRow>
                 </SettingSection>
 
-                <SettingSection title="Empty State Customization">
-                    <SettingRow flow="wrap" label="Empty State Message">
+                <SettingSection title={__t("uiEmptyStateCustomization")}>
+                    <SettingRow flow="wrap" label={__t("uiEmptyStateMessage")}>
                         <TextInput
-                            value={config.emptyStateMessage || 'No measurements yet'}
+                            value={__tc(config.emptyStateMessage, "uiNoMeasurementsYet")}
                             onChange={this.onEmptyStateMessageChange}
                             style={{ width: '100%' }}
-                            placeholder="No measurements yet"
+                            placeholder={__t("uiNoMeasurementsYet")}
                         />
                     </SettingRow>
 
-                    <SettingRow flow="wrap" label="Empty State Hint">
+                    <SettingRow flow="wrap" label={__t("uiEmptyStateHint")}>
                         <TextInput
-                            value={config.emptyStateHint || 'Click a measurement tool to begin'}
+                            value={__tc(config.emptyStateHint, "uiClickAMeasurementToolToBegin")}
                             onChange={this.onEmptyStateHintChange}
                             style={{ width: '100%' }}
-                            placeholder="Click a measurement tool to begin"
+                            placeholder={__t("uiClickAMeasurementToolToBegin")}
                         />
                     </SettingRow>
                 </SettingSection>
 
-                <SettingSection title="Dialog Customization">
-                    <SettingRow flow="wrap" label="Clear Dialog Title">
+                <SettingSection title={__t("uiDialogCustomization")}>
+                    <SettingRow flow="wrap" label={__t("uiClearDialogTitle")}>
                         <TextInput
-                            value={config.clearDialogTitle || 'Are you sure you want to clear all measurements?'}
+                            value={__tc(config.clearDialogTitle, "uiAreYouSureYouWantTo2")}
                             onChange={this.onClearDialogTitleChange}
                             style={{ width: '100%' }}
-                            placeholder="Are you sure you want to clear all measurements?"
+                            placeholder={__t("uiAreYouSureYouWantTo2")}
                         />
                     </SettingRow>
 
-                    <SettingRow flow="wrap" label="Clear Dialog Cancel Text">
+                    <SettingRow flow="wrap" label={__t("uiClearDialogCancelText")}>
                         <TextInput
-                            value={config.clearDialogCancelText || 'Cancel'}
+                            value={__tc(config.clearDialogCancelText, "uiCancel")}
                             onChange={this.onClearDialogCancelTextChange}
                             style={{ width: '100%' }}
-                            placeholder="Cancel"
+                            placeholder={__t("uiCancel")}
                         />
                     </SettingRow>
 
-                    <SettingRow flow="wrap" label="Clear Dialog Confirm Text">
+                    <SettingRow flow="wrap" label={__t("uiClearDialogConfirmText")}>
                         <TextInput
                             value={config.clearDialogConfirmText || 'OK'}
                             onChange={this.onClearDialogConfirmTextChange}
@@ -3229,7 +3239,7 @@ export default class Setting extends React.PureComponent<SettingProps, SettingSt
                             onClick={this.onResetToDefaults}
                             style={{ width: '100%' }}
                         >
-                            Reset All Settings to Defaults
+                            {__t("uiResetAllSettingsToDefaults")}
                         </Button>
                     </SettingRow>
                 </SettingSection>
@@ -3237,34 +3247,34 @@ export default class Setting extends React.PureComponent<SettingProps, SettingSt
                 <SettingSection>
                     <div style={{ padding: '10px', fontSize: '12px', color: '#666', background: '#f8f9fa', borderRadius: '4px' }}>
                         <p style={{ marginTop: 0, fontWeight: 'bold' }}>
-                            Enhanced Measurement Widget v3.3 - Custom Units Support
+                            {__t("uiEnhancedMeasurementWidgetV33Custom")}
                         </p>
                         <ul style={{ marginTop: '8px', marginBottom: 0, paddingLeft: '20px', lineHeight: '1.6' }}>
-                            <li>Custom linear and area units with developer-configurable conversion factors</li>
-                            <li>XML settings import/export for easy transfer between Experience Builder apps</li>
-                            <li>Individual tool enablement (8 measurement tools with independent controls)</li>
-                            <li>Complete UI customization with text overrides for all buttons and messages</li>
-                            <li>Print-Ready Labels mode for optimized PDF/print export spacing</li>
-                            <li>Full control over tool visibility and button layout (2/3/4 column or vertical)</li>
-                            <li>Comprehensive color palette with 10 customizable colors</li>
-                            <li>Advanced label styling and positioning with font size controls</li>
-                            <li>Toggle visibility controls for Segment Labels, Tooltips, Snapping, and Statistics</li>
-                            <li>Default state configuration for all toggles</li>
-                            <li>Configurable dialogs, empty states, and measurement headers</li>
-                            <li>Complete symbol styling (size, color, opacity, outlines)</li>
-                            <li>Enhanced segment labeling with customizable prefix and font sizes</li>
-                            <li>Flexible import/export with format selection and button customization</li>
-                            <li>Storage and persistence options with configurable limits</li>
-                            <li>Undo/Redo support with custom button text</li>
+                            <li>{__t("uiCustomLinearAndAreaUnitsWith")}</li>
+                            <li>{__t("uiXmlSettingsImportExportForEasy")}</li>
+                            <li>{__t("uiIndividualToolEnablement8MeasurementTools")}</li>
+                            <li>{__t("uiCompleteUiCustomizationWithTextOverrides")}</li>
+                            <li>{__t("uiPrintReadyLabelsModeForOptimized")}</li>
+                            <li>{__t("uiFullControlOverToolVisibilityAnd")}</li>
+                            <li>{__t("uiComprehensiveColorPaletteWith10Customizable")}</li>
+                            <li>{__t("uiAdvancedLabelStylingAndPositioningWith")}</li>
+                            <li>{__t("uiToggleVisibilityControlsForSegmentLabels")}</li>
+                            <li>{__t("uiDefaultStateConfigurationForAllToggles")}</li>
+                            <li>{__t("uiConfigurableDialogsEmptyStatesAndMeasurement")}</li>
+                            <li>{__t("uiCompleteSymbolStylingSizeColorOpacity")}</li>
+                            <li>{__t("uiEnhancedSegmentLabelingWithCustomizablePrefix")}</li>
+                            <li>{__t("uiFlexibleImportExportWithFormatSelection")}</li>
+                            <li>{__t("uiStorageAndPersistenceOptionsWithConfigurable")}</li>
+                            <li>{__t("uiUndoRedoSupportWithCustomButton")}</li>
                         </ul>
                     </div>
                 </SettingSection>
-                <SettingSection title='Help'>
-                  <SettingRow tag='label' label='Show help guide'>
+                <SettingSection title={__t("uiHelp")}>
+                  <SettingRow tag='label' label={__t("uiShowHelpGuide")}>
                     <Switch
                       checked={this.props.config?.showHelp !== false}
                       onChange={(evt) => { this.props.onSettingChange({ id: this.props.id, config: (this.props.config as any).set('showHelp', evt.target.checked) }) }}
-                      aria-label='Show the question-mark button that opens the widget help guide'
+                      aria-label={__t("uiShowTheQuestionMarkButtonThat")}
                     />
                   </SettingRow>
                 </SettingSection>

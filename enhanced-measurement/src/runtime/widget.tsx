@@ -18,6 +18,7 @@ import defaultMessages from './translations/default';
 import { beacon } from '../shared/beacon';
 import type { BeaconHandle } from '../shared/beacon';
 import './style.css';
+import { __setIntl, __t, __tc } from './i18n-t'
 
 // Dropdown Menu Components (shadcn/ui style) - WCAG 2.1 AA Accessible
 const DropdownMenuSeparator = () => (
@@ -738,22 +739,22 @@ export default class EnhancedMeasurement extends React.PureComponent<WidgetProps
             persistence: config.enablePersistence === true,
             labels: {
                 point: config.pointButtonText || 'Point',
-                distance: config.lineButtonText || 'Line',
-                freehandLine: config.freehandLineButtonText || 'Freehand Line',
-                rectangle: config.rectangleButtonText || 'Rectangle',
-                area: config.areaButtonText || 'Area',
-                freehandArea: config.freehandAreaButtonText || 'Freehand Area',
-                circle: config.circleButtonText || 'Circle',
-                triangle: config.triangleButtonText || 'Triangle',
-                segmentLabels: config.segmentLabelText || 'Show Segment Labels',
-                tooltips: config.tooltipsToggleText || 'Show Tooltips',
-                snapping: config.snappingToggleText || 'Enable Snapping',
-                undo: config.undoButtonText || 'Undo',
-                redo: config.redoButtonText || 'Redo',
-                displayOptions: config.displayOptionsHeaderText || 'Display Options',
-                units: config.unitsHeaderText || 'Units & Coordinates',
-                statistics: config.statisticsHeaderText || 'Summary Statistics',
-                measurements: config.measurementsHeaderText || 'Measurements'
+                distance: __tc(config.lineButtonText, "line"),
+                freehandLine: __tc(config.freehandLineButtonText, "freehandLine"),
+                rectangle: __tc(config.rectangleButtonText, "rectangle"),
+                area: __tc(config.areaButtonText, "area"),
+                freehandArea: __tc(config.freehandAreaButtonText, "freehandArea"),
+                circle: __tc(config.circleButtonText, "circle"),
+                triangle: __tc(config.triangleButtonText, "triangle"),
+                segmentLabels: __tc(config.segmentLabelText, "showSegmentLabels"),
+                tooltips: __tc(config.tooltipsToggleText, "showTooltips"),
+                snapping: __tc(config.snappingToggleText, "enableSnapping"),
+                undo: __tc(config.undoButtonText, "undo"),
+                redo: __tc(config.redoButtonText, "redo"),
+                displayOptions: __tc(config.displayOptionsHeaderText, "displayOptions"),
+                units: __tc(config.unitsHeaderText, "unitsCoordinates"),
+                statistics: __tc(config.statisticsHeaderText, "summaryStatistics"),
+                measurements: __tc(config.measurementsHeaderText, "measurements")
             }
         };
     }
@@ -1450,7 +1451,7 @@ export default class EnhancedMeasurement extends React.PureComponent<WidgetProps
 
     // Get display name for spatial reference
     getSpatialReferenceLabel(spatialReference: any): string {
-        if (!spatialReference) return 'Unknown';
+        if (!spatialReference) return __t("unknown");
 
         const wkid = spatialReference.wkid || spatialReference.latestWkid;
 
@@ -1545,7 +1546,7 @@ export default class EnhancedMeasurement extends React.PureComponent<WidgetProps
                 return `X: ${coordinates.x.toFixed(2)}\nY: ${coordinates.y.toFixed(2)}`;
             }
             const formatted = this.formatCoordinate(coordinates.lat, coordinates.lon, this.state.coordinateFormat);
-            return `Lat: ${formatted.lat}\nLon: ${formatted.lon}`;
+            return __t("latLatLonLon", { lat: formatted.lat, lon: formatted.lon });
         }
     }
 
@@ -2614,7 +2615,7 @@ export default class EnhancedMeasurement extends React.PureComponent<WidgetProps
                 },
                 linearUnit: this.state.currentLinearUnit,
                 areaUnit: this.state.currentAreaUnit,
-                label: `Point ${this.measurementCount}`,
+                label: __t("pointMeasurementCount", { measurementCount: this.measurementCount }),
                 geometry: graphic.geometry,
                 geojson: geojson,
                 graphic: graphic,
@@ -2711,7 +2712,7 @@ export default class EnhancedMeasurement extends React.PureComponent<WidgetProps
                     },
                     linearUnit: this.state.currentLinearUnit,
                     areaUnit: this.state.currentAreaUnit,
-                    label: `Circle ${this.measurementCount}`,
+                    label: __t("circleMeasurementCount", { measurementCount: this.measurementCount }),
                     geometry: graphic.geometry,
                     geojson: geojson,
                     graphic: graphic,
@@ -2731,7 +2732,7 @@ export default class EnhancedMeasurement extends React.PureComponent<WidgetProps
                     sideLength: sideLength,
                     linearUnit: this.state.currentLinearUnit,
                     areaUnit: this.state.currentAreaUnit,
-                    label: `Triangle ${this.measurementCount}`,
+                    label: __t("triangleMeasurementCount", { measurementCount: this.measurementCount }),
                     geometry: graphic.geometry,
                     geojson: geojson,
                     graphic: graphic,
@@ -2791,8 +2792,8 @@ export default class EnhancedMeasurement extends React.PureComponent<WidgetProps
         }
 
         // Get segment label prefix from config
-        const segmentLabelPrefix = config.segmentLabelPrefix || 'Segment';
-        const edgeLabelPrefix = config.edgeLabelPrefix || 'Edge';
+        const segmentLabelPrefix = __tc(config.segmentLabelPrefix, "segment");
+        const edgeLabelPrefix = __tc(config.edgeLabelPrefix, "edge");
 
         for (let i = 0; i < coordinates.length - 1; i++) {
             // Get original x/y from paths
@@ -3715,14 +3716,14 @@ export default class EnhancedMeasurement extends React.PureComponent<WidgetProps
         const config = this.props.config || {};
         switch (tool) {
             case 'point': return config.pointButtonText || 'Point';
-            case 'distance': return config.lineButtonText || 'Line';
-            case 'freehand-polyline': return config.freehandLineButtonText || 'Freehand Line';
-            case 'rectangle': return config.rectangleButtonText || 'Rectangle';
-            case 'area': return config.areaButtonText || 'Area';
-            case 'freehand-polygon': return config.freehandAreaButtonText || 'Freehand Area';
-            case 'circle': return config.circleButtonText || 'Circle';
-            case 'triangle': return config.triangleButtonText || 'Triangle';
-            case 'edit': return 'Edit Vertices';
+            case 'distance': return __tc(config.lineButtonText, "line");
+            case 'freehand-polyline': return __tc(config.freehandLineButtonText, "freehandLine");
+            case 'rectangle': return __tc(config.rectangleButtonText, "rectangle");
+            case 'area': return __tc(config.areaButtonText, "area");
+            case 'freehand-polygon': return __tc(config.freehandAreaButtonText, "freehandArea");
+            case 'circle': return __tc(config.circleButtonText, "circle");
+            case 'triangle': return __tc(config.triangleButtonText, "triangle");
+            case 'edit': return __t("editVertices2");
             default: return '';
         }
     }
@@ -3733,22 +3734,22 @@ export default class EnhancedMeasurement extends React.PureComponent<WidgetProps
     getToolHint(tool: string | null): string {
         switch (tool) {
             case 'point':
-                return 'Click on the map to place a point';
+                return __t("clickOnTheMapToPlace");
             case 'distance':
-                return 'Click to add points · double-click to finish · Esc to cancel';
+                return __t("clickToAddPointsDoubleClick");
             case 'area':
-                return 'Click to add vertices · double-click to close · Esc to cancel';
+                return __t("clickToAddVerticesDoubleClick");
             case 'freehand-polyline':
             case 'freehand-polygon':
-                return 'Click and drag on the map · release to finish';
+                return __t("clickAndDragOnTheMap");
             case 'rectangle':
-                return 'Click and drag to draw a rectangle · Esc to cancel';
+                return __t("clickAndDragToDrawA");
             case 'circle':
-                return 'Click center, drag for radius · Esc to cancel';
+                return __t("clickCenterDragForRadiusEsc");
             case 'triangle':
-                return 'Click 3 points · hold Shift for equilateral · Esc to cancel';
+                return __t("click3PointsHoldShiftFor");
             case 'edit':
-                return 'Drag vertices to reshape · Esc when done';
+                return __t("dragVerticesToReshapeEscWhen");
             default:
                 return '';
         }
@@ -4874,7 +4875,7 @@ export default class EnhancedMeasurement extends React.PureComponent<WidgetProps
                     coordinates: props.coordinates,
                     linearUnit: props.linearUnit || this.state.currentLinearUnit,
                     areaUnit: props.areaUnit || this.state.currentAreaUnit,
-                    label: props.label || `Imported ${props.measurementType}`,
+                    label: props.label || __t("importedMeasurementType", { measurementType: props.measurementType }),
                     geometry: esriGeometry,
                     geojson: { type: 'Feature', geometry, properties: props },
                     graphic: graphic,
@@ -5932,6 +5933,7 @@ export default class EnhancedMeasurement extends React.PureComponent<WidgetProps
     }
 
     render() {
+    __setIntl((this.props as any).intl)
         const config = this.props.config || {};
         const { moduleLoadError, modulesLoaded, measurements, currentTool, showStatistics, showDisplayOptions, showUnits } = this.state;
 
