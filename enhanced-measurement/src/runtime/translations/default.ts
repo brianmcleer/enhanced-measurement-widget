@@ -317,5 +317,9 @@ export default {
   dragVerticesToReshapeEscWhen: 'Drag vertices to reshape · Esc when done',
   importedMeasurementType: 'Imported {measurementType}',
   unknownError: 'unknown error',
-  unserializableError: 'unserializable error'
+  unserializableError: 'unserializable error',
+  input: 'Input',
+  radiusFormatValueCurrentLinearUnitCircumferenceFormatValue2CurrentLinearUnit2: 'Radius: {formatValue} {currentLinearUnit}\nCircumference: {formatValue2} {currentLinearUnit2}\nArea: {formatValue3} {currentAreaUnit}',
+  areaFormatValueCurrentAreaUnitPerimeterFormatValue2CurrentLinearUnit: 'Area: {formatValue} {currentAreaUnit}\nPerimeter: {formatValue2} {currentLinearUnit}',
+  sideLengthFormatValueCurrentLinearUnitPerimeterFormatValue2: 'Side Length: {formatValue} {currentLinearUnit}\nPerimeter: {formatValue2} {currentLinearUnit2}\nArea: {formatValue3} {currentAreaUnit}'
 }

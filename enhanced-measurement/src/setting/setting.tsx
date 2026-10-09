@@ -377,80 +377,80 @@ export default class Setting extends React.PureComponent<SettingProps, SettingSt
     };
 
     linearUnitOptions = [
-        { value: 'meters', label: __t("meters") },
-        { value: 'kilometers', label: __t("kilometers") },
-        { value: 'feet', label: __t("feet") },
-        { value: 'miles', label: __t("miles") },
-        { value: 'yards', label: __t("yards") },
-        { value: 'nautical-miles', label: __t("nauticalMiles") }
+        { value: 'meters', get label () { return __t("meters") } },
+        { value: 'kilometers', get label () { return __t("kilometers") } },
+        { value: 'feet', get label () { return __t("feet") } },
+        { value: 'miles', get label () { return __t("miles") } },
+        { value: 'yards', get label () { return __t("yards") } },
+        { value: 'nautical-miles', get label () { return __t("nauticalMiles") } }
     ];
 
     areaUnitOptions = [
-        { value: 'square-meters', label: __t("squareMeters") },
-        { value: 'square-kilometers', label: __t("squareKilometers") },
-        { value: 'square-feet', label: __t("squareFeet") },
-        { value: 'square-miles', label: __t("squareMiles") },
-        { value: 'acres', label: __t("acres") },
-        { value: 'hectares', label: __t("hectares") }
+        { value: 'square-meters', get label () { return __t("squareMeters") } },
+        { value: 'square-kilometers', get label () { return __t("squareKilometers") } },
+        { value: 'square-feet', get label () { return __t("squareFeet") } },
+        { value: 'square-miles', get label () { return __t("squareMiles") } },
+        { value: 'acres', get label () { return __t("acres") } },
+        { value: 'hectares', get label () { return __t("hectares") } }
     ];
 
     defaultToolOptions = [
-        { value: 'none', label: __t("noneManualSelection") },
-        { value: 'point', label: __t("pointMeasurement") },
-        { value: 'distance', label: __t("distanceMeasurement") },
-        { value: 'area', label: __t("areaMeasurement") },
-        { value: 'circle', label: __t("circleMeasurement") },
-        { value: 'rectangle', label: __t("rectangleMeasurement") },
-        { value: 'triangle', label: __t("triangleMeasurement") },
-        { value: 'freehand-polyline', label: __t("uiFreehandLine") },
-        { value: 'freehand-polygon', label: __t("uiFreehandArea") }
+        { value: 'none', get label () { return __t("noneManualSelection") } },
+        { value: 'point', get label () { return __t("pointMeasurement") } },
+        { value: 'distance', get label () { return __t("distanceMeasurement") } },
+        { value: 'area', get label () { return __t("areaMeasurement") } },
+        { value: 'circle', get label () { return __t("circleMeasurement") } },
+        { value: 'rectangle', get label () { return __t("rectangleMeasurement") } },
+        { value: 'triangle', get label () { return __t("triangleMeasurement") } },
+        { value: 'freehand-polyline', get label () { return __t("uiFreehandLine") } },
+        { value: 'freehand-polygon', get label () { return __t("uiFreehandArea") } }
     ];
 
     coordinateFormatOptions = [
-        { value: 'decimal', label: __t("decimalDegreesDd") },
-        { value: 'dms', label: __t("degreesMinutesSecondsDms") },
-        { value: 'ddm', label: __t("degreesDecimalMinutesDdm") }
+        { value: 'decimal', get label () { return __t("decimalDegreesDd") } },
+        { value: 'dms', get label () { return __t("degreesMinutesSecondsDms") } },
+        { value: 'ddm', get label () { return __t("degreesDecimalMinutesDdm") } }
     ];
 
     exportFormatOptions = [
         { value: 'json', label: 'JSON' },
         { value: 'csv', label: 'CSV' },
-        { value: 'geojson', label: __t("geoJSON") },
+        { value: 'geojson', get label () { return __t("geoJSON") } },
         { value: 'pdf', label: 'PDF' }
     ];
 
     labelPositionOptions = [
-        { value: 'center', label: __t("center") },
-        { value: 'top', label: __t("top") },
-        { value: 'bottom', label: __t("bottom") }
+        { value: 'center', get label () { return __t("center") } },
+        { value: 'top', get label () { return __t("top") } },
+        { value: 'bottom', get label () { return __t("bottom") } }
     ];
 
     fontFamilyOptions = [
-        { value: 'Arial', label: __t("arial") },
-        { value: 'Helvetica', label: __t("helvetica") },
-        { value: 'Times New Roman', label: __t("timesNewRoman") },
-        { value: 'Courier New', label: __t("courierNew") },
-        { value: 'Georgia', label: __t("georgia") },
-        { value: 'Verdana', label: __t("verdana") },
-        { value: 'Trebuchet MS', label: __t("trebuchetMs") },
-        { value: 'Palatino', label: __t("palatino") },
-        { value: 'Garamond', label: __t("garamond") },
-        { value: 'Comic Sans MS', label: __t("comicSansMs") },
-        { value: 'Tahoma', label: __t("tahoma") },
-        { value: 'Impact', label: __t("impact") }
+        { value: 'Arial', get label () { return __t("arial") } },
+        { value: 'Helvetica', get label () { return __t("helvetica") } },
+        { value: 'Times New Roman', get label () { return __t("timesNewRoman") } },
+        { value: 'Courier New', get label () { return __t("courierNew") } },
+        { value: 'Georgia', get label () { return __t("georgia") } },
+        { value: 'Verdana', get label () { return __t("verdana") } },
+        { value: 'Trebuchet MS', get label () { return __t("trebuchetMs") } },
+        { value: 'Palatino', get label () { return __t("palatino") } },
+        { value: 'Garamond', get label () { return __t("garamond") } },
+        { value: 'Comic Sans MS', get label () { return __t("comicSansMs") } },
+        { value: 'Tahoma', get label () { return __t("tahoma") } },
+        { value: 'Impact', get label () { return __t("impact") } }
     ];
 
     fontWeightOptions = [
-        { value: 'normal', label: __t("normal") },
-        { value: 'bold', label: __t("bold") },
-        { value: 'bolder', label: __t("bolder") },
-        { value: 'lighter', label: __t("lighter") }
+        { value: 'normal', get label () { return __t("normal") } },
+        { value: 'bold', get label () { return __t("bold") } },
+        { value: 'bolder', get label () { return __t("bolder") } },
+        { value: 'lighter', get label () { return __t("lighter") } }
     ];
 
     fontStyleOptions = [
-        { value: 'normal', label: __t("normal") },
-        { value: 'italic', label: __t("italic") },
-        { value: 'oblique', label: __t("oblique") }
+        { value: 'normal', get label () { return __t("normal") } },
+        { value: 'italic', get label () { return __t("italic") } },
+        { value: 'oblique', get label () { return __t("oblique") } }
     ];
 
     onMapWidgetSelected = (useMapWidgetIds: string[]) => {

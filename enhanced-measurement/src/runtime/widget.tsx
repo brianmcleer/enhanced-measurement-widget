@@ -18,7 +18,7 @@ import defaultMessages from './translations/default';
 import { beacon } from '../shared/beacon';
 import type { BeaconHandle } from '../shared/beacon';
 import './style.css';
-import { __setIntl, __t, __tc } from './i18n-t'
+import { __locale, __setIntl, __t, __tc } from './i18n-t'
 
 // Dropdown Menu Components (shadcn/ui style) - WCAG 2.1 AA Accessible
 const DropdownMenuSeparator = () => (
@@ -1967,7 +1967,7 @@ export default class EnhancedMeasurement extends React.PureComponent<WidgetProps
                         }
                     });
 
-                    this.updateLiveLabel(geometry, `Radius: ${this.formatValue(radius)} ${this.state.currentLinearUnit}\nCircumference: ${this.formatValue(perimeter)} ${this.state.currentLinearUnit}\nArea: ${this.formatValue(areaConverted)} ${this.state.currentAreaUnit}`, 'polygon');
+                    this.updateLiveLabel(geometry, __t("radiusFormatValueCurrentLinearUnitCircumferenceFormatValue2CurrentLinearUnit2", { formatValue: this.formatValue(radius), currentLinearUnit: this.state.currentLinearUnit, formatValue2: this.formatValue(perimeter), currentLinearUnit2: this.state.currentLinearUnit, formatValue3: this.formatValue(areaConverted), currentAreaUnit: this.state.currentAreaUnit }), 'polygon');
                 } else {
                     this.setState({
                         liveMeasurement: {
@@ -1976,7 +1976,7 @@ export default class EnhancedMeasurement extends React.PureComponent<WidgetProps
                         }
                     });
 
-                    this.updateLiveLabel(geometry, `Area: ${this.formatValue(areaConverted)} ${this.state.currentAreaUnit}\nPerimeter: ${this.formatValue(perimeter)} ${this.state.currentLinearUnit}`, 'polygon');
+                    this.updateLiveLabel(geometry, __t("areaFormatValueCurrentAreaUnitPerimeterFormatValue2CurrentLinearUnit", { formatValue: this.formatValue(areaConverted), currentAreaUnit: this.state.currentAreaUnit, formatValue2: this.formatValue(perimeter), currentLinearUnit: this.state.currentLinearUnit }), 'polygon');
                 }
             } else if (geometryType === 'point') {
                 const lonLat = this.convertToGeographic(geometry.x, geometry.y, geometry.spatialReference);
@@ -3771,9 +3771,9 @@ export default class EnhancedMeasurement extends React.PureComponent<WidgetProps
         const startOfToday = new Date(); startOfToday.setHours(0, 0, 0, 0);
         const startOfDate = new Date(d); startOfDate.setHours(0, 0, 0, 0);
         const dayDiff = Math.round((startOfToday.getTime() - startOfDate.getTime()) / 86400000);
-        if (dayDiff === 1) return `Yesterday, ${d.toLocaleTimeString([], { hour: 'numeric', minute: '2-digit' })}`;
-        if (dayDiff < 7) return d.toLocaleDateString([], { weekday: 'short' }) + ', ' + d.toLocaleTimeString([], { hour: 'numeric', minute: '2-digit' });
-        return d.toLocaleDateString() + ' ' + d.toLocaleTimeString([], { hour: 'numeric', minute: '2-digit' });
+        if (dayDiff === 1) return `Yesterday, ${d.toLocaleTimeString(__locale(), { hour: 'numeric', minute: '2-digit' })}`;
+        if (dayDiff < 7) return d.toLocaleDateString(__locale(), { weekday: 'short' }) + ', ' + d.toLocaleTimeString(__locale(), { hour: 'numeric', minute: '2-digit' });
+        return d.toLocaleDateString(__locale()) + ' ' + d.toLocaleTimeString(__locale(), { hour: 'numeric', minute: '2-digit' });
     }
 
     activateTool(tool: 'point' | 'distance' | 'freehand-polyline' | 'rectangle' | 'area' | 'freehand-polygon' | 'circle' | 'triangle' | 'edit') {
@@ -4228,7 +4228,7 @@ export default class EnhancedMeasurement extends React.PureComponent<WidgetProps
                 // Update live label
                 this.updateLiveLabel(
                     triangle,
-                    `Side Length: ${this.formatValue(avgSideLength)} ${this.state.currentLinearUnit}\nPerimeter: ${this.formatValue(perimeter)} ${this.state.currentLinearUnit}\nArea: ${this.formatValue(areaConverted)} ${this.state.currentAreaUnit}`,
+                    __t("sideLengthFormatValueCurrentLinearUnitPerimeterFormatValue2", { formatValue: this.formatValue(avgSideLength), currentLinearUnit: this.state.currentLinearUnit, formatValue2: this.formatValue(perimeter), currentLinearUnit2: this.state.currentLinearUnit, formatValue3: this.formatValue(areaConverted), currentAreaUnit: this.state.currentAreaUnit }),
                     'polygon'
                 );
             } catch (error) {
@@ -4938,11 +4938,11 @@ export default class EnhancedMeasurement extends React.PureComponent<WidgetProps
         if (measurement.type === 'point') {
             // Header for point
             csvContent += 'Measurement Label,Type,Date,Latitude,Longitude,X,Y\n';
-            csvContent += `"${measurement.label}","${measurement.type}","${measurement.timestamp.toLocaleString()}","${measurement.coordinates.lat.toFixed(6)}","${measurement.coordinates.lon.toFixed(6)}","${measurement.coordinates.x.toFixed(2)}","${measurement.coordinates.y.toFixed(2)}"\n`;
+            csvContent += `"${measurement.label}","${measurement.type}","${measurement.timestamp.toLocaleString(__locale())}","${measurement.coordinates.lat.toFixed(6)}","${measurement.coordinates.lon.toFixed(6)}","${measurement.coordinates.x.toFixed(2)}","${measurement.coordinates.y.toFixed(2)}"\n`;
         } else if (measurement.type === 'distance') {
             // Header
             csvContent += 'Measurement Label,Type,Date,Total Distance,Unit\n';
-            csvContent += `"${measurement.label}","${measurement.type}","${measurement.timestamp.toLocaleString()}","${this.formatValue(measurement.totalDistance)}","${measurement.linearUnit}"\n\n`;
+            csvContent += `"${measurement.label}","${measurement.type}","${measurement.timestamp.toLocaleString(__locale())}","${this.formatValue(measurement.totalDistance)}","${measurement.linearUnit}"\n\n`;
 
             // Segments header
             csvContent += 'Segment #,Segment Label,Distance,Start X,Start Y,End X,End Y\n';
@@ -4958,11 +4958,11 @@ export default class EnhancedMeasurement extends React.PureComponent<WidgetProps
         } else if (measurement.type === 'circle') {
             // Header for circle
             csvContent += 'Measurement Label,Type,Date,Radius,Linear Unit,Area,Area Unit,Circumference,Center Latitude,Center Longitude\n';
-            csvContent += `"${measurement.label}","${measurement.type}","${measurement.timestamp.toLocaleString()}","${this.formatValue(measurement.radius)}","${measurement.linearUnit}","${this.formatValue(measurement.totalArea)}","${measurement.areaUnit}","${this.formatValue(measurement.perimeter)}","${measurement.coordinates.lat.toFixed(6)}","${measurement.coordinates.lon.toFixed(6)}"\n`;
+            csvContent += `"${measurement.label}","${measurement.type}","${measurement.timestamp.toLocaleString(__locale())}","${this.formatValue(measurement.radius)}","${measurement.linearUnit}","${this.formatValue(measurement.totalArea)}","${measurement.areaUnit}","${this.formatValue(measurement.perimeter)}","${measurement.coordinates.lat.toFixed(6)}","${measurement.coordinates.lon.toFixed(6)}"\n`;
         } else if (measurement.type === 'triangle') {
             // Header for triangle
             csvContent += 'Measurement Label,Type,Date,Side Length,Linear Unit,Total Area,Area Unit,Perimeter\n';
-            csvContent += `"${measurement.label}","${measurement.type}","${measurement.timestamp.toLocaleString()}","${this.formatValue(measurement.sideLength)}","${measurement.linearUnit}","${this.formatValue(measurement.totalArea)}","${measurement.areaUnit}","${this.formatValue(measurement.perimeter)}"\n\n`;
+            csvContent += `"${measurement.label}","${measurement.type}","${measurement.timestamp.toLocaleString(__locale())}","${this.formatValue(measurement.sideLength)}","${measurement.linearUnit}","${this.formatValue(measurement.totalArea)}","${measurement.areaUnit}","${this.formatValue(measurement.perimeter)}"\n\n`;
 
             // Perimeter segments header
             if (measurement.segments && measurement.segments.length > 0) {
@@ -4980,7 +4980,7 @@ export default class EnhancedMeasurement extends React.PureComponent<WidgetProps
         } else {
             // Header for area
             csvContent += 'Measurement Label,Type,Date,Total Area,Area Unit,Perimeter,Linear Unit\n';
-            csvContent += `"${measurement.label}","${measurement.type}","${measurement.timestamp.toLocaleString()}","${this.formatValue(measurement.totalArea)}","${measurement.areaUnit}","${this.formatValue(measurement.perimeter)}","${measurement.linearUnit}"\n\n`;
+            csvContent += `"${measurement.label}","${measurement.type}","${measurement.timestamp.toLocaleString(__locale())}","${this.formatValue(measurement.totalArea)}","${measurement.areaUnit}","${this.formatValue(measurement.perimeter)}","${measurement.linearUnit}"\n\n`;
 
             // Perimeter segments header
             if (measurement.segments && measurement.segments.length > 0) {
@@ -5017,13 +5017,13 @@ export default class EnhancedMeasurement extends React.PureComponent<WidgetProps
         this.state.measurements.forEach(measurement => {
             const segmentCount = measurement.segments?.length || 0;
             if (measurement.type === 'point') {
-                csvContent += `"${measurement.label}","${measurement.type}","${measurement.timestamp.toLocaleString()}","${measurement.coordinates.lat.toFixed(6)}","Lat","${measurement.coordinates.lon.toFixed(6)}","Lon","0"\n`;
+                csvContent += `"${measurement.label}","${measurement.type}","${measurement.timestamp.toLocaleString(__locale())}","${measurement.coordinates.lat.toFixed(6)}","Lat","${measurement.coordinates.lon.toFixed(6)}","Lon","0"\n`;
             } else if (measurement.type === 'distance') {
-                csvContent += `"${measurement.label}","${measurement.type}","${measurement.timestamp.toLocaleString()}","${this.formatValue(measurement.totalDistance)}","${measurement.linearUnit}","","","${segmentCount}"\n`;
+                csvContent += `"${measurement.label}","${measurement.type}","${measurement.timestamp.toLocaleString(__locale())}","${this.formatValue(measurement.totalDistance)}","${measurement.linearUnit}","","","${segmentCount}"\n`;
             } else if (measurement.type === 'circle') {
-                csvContent += `"${measurement.label}","${measurement.type}","${measurement.timestamp.toLocaleString()}","${this.formatValue(measurement.radius)}","${measurement.linearUnit} (radius)","${this.formatValue(measurement.perimeter)}","${measurement.linearUnit} (circumference)","0"\n`;
+                csvContent += `"${measurement.label}","${measurement.type}","${measurement.timestamp.toLocaleString(__locale())}","${this.formatValue(measurement.radius)}","${measurement.linearUnit} (radius)","${this.formatValue(measurement.perimeter)}","${measurement.linearUnit} (circumference)","0"\n`;
             } else {
-                csvContent += `"${measurement.label}","${measurement.type}","${measurement.timestamp.toLocaleString()}","${this.formatValue(measurement.totalArea)}","${measurement.areaUnit}","${this.formatValue(measurement.perimeter)}","${measurement.linearUnit}","${segmentCount}"\n`;
+                csvContent += `"${measurement.label}","${measurement.type}","${measurement.timestamp.toLocaleString(__locale())}","${this.formatValue(measurement.totalArea)}","${measurement.areaUnit}","${this.formatValue(measurement.perimeter)}","${measurement.linearUnit}","${segmentCount}"\n`;
             }
         });
 
@@ -5127,7 +5127,7 @@ export default class EnhancedMeasurement extends React.PureComponent<WidgetProps
         doc.setFont('helvetica', 'normal');
 
         // Date and Type
-        doc.text(`Date: ${measurement.timestamp.toLocaleString()}`, 20, yPos);
+        doc.text(`Date: ${measurement.timestamp.toLocaleString(__locale())}`, 20, yPos);
         yPos += 6;
         doc.text(`Type: ${measurement.type.charAt(0).toUpperCase() + measurement.type.slice(1)}`, 20, yPos);
         yPos += 10;
@@ -5271,7 +5271,7 @@ export default class EnhancedMeasurement extends React.PureComponent<WidgetProps
             doc.setPage(i);
             doc.setFontSize(8);
             doc.setTextColor(128);
-            doc.text(`Generated on ${new Date().toLocaleString()} | Page ${i} of ${pageCount}`, pageWidth / 2, pageHeight - 5, { align: 'center' });
+            doc.text(`Generated on ${new Date().toLocaleString(__locale())} | Page ${i} of ${pageCount}`, pageWidth / 2, pageHeight - 5, { align: 'center' });
         }
 
         // Save
@@ -5360,7 +5360,7 @@ export default class EnhancedMeasurement extends React.PureComponent<WidgetProps
         // Report Date
         doc.setFontSize(10);
         doc.setFont('helvetica', 'normal');
-        doc.text(`Generated: ${new Date().toLocaleString()}`, pageWidth / 2, yPos, { align: 'center' });
+        doc.text(`Generated: ${new Date().toLocaleString(__locale())}`, pageWidth / 2, yPos, { align: 'center' });
         yPos += 15;
 
         // Summary Statistics
@@ -5445,7 +5445,7 @@ export default class EnhancedMeasurement extends React.PureComponent<WidgetProps
                 yPos += imgHeight + 6;
             }
 
-            doc.text(`Date: ${measurement.timestamp.toLocaleString()}`, 25, yPos);
+            doc.text(`Date: ${measurement.timestamp.toLocaleString(__locale())}`, 25, yPos);
             yPos += 5;
             doc.text(`Type: ${measurement.type.charAt(0).toUpperCase() + measurement.type.slice(1)}`, 25, yPos);
             yPos += 5;
@@ -5595,7 +5595,7 @@ export default class EnhancedMeasurement extends React.PureComponent<WidgetProps
         const isRenaming = this.state.renamingMeasurementId === m.id;
         const canEditVertices = (config.enableVertexEditTool !== false) && m.type !== 'point' && m.type !== 'circle';
         const sr = m.coordinates?.spatialReference;
-        const srLabel = sr ? this.getSpatialReferenceLabel(sr) : 'Input';
+        const srLabel = sr ? this.getSpatialReferenceLabel(sr) : __t("input");
         const fmtCoord = this.formatCoordinate.bind(this);
 
         return (
