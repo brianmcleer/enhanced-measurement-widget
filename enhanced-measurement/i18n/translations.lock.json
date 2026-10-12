@@ -2672,14 +2672,14 @@
           }
         },
         "bs": {
-          "file": "e611a316bc5a",
+          "file": "f5ea4e533fd0",
           "counts": {
-            "esri": 48,
+            "esri": 58,
             "esri-check": 1,
             "community": 0,
             "manual": 0,
             "existing": 0,
-            "machine": 230,
+            "machine": 220,
             "stale": 0,
             "missing": 14
           },
@@ -2699,35 +2699,10 @@
               "src": "machine",
               "h": "3d569fc0c2bb"
             },
-            "helpNoMatches": {
-              "t": "Ništa u vodiču ne odgovara toj riječi.",
-              "src": "machine",
-              "h": "3fe179f75330"
-            },
-            "firstRunTitle": {
-              "t": "Novi ovdje?",
-              "src": "machine",
-              "h": "b81f2e17e001"
-            },
             "firstRunBody": {
               "t": "Izaberite alat na vrhu, kliknite na kartu, i vaše mjerenje se pojavljuje u listi ispod.",
               "src": "machine",
               "h": "d348126437dc"
-            },
-            "firstRunHelpLink": {
-              "t": "Otvori vodič.",
-              "src": "machine",
-              "h": "2447dd6134ea"
-            },
-            "firstRunDismiss": {
-              "t": "Otpust",
-              "src": "machine",
-              "h": "70afe9eff3f2"
-            },
-            "helpStartTitle": {
-              "t": "Počnite ovdje: tri koraka",
-              "src": "machine",
-              "h": "789320b4831d"
             },
             "helpStart1": {
               "t": "Kliknite na dugme alata na vrhu, kao što su {distance} ili {area}.",
@@ -3024,11 +2999,6 @@
               "src": "machine",
               "h": "1cd725ab5ebe"
             },
-            "helpKeepTitle": {
-              "t": "Gdje stvari žive.",
-              "src": "machine",
-              "h": "7a475a9b4308"
-            },
             "helpKeep1": {
               "t": "Mjerenja žive u ovom pregledniku na ovom računaru. Druga osoba, ili neki drugi računar, neće ih vidjeti.",
               "src": "machine",
@@ -3048,11 +3018,6 @@
               "t": "Mjere nisu snimljene. Zatvaranje ili ponovno učitavanje stranice ih briše, pa izvozi ono što želiš zadržati.",
               "src": "machine",
               "h": "c4c3a93e74d2"
-            },
-            "helpTroubleTitle": {
-              "t": "Ako nešto nije u redu",
-              "src": "machine",
-              "h": "6f7fec3ff1e0"
             },
             "helpTroubleNoMap": {
               "t": "Alati ne rade ništa: grafički element nije spojen na mapu. Pitajte onog ko je napravio ovu aplikaciju da provjeri postavke mape.",
@@ -3098,11 +3063,6 @@
               "t": "- Kontaktirajte odjel GIS-a i spomenite pojašnjeno ime mjerenja i ovu aplikaciju.",
               "src": "machine",
               "h": "798b2250a854"
-            },
-            "helpTipsTitle": {
-              "t": "Dobro je znati.",
-              "src": "machine",
-              "h": "79fc372dc790"
             },
             "helpTips1": {
               "t": "Pritisnite Esca da prestane crtati.",
@@ -3808,16 +3768,6 @@
               "t": "Povucite rubove za preoblikovanje · Esc kada je učinjeno",
               "src": "machine",
               "h": "c52887258939"
-            },
-            "unknownError": {
-              "t": "nepoznata greška",
-              "src": "machine",
-              "h": "af6321ca7a8b"
-            },
-            "unserializableError": {
-              "t": "Neserijalizacijska greška",
-              "src": "machine",
-              "h": "76e73551597a"
             },
             "radiusFormatValueCurrentLinearUnitCircumferenceFormatValue2CurrentLinearUnit2": {
               "t": "Radius: {formatValue} {currentLinearUnit} Cirkumferencija: {formatValue2} {currentLinearUnit2} Površina: {formatValue3} {currentAreaUnit}",
@@ -15787,14 +15737,14 @@
           }
         },
         "hr": {
-          "file": "606d3d14d694",
+          "file": "5437c55a0130",
           "counts": {
-            "esri": 48,
+            "esri": 58,
             "esri-check": 1,
             "community": 0,
             "manual": 0,
             "existing": 0,
-            "machine": 239,
+            "machine": 229,
             "stale": 0,
             "missing": 5
           },
@@ -15814,35 +15764,10 @@
               "src": "machine",
               "h": "3d569fc0c2bb"
             },
-            "helpNoMatches": {
-              "t": "Ništa u vodiču ne odgovara toj riječi. Pokušajte drugi, ili otvorite dijelove iznad.",
-              "src": "machine",
-              "h": "3fe179f75330"
-            },
-            "firstRunTitle": {
-              "t": "Novi ovdje?",
-              "src": "machine",
-              "h": "b81f2e17e001"
-            },
             "firstRunBody": {
               "t": "Odaberite alat na vrhu, kliknite na kartu, i vaše mjerenje pojavljuje se u popisu ispod.",
               "src": "machine",
               "h": "d348126437dc"
-            },
-            "firstRunHelpLink": {
-              "t": "Otvori vodič.",
-              "src": "machine",
-              "h": "2447dd6134ea"
-            },
-            "firstRunDismiss": {
-              "t": "Otpust",
-              "src": "machine",
-              "h": "70afe9eff3f2"
-            },
-            "helpStartTitle": {
-              "t": "Počnite ovdje: tri koraka",
-              "src": "machine",
-              "h": "789320b4831d"
             },
             "helpStart1": {
               "t": "Kliknite jedan od gumba alata na vrhu, kao što su {distance} ili {area}.",
@@ -16139,11 +16064,6 @@
               "src": "machine",
               "h": "1cd725ab5ebe"
             },
-            "helpKeepTitle": {
-              "t": "Gdje stvari žive",
-              "src": "machine",
-              "h": "7a475a9b4308"
-            },
             "helpKeep1": {
               "t": "Mjerenja žive u ovom pregledniku na ovom računalu. Druga osoba, ili drugo računalo, neće ih vidjeti.",
               "src": "machine",
@@ -16163,11 +16083,6 @@
               "t": "Mjerenja nisu spremljena. Zatvaranje ili ponovno učitavanje stranice ih čisti, tako da izvozite ono što želite zadržati.",
               "src": "machine",
               "h": "c4c3a93e74d2"
-            },
-            "helpTroubleTitle": {
-              "t": "Ako nešto izgleda loše",
-              "src": "machine",
-              "h": "6f7fec3ff1e0"
             },
             "helpTroubleNoMap": {
               "t": "Alati ne rade ništa: widget nije spojen na kartu. Pitajte onoga tko je napravio ovu aplikaciju da provjeri postavke karte.",
@@ -16213,11 +16128,6 @@
               "t": "Još uvijek zaglavi? Kontaktirajte GIS odjel i spomenuti poboljšano ime mjerenja i ovu aplikaciju.",
               "src": "machine",
               "h": "798b2250a854"
-            },
-            "helpTipsTitle": {
-              "t": "Dobro je znati.",
-              "src": "machine",
-              "h": "79fc372dc790"
             },
             "helpTips1": {
               "t": "Pritisnite Esca da prestane crtati.",
@@ -16968,16 +16878,6 @@
               "t": "Uvezeno {measurementType}",
               "src": "machine",
               "h": "f3949a7c95c5"
-            },
-            "unknownError": {
-              "t": "nepoznata greška",
-              "src": "machine",
-              "h": "af6321ca7a8b"
-            },
-            "unserializableError": {
-              "t": "Neserijalizacijska greška",
-              "src": "machine",
-              "h": "76e73551597a"
             },
             "radiusFormatValueCurrentLinearUnitCircumferenceFormatValue2CurrentLinearUnit2": {
               "t": "Radius: {formatValue} {currentLinearUnit} Cirkumferencija: {formatValue2} {currentLinearUnit2} Površina: {formatValue3} {currentAreaUnit}",
@@ -36067,14 +35967,14 @@
           }
         },
         "sr": {
-          "file": "58dff02d66fb",
+          "file": "dc74d58584d7",
           "counts": {
-            "esri": 46,
+            "esri": 56,
             "esri-check": 3,
             "community": 0,
             "manual": 0,
             "existing": 0,
-            "machine": 242,
+            "machine": 232,
             "stale": 0,
             "missing": 2
           },
@@ -36094,35 +35994,10 @@
               "src": "machine",
               "h": "3d569fc0c2bb"
             },
-            "helpNoMatches": {
-              "t": "Ništa u vodièu ne odgovara toj reèi.",
-              "src": "machine",
-              "h": "3fe179f75330"
-            },
-            "firstRunTitle": {
-              "t": "Novi ovde?",
-              "src": "machine",
-              "h": "b81f2e17e001"
-            },
             "firstRunBody": {
               "t": "Odaberite alat na vrhu, kliknite na mapu, i vaše merenje se pojavljuje u listi ispod.",
               "src": "machine",
               "h": "d348126437dc"
-            },
-            "firstRunHelpLink": {
-              "t": "Otvori vodiè.",
-              "src": "machine",
-              "h": "2447dd6134ea"
-            },
-            "firstRunDismiss": {
-              "t": "Otpust.",
-              "src": "machine",
-              "h": "70afe9eff3f2"
-            },
-            "helpStartTitle": {
-              "t": "Poènite ovde: tri koraka.",
-              "src": "machine",
-              "h": "789320b4831d"
             },
             "helpStart1": {
               "t": "Klikni na jedno od dugmeta alata na vrhu, kao što su {distance} ili {area}.",
@@ -36419,11 +36294,6 @@
               "src": "machine",
               "h": "1cd725ab5ebe"
             },
-            "helpKeepTitle": {
-              "t": "Gde stvari žive.",
-              "src": "machine",
-              "h": "7a475a9b4308"
-            },
             "helpKeep1": {
               "t": "Meraèi žive u ovom pretraživaèu na ovom kompjuteru.",
               "src": "machine",
@@ -36443,11 +36313,6 @@
               "t": "Merenja nisu spremljena. Zatvaranje ili ponovno učitavanje stranice ih briše, tako da izvozite ono što želite da zadržite.",
               "src": "machine",
               "h": "c4c3a93e74d2"
-            },
-            "helpTroubleTitle": {
-              "t": "Ako nešto nije u redu",
-              "src": "machine",
-              "h": "6f7fec3ff1e0"
             },
             "helpTroubleNoMap": {
               "t": "Alati ne rade ništa: grafički element nije povezan sa mapom. Pitajte ko je napravio ovu aplikaciju da proveri podešavanje mape.",
@@ -36493,11 +36358,6 @@
               "t": "Još uvek zaglavljen? Kontaktirajte GIS diviziju i pomenite pojašnjeno ime merenja i ovu aplikaciju.",
               "src": "machine",
               "h": "798b2250a854"
-            },
-            "helpTipsTitle": {
-              "t": "Dobro je znati.",
-              "src": "machine",
-              "h": "79fc372dc790"
             },
             "helpTips1": {
               "t": "Pritisnite Esca da prestane crtati.",
@@ -37268,16 +37128,6 @@
               "t": "Увезено {measurementType}",
               "src": "machine",
               "h": "f3949a7c95c5"
-            },
-            "unknownError": {
-              "t": "nepoznata greška",
-              "src": "machine",
-              "h": "af6321ca7a8b"
-            },
-            "unserializableError": {
-              "t": "Neserijalizacijska greška",
-              "src": "machine",
-              "h": "76e73551597a"
             },
             "areaFormatValueCurrentAreaUnitPerimeterFormatValue2CurrentLinearUnit": {
               "t": "Oblast: {formatValue} {currentAreaUnit} Perimetar: {formatValue2} {currentLinearUnit}",
@@ -49327,12 +49177,12 @@
         "bs": {
           "file": "3091009d6291",
           "counts": {
-            "esri": 60,
+            "esri": 63,
             "esri-check": 0,
             "community": 0,
             "manual": 0,
             "existing": 0,
-            "machine": 224,
+            "machine": 221,
             "stale": 0,
             "missing": 1
           },
@@ -49396,11 +49246,6 @@
               "t": "Čitaj XML datoteku sa diska",
               "src": "machine",
               "h": "a9831e45fd58"
-            },
-            "uiLoad": {
-              "t": "Opterećenje",
-              "src": "machine",
-              "h": "ddcb77ff769e"
             },
             "uiApplyPastedXmlConfiguration": {
               "t": "Koristi zabilješku za XML podešavanje",
@@ -50316,16 +50161,6 @@
               "t": "Poništi/Poništi podršku pomoću vlastitog teksta dugmeta",
               "src": "machine",
               "h": "ad2150291541"
-            },
-            "uiShowHelpGuide": {
-              "t": "Pokaži vodič za pomoć",
-              "src": "machine",
-              "h": "03e9f0b81336"
-            },
-            "uiShowTheQuestionMarkButtonThat": {
-              "t": "Pokaži dugme sa znakom pitanja koje otvara vodič za pomoć grafičkog elementa",
-              "src": "machine",
-              "h": "62c4e81a84ca"
             },
             "noneManualSelection": {
               "t": "Nijedan (Ručni izbor)",
@@ -61817,12 +61652,12 @@
         "hr": {
           "file": "c660cb324936",
           "counts": {
-            "esri": 60,
+            "esri": 63,
             "esri-check": 0,
             "community": 0,
             "manual": 0,
             "existing": 0,
-            "machine": 224,
+            "machine": 221,
             "stale": 0,
             "missing": 1
           },
@@ -61886,11 +61721,6 @@
               "t": "Čitaj XML datoteku s diska",
               "src": "machine",
               "h": "a9831e45fd58"
-            },
-            "uiLoad": {
-              "t": "_Učitaj",
-              "src": "machine",
-              "h": "ddcb77ff769e"
             },
             "uiApplyPastedXmlConfiguration": {
               "t": "Primijeni zaljepljenu XML konfiguraciju",
@@ -62806,16 +62636,6 @@
               "t": "Poništi/Ponovi podršku s prilagođenim tekstom gumba",
               "src": "machine",
               "h": "ad2150291541"
-            },
-            "uiShowHelpGuide": {
-              "t": "Prikaži vodič pomoći",
-              "src": "machine",
-              "h": "03e9f0b81336"
-            },
-            "uiShowTheQuestionMarkButtonThat": {
-              "t": "Prikaži gumb s upitnikom koji otvara vodič za pomoć widgetu",
-              "src": "machine",
-              "h": "62c4e81a84ca"
             },
             "noneManualSelection": {
               "t": "Nijedan (ručni odabir)",
@@ -81032,12 +80852,12 @@
         "sr": {
           "file": "0b9e3da036a8",
           "counts": {
-            "esri": 59,
+            "esri": 62,
             "esri-check": 1,
             "community": 0,
             "manual": 0,
             "existing": 0,
-            "machine": 225,
+            "machine": 222,
             "stale": 0,
             "missing": 0
           },
@@ -81101,11 +80921,6 @@
               "t": "Čitaj XML fajl sa diska",
               "src": "machine",
               "h": "a9831e45fd58"
-            },
-            "uiLoad": {
-              "t": "Učitaj",
-              "src": "machine",
-              "h": "ddcb77ff769e"
             },
             "uiApplyPastedXmlConfiguration": {
               "t": "Примени залепљену XML конфигурацијуQShortcut",
@@ -82026,16 +81841,6 @@
               "t": "Поништи/ Понови подршку са прилагођеним текстом дугмета",
               "src": "machine",
               "h": "ad2150291541"
-            },
-            "uiShowHelpGuide": {
-              "t": "Pokaži vodič za pomoć",
-              "src": "machine",
-              "h": "03e9f0b81336"
-            },
-            "uiShowTheQuestionMarkButtonThat": {
-              "t": "Prikaži dugme sa znakom pitanja koje otvara vodič za pomoć grafičkom elementu",
-              "src": "machine",
-              "h": "62c4e81a84ca"
             },
             "noneManualSelection": {
               "t": "Ниједан (ручни избор)",

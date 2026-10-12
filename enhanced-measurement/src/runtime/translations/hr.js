@@ -91,7 +91,7 @@ System.register([], function (e) {
         helpTroubleImport: "Uvoz nije uspio: datoteka mora biti GeoJSON izvezena iz ovog widgeta. Druge GeoJSON datoteke možda nemaju detalje koji su potrebni widgetu.",
         helpTroubleGone: "Mjerenja su nestala: žive samo u ovom pregledniku. Drugo računalo ili očišćeni preglednik ih neće imati.",
         helpTroubleContact: "Još uvijek zaglavi? Kontaktirajte GIS odjel i spomenuti poboljšano ime mjerenja i ovu aplikaciju.",
-        helpTipsTitle: "Dobro je znati.",
+        helpTipsTitle: "Dobro je znati",
         helpTips1: "Pritisnite Esca da prestane crtati.",
         helpTipsUndo: "Ctrl+Z poništava posljednju izmjenu i Ctrl+Y je vraća.",
         helpTips2: "Tipka za tipkovnicu iznad popisa prikazuje svaku kraticu.",
