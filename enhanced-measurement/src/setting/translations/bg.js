@@ -71,6 +71,7 @@ System.register([], function (e) {
         uiDefaultLinearUnit: "Линейна единица по подразбиране",
         uiDefaultAreaUnit: "Единица за зоната по подразбиране",
         uiDecimalPrecision: "Десетична точност",
+        uiFixedDecimalPlaces: "Fixed decimal places (show exactly this many decimals on every value; off shows fewer on larger numbers)",
         uiCustomUnits: "Потребителски единици",
         uiDefineCustomLinearAndAreaUnits: "Определете потребителски линейни и площ единици с коефициенти на преобразуване. Ще се появят единици, маркирани за спускане.",
         uiCustomLinearUnits: "Потребителски линейни единици",

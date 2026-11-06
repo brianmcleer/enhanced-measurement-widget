@@ -71,6 +71,7 @@ System.register([], function (e) {
         uiDefaultLinearUnit: "デフォルトの線形単位",
         uiDefaultAreaUnit: "デフォルトエリアユニット",
         uiDecimalPrecision: "精密加工",
+        uiFixedDecimalPlaces: "Fixed decimal places (show exactly this many decimals on every value; off shows fewer on larger numbers)",
         uiCustomUnits: "カスタムユニット",
         uiDefineCustomLinearAndAreaUnits: "変換係数を持つカスタムリニアとエリアユニットを定義します。 ドロップダウン用にマークされたユニットは、ランタイムユニットセレクターに表示されます。",
         uiCustomLinearUnits: "カスタムリニアユニット",

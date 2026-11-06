@@ -71,6 +71,7 @@ System.register([], function (e) {
         uiDefaultLinearUnit: "과태 선형 단위",
         uiDefaultAreaUnit: "기본 영역 단위",
         uiDecimalPrecision: "Decimal 정밀도",
+        uiFixedDecimalPlaces: "Fixed decimal places (show exactly this many decimals on every value; off shows fewer on larger numbers)",
         uiCustomUnits: "주문 단위",
         uiDefineCustomLinearAndAreaUnits: "변환 요소와 사용자 정의 선형 및 영역 단위 정의. dropdown에 표시된 단위는 런타임 단위 선별기에서 나타날 것입니다.",
         uiCustomLinearUnits: "사용자 정의 선형 단위",

@@ -71,6 +71,7 @@ System.register([], function (e) {
         uiDefaultLinearUnit: "Varsayılan Linear Unit",
         uiDefaultAreaUnit: "Varsayılan Alan Birimi",
         uiDecimalPrecision: "Decimal Precision",
+        uiFixedDecimalPlaces: "Fixed decimal places (show exactly this many decimals on every value; off shows fewer on larger numbers)",
         uiCustomUnits: "Özel Birimler",
         uiDefineCustomLinearAndAreaUnits: "Dönüşüm faktörleri ile özel lineer ve alan birimleri tanımlayın. dropdown için işaretlenen birimler, runtime ünitesinde seçici görünecektir.",
         uiCustomLinearUnits: "Özel Linear Birimleri",

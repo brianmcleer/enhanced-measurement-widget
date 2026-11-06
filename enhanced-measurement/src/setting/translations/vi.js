@@ -71,6 +71,7 @@ System.register([], function (e) {
         uiDefaultLinearUnit: "Đơn vị tuyến mặc định",
         uiDefaultAreaUnit: "Đơn vị vùng mặc định",
         uiDecimalPrecision: "Độ chính xác thập phân",
+        uiFixedDecimalPlaces: "Fixed decimal places (show exactly this many decimals on every value; off shows fewer on larger numbers)",
         uiCustomUnits: "Đơn vị tự chọn",
         uiDefineCustomLinearAndAreaUnits: "Xác định đơn vị tuyến tính và diện tích tùy chỉnh với yếu tố chuyển đổi. Các đơn vị được đánh dấu để thả xuống sẽ xuất hiện trong các bộ chọn thời gian chạy.",
         uiCustomLinearUnits: "Đơn vị tuyến riêng",

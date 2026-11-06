@@ -71,6 +71,7 @@ System.register([], function (e) {
         uiDefaultLinearUnit: "Noklusētā lineārā vienība",
         uiDefaultAreaUnit: "Noklusētā apgabala vienība",
         uiDecimalPrecision: "Decimālā precizitāte",
+        uiFixedDecimalPlaces: "Fixed decimal places (show exactly this many decimals on every value; off shows fewer on larger numbers)",
         uiCustomUnits: "Pielāgotas vienības",
         uiDefineCustomLinearAndAreaUnits: "Definē pielāgotās lineārās un laukuma vienības ar pārrēķina koeficientiem. Nokrītošajām vienībām atzīmētās vienības parādīsies darba laika vienību selektoros.",
         uiCustomLinearUnits: "Pielāgotas lineārās vienības",

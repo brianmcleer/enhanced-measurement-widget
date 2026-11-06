@@ -71,6 +71,7 @@ System.register([], function (e) {
         uiDefaultLinearUnit: "Линейный блок по умолчанию",
         uiDefaultAreaUnit: "По умолчанию Area Unit",
         uiDecimalPrecision: "Десятичная точность",
+        uiFixedDecimalPlaces: "Fixed decimal places (show exactly this many decimals on every value; off shows fewer on larger numbers)",
         uiCustomUnits: "Пользовательские единицы",
         uiDefineCustomLinearAndAreaUnits: "Определение пользовательских линейных и площадных единиц с коэффициентами преобразования. Единицы, отмеченные для выпадения, появятся в селекторах блоков времени выполнения.",
         uiCustomLinearUnits: "Пользовательские линейные единицы",

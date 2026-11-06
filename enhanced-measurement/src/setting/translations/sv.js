@@ -71,6 +71,7 @@ System.register([], function (e) {
         uiDefaultLinearUnit: "Standard linjär enhet",
         uiDefaultAreaUnit: "Standard Area Unit",
         uiDecimalPrecision: "Decimal Precision",
+        uiFixedDecimalPlaces: "Fixed decimal places (show exactly this many decimals on every value; off shows fewer on larger numbers)",
         uiCustomUnits: "Anpassade enheter",
         uiDefineCustomLinearAndAreaUnits: "Definiera anpassade linjära och område enheter med omvandlingsfaktorer. Enheter som är markerade för nedgång kommer att visas i runtime unit väljare.",
         uiCustomLinearUnits: "Anpassade linjära enheter",

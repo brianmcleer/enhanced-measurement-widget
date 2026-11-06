@@ -67,6 +67,7 @@ export default {
   uiDefaultLinearUnit: 'Default Linear Unit',
   uiDefaultAreaUnit: 'Default Area Unit',
   uiDecimalPrecision: 'Decimal Precision',
+  uiFixedDecimalPlaces: 'Fixed decimal places (show exactly this many decimals on every value; off shows fewer on larger numbers)',
   uiCustomUnits: 'Custom Units',
   uiDefineCustomLinearAndAreaUnits: 'Define custom linear and area units with conversion factors. Units marked for dropdown will appear in the runtime unit selectors.',
   uiCustomLinearUnits: 'Custom Linear Units',

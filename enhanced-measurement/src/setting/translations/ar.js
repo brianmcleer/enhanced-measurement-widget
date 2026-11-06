@@ -71,6 +71,7 @@ System.register([], function (e) {
         uiDefaultLinearUnit: "وحدة خط الافتراض",
         uiDefaultAreaUnit: "وحدة المنطقة الافتراضية",
         uiDecimalPrecision: "الدقة المزمنة",
+        uiFixedDecimalPlaces: "Fixed decimal places (show exactly this many decimals on every value; off shows fewer on larger numbers)",
         uiCustomUnits: "الوحدات العرفية",
         uiDefineCustomLinearAndAreaUnits: "(ب) تحديد خط العرف ووحدات المنطقة التي لديها عوامل تحويل. ستظهر الوحدات المصممة للإسقاط في مختاري الوحدة",
         uiCustomLinearUnits: "وحدات السراويل العرفية",

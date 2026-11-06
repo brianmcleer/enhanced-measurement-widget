@@ -71,6 +71,7 @@ System.register([], function (e) {
         uiDefaultLinearUnit: "Výchozí lineární jednotka",
         uiDefaultAreaUnit: "Výchozí prostorová jednotka",
         uiDecimalPrecision: "Decimální přesnost",
+        uiFixedDecimalPlaces: "Fixed decimal places (show exactly this many decimals on every value; off shows fewer on larger numbers)",
         uiCustomUnits: "Vlastní jednotky",
         uiDefineCustomLinearAndAreaUnits: "Definujte vlastní lineární a plošné jednotky s konverzními faktory. Jednotky označené jako dropdown se objeví ve volbě runtime jednotky.",
         uiCustomLinearUnits: "Vlastní lineární jednotky",

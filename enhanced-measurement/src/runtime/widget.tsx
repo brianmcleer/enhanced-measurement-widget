@@ -1143,6 +1143,15 @@ export default class EnhancedMeasurement extends React.PureComponent<WidgetProps
             }
         }
 
+        // Lines: run the label parallel to the line and, with Offset Labels on, clear of it
+        let mainVerticalAlignment: 'top' | 'bottom' | undefined;
+        const simpleLinePlacement = this.getLineLabelPlacement(geometry);
+        if (simpleLinePlacement) {
+            labelPoint = simpleLinePlacement.point;
+            labelAngle = simpleLinePlacement.angle;
+            mainVerticalAlignment = simpleLinePlacement.verticalAlignment;
+        }
+
         const textSymbol = new this.TextSymbol({
             text: labelText,
             color: config.labelColor || 'white',
@@ -1155,6 +1164,7 @@ export default class EnhancedMeasurement extends React.PureComponent<WidgetProps
                 style: config.labelFontStyle || 'normal'
             },
             angle: labelAngle,  // Apply rotation for single-segment lines
+            ...(mainVerticalAlignment ? { verticalAlignment: mainVerticalAlignment } : {}),
             yoffset: geometry.type === 'point' ? -15 : 0
         });
 
@@ -1180,7 +1190,7 @@ export default class EnhancedMeasurement extends React.PureComponent<WidgetProps
      * anchor is re-placed after each zoom or pan (see repositionSegmentLabels) so the gap stays
      * the same size on screen.
      */
-    getSegmentLabelPlacement(geometry: any, startCoords: number[], endCoords: number[]): { point: any, angle: number, verticalAlignment?: 'top' | 'bottom' } {
+    getSegmentLabelPlacement(geometry: any, startCoords: number[], endCoords: number[], forceSide?: 'top' | 'bottom'): { point: any, angle: number, verticalAlignment?: 'top' | 'bottom' } {
         const SEGMENT_LABEL_GAP_PX = 8;
         const mid = new this.Point({
             x: (startCoords[0] + endCoords[0]) / 2,
@@ -1235,6 +1245,8 @@ export default class EnhancedMeasurement extends React.PureComponent<WidgetProps
             }
         }
 
+        if (forceSide) verticalAlignment = forceSide;
+
         // Move the anchor off the line by the gap, on the side the text will sit
         const dir = verticalAlignment === 'top' ? -1 : 1;
         let point = mid;
@@ -1249,6 +1261,37 @@ export default class EnhancedMeasurement extends React.PureComponent<WidgetProps
     }
 
     /**
+     * Placement for the main Distance label of a two-point line, so it can run parallel to the
+     * line and sit clear of it (Offset Labels). Returns null for any other geometry, which keeps
+     * the existing placement.
+     */
+    getSimpleLineLabelPlacement(geometry: any): { point: any, angle: number, verticalAlignment?: 'top' | 'bottom' } | null {
+        if (!geometry || geometry.type !== 'polyline' || !geometry.paths || !geometry.paths[0] || geometry.paths[0].length !== 2) return null;
+        return this.getSegmentLabelPlacement(geometry, geometry.paths[0][0], geometry.paths[0][1]);
+    }
+
+    /**
+     * Placement for the main Distance label of any line. Two-point lines use the line itself.
+     * With Offset Labels on, a longer line puts the label on its longest segment, parallel to it,
+     * on the opposite side from that segment's own label so the two never overlap. With Offset
+     * Labels off, returns null and the label stays horizontal at the middle vertex as before.
+     */
+    getLineLabelPlacement(geometry: any): { point: any, angle: number, verticalAlignment?: 'top' | 'bottom' } | null {
+        const simple = this.getSimpleLineLabelPlacement(geometry);
+        if (simple) return simple;
+        if (this.state.offsetSegmentLabels === false) return null;
+        if (!geometry || geometry.type !== 'polyline' || !geometry.paths || !geometry.paths[0] || geometry.paths[0].length < 3) return null;
+        const pts = geometry.paths[0];
+        let best = 0;
+        let bestLen = -1;
+        for (let i = 0; i < pts.length - 1; i++) {
+            const len = Math.hypot(pts[i + 1][0] - pts[i][0], pts[i + 1][1] - pts[i][1]);
+            if (len > bestLen) { bestLen = len; best = i; }
+        }
+        return this.getSegmentLabelPlacement(geometry, pts[best], pts[best + 1], 'top');
+    }
+
+    /**
      * Re-places every segment label (anchor, angle, side) for the current view. Called when the
      * view stops moving so the gap keeps its screen size after a zoom, and so the text angle
      * stays right if the view is rotated.
@@ -1257,7 +1300,21 @@ export default class EnhancedMeasurement extends React.PureComponent<WidgetProps
         if (!this.labelLayer || !this.state.showSegmentLabels || !this.state.jimuMapView) return;
         try {
             this.labelLayer.graphics.toArray().forEach((g: any) => {
-                if (!g.attributes || g.attributes.labelType !== 'segment') return;
+                if (!g.attributes) return;
+                if (g.attributes.labelType === 'main') {
+                    // Two-point lines: keep the Distance label parallel and clear of the line
+                    const mm = this.state.measurements.find(x => x.id === g.attributes.measurementId);
+                    const lp = mm && mm.geometry ? this.getLineLabelPlacement(mm.geometry) : null;
+                    const lsym = lp && g.symbol && g.symbol.clone ? g.symbol.clone() : null;
+                    if (lp && lsym) {
+                        lsym.angle = lp.angle;
+                        lsym.verticalAlignment = lp.verticalAlignment || 'baseline';
+                        g.geometry = lp.point;
+                        g.symbol = lsym;
+                    }
+                    return;
+                }
+                if (g.attributes.labelType !== 'segment') return;
                 const m = this.state.measurements.find(x => x.id === g.attributes.measurementId);
                 if (!m || !m.geometry || !m.segments) return;
                 const idx = m.segments.findIndex(sg => sg.id === g.attributes.segmentId);
@@ -2020,6 +2077,18 @@ export default class EnhancedMeasurement extends React.PureComponent<WidgetProps
             labelPoint = geometry.centroid;
         }
 
+        // First segment of a line being drawn: run parallel to it and, with Offset Labels on, clear of it
+        let liveAngle = 0;
+        let liveVerticalAlignment: 'top' | 'bottom' | undefined;
+        if (geometryType === 'polyline') {
+            const livePlacement = this.getSimpleLineLabelPlacement(geometry);
+            if (livePlacement) {
+                labelPoint = livePlacement.point;
+                liveAngle = livePlacement.angle;
+                liveVerticalAlignment = livePlacement.verticalAlignment;
+            }
+        }
+
         const primaryColor = config.useColorPalette !== false
             ? (config.colorPalette1 || '#3b82f6')
             : (config.primaryColor || '#3b82f6');
@@ -2035,6 +2104,8 @@ export default class EnhancedMeasurement extends React.PureComponent<WidgetProps
                 weight: config.labelFontWeight || 'bold',
                 style: config.labelFontStyle || 'normal'
             },
+            angle: liveAngle,
+            ...(liveVerticalAlignment ? { verticalAlignment: liveVerticalAlignment } : {}),
             yoffset: geometryType === 'point' ? -15 : 0
         });
 
@@ -2500,6 +2571,10 @@ export default class EnhancedMeasurement extends React.PureComponent<WidgetProps
                     }
                 }
 
+                // Lines: keep the label parallel to the line and clear of it
+                const dragPlacement = this.getLineLabelPlacement(geometry);
+                if (dragPlacement) labelPoint = dragPlacement.point;
+
                 label.geometry = labelPoint;
                 label.symbol = new this.TextSymbol({
                     text: labelText,
@@ -2512,6 +2587,8 @@ export default class EnhancedMeasurement extends React.PureComponent<WidgetProps
                         weight: (this.props.config || {}).labelFontWeight || 'bold',
                         style: (this.props.config || {}).labelFontStyle || 'normal'
                     },
+                    ...(dragPlacement ? { angle: dragPlacement.angle } : {}),
+                    ...(dragPlacement && dragPlacement.verticalAlignment ? { verticalAlignment: dragPlacement.verticalAlignment } : {}),
                     yoffset: geometry.type === 'point' ? -15 : 0
                 });
             } else if (labelType === 'segment' && measurement.segments && measurement.type !== 'circle') {
@@ -3580,6 +3657,16 @@ export default class EnhancedMeasurement extends React.PureComponent<WidgetProps
             }
         }
 
+        // Lines: run the label parallel to the line and, with Offset Labels on, clear of it
+        let mainVerticalAlignment: 'top' | 'bottom' | undefined;
+        const simpleLinePlacement = this.getLineLabelPlacement(geometry);
+        if (simpleLinePlacement) {
+            labelPoint = simpleLinePlacement.point;
+            labelAngle = simpleLinePlacement.angle;
+            mainVerticalAlignment = simpleLinePlacement.verticalAlignment;
+            if (mainVerticalAlignment) yoffset = 0;  // the offset already clears the line
+        }
+
         const textSymbol = new this.TextSymbol({
             text: labelText,
             color: config.labelColor || 'white',
@@ -3592,6 +3679,7 @@ export default class EnhancedMeasurement extends React.PureComponent<WidgetProps
                 style: config.labelFontStyle || 'normal'
             },
             angle: labelAngle,  // Apply rotation for single-segment lines
+            ...(mainVerticalAlignment ? { verticalAlignment: mainVerticalAlignment } : {}),
             yoffset: yoffset
         });
 
@@ -3676,7 +3764,10 @@ export default class EnhancedMeasurement extends React.PureComponent<WidgetProps
         const precision = config.decimalPrecision ?? 2;
 
         let formattedValue: string;
-        if (value < 0.01) formattedValue = value.toFixed(Math.max(precision, 4));
+        if (config.fixedDecimalPlaces === true) {
+            // Exactly the configured number of decimals on every value
+            formattedValue = value.toFixed(Math.max(0, Math.min(10, precision)));
+        } else if (value < 0.01) formattedValue = value.toFixed(Math.max(precision, 4));
         else if (value < 1) formattedValue = value.toFixed(Math.max(precision, 3));
         else if (value < 10) formattedValue = value.toFixed(precision);
         else if (value < 100) formattedValue = value.toFixed(Math.max(precision - 1, 0));

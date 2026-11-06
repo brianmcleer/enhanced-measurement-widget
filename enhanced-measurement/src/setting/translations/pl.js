@@ -71,6 +71,7 @@ System.register([], function (e) {
         uiDefaultLinearUnit: "Domyślna jednostka liniowa",
         uiDefaultAreaUnit: "Domyślna jednostka obszaru",
         uiDecimalPrecision: "Dokładność dziesiętna",
+        uiFixedDecimalPlaces: "Fixed decimal places (show exactly this many decimals on every value; off shows fewer on larger numbers)",
         uiCustomUnits: "Jednostki niestandardowe",
         uiDefineCustomLinearAndAreaUnits: "Zdefiniuj niestandardowe jednostki liniowe i powierzchniowe z współczynnikami konwersji. Jednostki oznaczone do zrzutu będą pojawiały się w selektorach jednostek runtime.",
         uiCustomLinearUnits: "Niestandardowe jednostki liniowe",

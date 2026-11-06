@@ -71,6 +71,7 @@ System.register([], function (e) {
         uiDefaultLinearUnit: "Lineaarinen oletusyksikkö",
         uiDefaultAreaUnit: "Oletusalueyksikkö",
         uiDecimalPrecision: "Desimaalitarkkuus",
+        uiFixedDecimalPlaces: "Fixed decimal places (show exactly this many decimals on every value; off shows fewer on larger numbers)",
         uiCustomUnits: "Omat yksiköt",
         uiDefineCustomLinearAndAreaUnits: "Määrittele mukautetut lineaariset ja alueyksiköt muuntokertoimilla. Pudotusta varten merkityt yksiköt näkyvät ajoaikayksikön valitsimissa.",
         uiCustomLinearUnits: "Omat lineaariset yksiköt",

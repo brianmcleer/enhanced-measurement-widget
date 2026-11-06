@@ -71,6 +71,7 @@ System.register([], function (e) {
         uiDefaultLinearUnit: "За замовчуванням Linear Unit",
         uiDefaultAreaUnit: "Блокування за замовчуванням",
         uiDecimalPrecision: "Декілька Точність",
+        uiFixedDecimalPlaces: "Fixed decimal places (show exactly this many decimals on every value; off shows fewer on larger numbers)",
         uiCustomUnits: "Призначені для користувача одиниці",
         uiDefineCustomLinearAndAreaUnits: "Визначте нестандартні лінійні та районні одиниці з факторами перетворення. У розбірниках з’явиться блоки, позначені для випадання.",
         uiCustomLinearUnits: "Призначені для користувача лінійні блоки",

@@ -2,6 +2,14 @@
 
 Newest first. Every release bumps `manifest.json` and `package.json` together.
 
+## 1.4.1 (2026-11-06)
+
+### Added
+- Settings, Units: **Fixed decimal places**. Off by default, so existing apps look the same. Turn it on and Decimal Precision applies to every value. Before this, Decimal Precision only applied to values under 10: values from 10 to 99 got one decimal fewer and values of 100 or more got none, so a precision of 1 could never show one decimal on a 54 foot line or a 1,234 square foot area. It carries through the settings XML export and import.
+
+### Changed
+- Offset Labels now also applies to the Distance label on a line. On a two-point line the label runs parallel to the line and sits beside it, so a short line is no longer covered by its own label. On a longer line the label goes on the longest segment, parallel to it, on the opposite side from that segment's own label. This works while drawing a two-point line, after finishing, while a corner is dragged, and after zooming. With Offset Labels off, the label stays centered on the line (or at the middle corner) as before.
+
 ## 1.4.0 (2026-10-08)
 
 ### Added

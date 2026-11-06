@@ -71,6 +71,7 @@ System.register([], function (e) {
         uiDefaultLinearUnit: "Default Linear Unit",
         uiDefaultAreaUnit: "Default Area Unit",
         uiDecimalPrecision: "שיקול דעת",
+        uiFixedDecimalPlaces: "Fixed decimal places (show exactly this many decimals on every value; off shows fewer on larger numbers)",
         uiCustomUnits: "יחידות מכס",
         uiDefineCustomLinearAndAreaUnits: "Define מותאם אישית לינארית ויחידות אזור עם גורמי המרה. יחידות המסומנים לירידה יופיעו בבחירת יחידת הריצה.",
         uiCustomLinearUnits: "יחידת קוויאר Custom Linear",

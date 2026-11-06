@@ -71,6 +71,7 @@ System.register([], function (e) {
         uiDefaultLinearUnit: "Unitat lineal per defecte",
         uiDefaultAreaUnit: "Unitat d' àrea per omissió",
         uiDecimalPrecision: "Precisió decimal",
+        uiFixedDecimalPlaces: "Fixed decimal places (show exactly this many decimals on every value; off shows fewer on larger numbers)",
         uiCustomUnits: "Unitats personalitzades",
         uiDefineCustomLinearAndAreaUnits: "Defineix unitats lineals i àrees personalitzades amb factors de conversió. Les unitats marcades per a la llista desplegable apareixeran en els selectors d' unitats d' execució.",
         uiCustomLinearUnits: "Unitats lineals a mida",

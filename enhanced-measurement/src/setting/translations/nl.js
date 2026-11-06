@@ -71,6 +71,7 @@ System.register([], function (e) {
         uiDefaultLinearUnit: "Standaard lineaire eenheid",
         uiDefaultAreaUnit: "Standaard gebiedseenheid",
         uiDecimalPrecision: "Decimale precisie",
+        uiFixedDecimalPlaces: "Fixed decimal places (show exactly this many decimals on every value; off shows fewer on larger numbers)",
         uiCustomUnits: "Aangepaste eenheden",
         uiDefineCustomLinearAndAreaUnits: "Definieer aangepaste lineaire en oppervlakte-eenheden met conversiefactoren. Eenheden gemarkeerd voor dropdown zullen verschijnen in de runtime unit selectors.",
         uiCustomLinearUnits: "Aangepaste lineaire eenheden",

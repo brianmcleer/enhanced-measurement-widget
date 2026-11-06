@@ -71,6 +71,7 @@ System.register([], function (e) {
         uiDefaultLinearUnit: "預設行距單位",
         uiDefaultAreaUnit: "預設區域單位",
         uiDecimalPrecision: "小數精度",
+        uiFixedDecimalPlaces: "Fixed decimal places (show exactly this many decimals on every value; off shows fewer on larger numbers)",
         uiCustomUnits: "自訂單位",
         uiDefineCustomLinearAndAreaUnits: "有轉換因子的自訂線形和地區單位 。 有下放標記的單位會出現在跑取單位選取器中 。",
         uiCustomLinearUnits: "自訂行距單位",

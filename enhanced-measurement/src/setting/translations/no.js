@@ -71,6 +71,7 @@ System.register([], function (e) {
         uiDefaultLinearUnit: "Standard lineær enhet",
         uiDefaultAreaUnit: "Standardområdeenhet",
         uiDecimalPrecision: "Desimal presisjon",
+        uiFixedDecimalPlaces: "Fixed decimal places (show exactly this many decimals on every value; off shows fewer on larger numbers)",
         uiCustomUnits: "Tilpassede enheter",
         uiDefineCustomLinearAndAreaUnits: "Definer egendefinerte lineære og arealenheter med konverteringsfaktorer. Enheter som er merket for nedtrekk vil vises i valg av kjøretid.",
         uiCustomLinearUnits: "Tilpassede lineære enheter",

@@ -71,6 +71,7 @@ System.register([], function (e) {
         uiDefaultLinearUnit: "@ info: whatsthis",
         uiDefaultAreaUnit: "NAME OF TRANSLATORS",
         uiDecimalPrecision: "Dešimtainis preciziškumas",
+        uiFixedDecimalPlaces: "Fixed decimal places (show exactly this many decimals on every value; off shows fewer on larger numbers)",
         uiCustomUnits: "Renkami vienetai",
         uiDefineCustomLinearAndAreaUnits: "Apibrėžkite pagal užsakymą linijiniai ir ploto vienetai su perskaičiavimo koeficientų. Rikiavimosi įrenginio parinktuvuose bus rodomi išsijungimui pažymėti vienetai.",
         uiCustomLinearUnits: "Renkami tiesiniai vienetai",

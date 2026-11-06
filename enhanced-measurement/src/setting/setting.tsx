@@ -2071,6 +2071,18 @@ export default class Setting extends React.PureComponent<SettingProps, SettingSt
                             style={{ width: '100%' }}
                         />
                     </SettingRow>
+
+                    <SettingRow flow="wrap" label={__t("uiFixedDecimalPlaces")}>
+                        <Switch
+                            checked={config.fixedDecimalPlaces === true}
+                            onChange={(evt) => {
+                                this.props.onSettingChange({
+                                    id: this.props.id,
+                                    config: this.props.config.set('fixedDecimalPlaces', evt.target.checked)
+                                });
+                            }}
+                        />
+                    </SettingRow>
                 </SettingSection>
 
                 <SettingSection title={__t("uiCustomUnits")}>
