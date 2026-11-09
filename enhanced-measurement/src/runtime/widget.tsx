@@ -427,6 +427,8 @@ export default class EnhancedMeasurement extends React.PureComponent<WidgetProps
     private sketchHandlers: any[] = [];
     /** Temporary layer that draws the highlighted segment (hover or click in the detail list). */
     private highlightLayer: any = null;
+    /** Small lat/long readout that follows the cursor while a draw tool is active (see updateCoordinateReadout). */
+    private coordReadout: HTMLDivElement | null = null;
     /** Refs map keyed by measurement id — replaces leaky `this[`exportTrigger_${id}`]` properties so we can clean up on delete. */
     private exportTriggerRefs: Map<string, HTMLElement | null> = new Map();
     private overflowTriggerRefs: Map<string, HTMLElement | null> = new Map();
@@ -536,6 +538,7 @@ export default class EnhancedMeasurement extends React.PureComponent<WidgetProps
     }
 
     componentDidUpdate(prevProps, prevState) {
+        if (prevState.currentTool !== this.state.currentTool) this.hideCoordinateReadout();
         // Persist to localStorage whenever measurements change (debounced, config-gated)
         if (prevState && prevState.measurements !== this.state.measurements) {
             this.schedulePersist();
@@ -603,11 +606,7 @@ export default class EnhancedMeasurement extends React.PureComponent<WidgetProps
             }
 
             // Update sketch widget tooltips based on current toggle state
-            if (this.state.sketchWidget) {
-                this.state.sketchWidget.tooltipOptions = {
-                    enabled: this.state.showTooltips
-                };
-            }
+            this.applyTooltipOptions();
         }
     }
 
@@ -1394,6 +1393,11 @@ export default class EnhancedMeasurement extends React.PureComponent<WidgetProps
         this.sketchHandlers.forEach(h => { try { h.remove(); } catch (_) { /* already removed */ } });
         this.sketchHandlers = [];
 
+        if (this.coordReadout && this.coordReadout.parentNode) {
+            try { this.coordReadout.parentNode.removeChild(this.coordReadout); } catch (_) { /* already removed */ }
+        }
+        this.coordReadout = null;
+
         if (this.state.sketchWidget) {
             try {
                 this.state.sketchWidget.destroy();
@@ -1762,10 +1766,80 @@ export default class EnhancedMeasurement extends React.PureComponent<WidgetProps
         loadArcGISJSAPIModules(['esri/geometry/projection']).then(([proj]) => {
             return proj.load().then(() => {
                 this.projection = proj;
+                this.applyTooltipOptions();
             });
         }).catch(() => {
             // WASM blocked in local dev - coordinate display falls back to raw XY
         }).finally(restore);
+    }
+
+    /**
+     * True when the Esri drawing tooltip would show the map's own coordinates (State Plane, for
+     * example) but the user chose lat/long. In that case the tooltip's coordinates are hidden and
+     * updateCoordinateReadout shows lat/long at the cursor instead. Needs the projection engine;
+     * without it the Esri tooltip keeps its coordinates so nothing is lost.
+     */
+    shouldUseOwnCoordinateReadout(): boolean {
+        const view = this.state.jimuMapView && this.state.jimuMapView.view;
+        const sr = view && view.spatialReference;
+        if (!sr || !this.state.showTooltips) return false;
+        if (this.state.coordinateDisplayMode !== 'webmercator') return false;
+        if (sr.isWebMercator || sr.isGeographic) return false;
+        return !!this.projection;
+    }
+
+    getTooltipOptions(): any {
+        return {
+            enabled: this.state.showTooltips,
+            visibleElements: { coordinates: !this.shouldUseOwnCoordinateReadout() }
+        };
+    }
+
+    applyTooltipOptions() {
+        if (this.state.sketchWidget) {
+            this.state.sketchWidget.tooltipOptions = this.getTooltipOptions();
+        }
+    }
+
+    hideCoordinateReadout() {
+        if (this.coordReadout) this.coordReadout.style.display = 'none';
+    }
+
+    updateCoordinateReadout(e: any) {
+        const view = this.state.jimuMapView && this.state.jimuMapView.view;
+        const tool = this.state.currentTool;
+        if (!view || !view.container || !tool || tool === 'edit' || !this.shouldUseOwnCoordinateReadout()) {
+            this.hideCoordinateReadout();
+            return;
+        }
+        try {
+            const mp = view.toMap({ x: e.x, y: e.y });
+            if (!mp) { this.hideCoordinateReadout(); return; }
+            const ll = this.convertToGeographic(mp.x, mp.y, mp.spatialReference || view.spatialReference);
+            if (!(ll[1] >= -90 && ll[1] <= 90 && ll[0] >= -180 && ll[0] <= 180)) {
+                this.hideCoordinateReadout();
+                return;
+            }
+            const formatted = this.formatCoordinate(ll[1], ll[0], this.state.coordinateFormat);
+
+            if (!this.coordReadout) {
+                const el = document.createElement('div');
+                el.setAttribute('aria-hidden', 'true');
+                el.style.cssText = 'position:absolute;z-index:5;pointer-events:none;padding:4px 8px;border-radius:4px;'
+                    + 'background:rgba(255,255,255,0.95);color:#323232;border:1px solid #c0c0c0;'
+                    + 'box-shadow:0 1px 4px rgba(0,0,0,0.25);font:12px Arial,sans-serif;white-space:pre;';
+                this.coordReadout = el;
+            }
+            if (this.coordReadout.parentNode !== view.container) {
+                view.container.appendChild(this.coordReadout);
+            }
+            this.coordReadout.textContent = __t("latLatLonLon", { lat: formatted.lat, lon: formatted.lon });
+            this.coordReadout.style.left = `${e.x + 18}px`;
+            this.coordReadout.style.top = `${Math.max(0, e.y - 48)}px`;
+            this.coordReadout.style.display = 'block';
+        } catch (_) {
+            this.hideCoordinateReadout();
+        }
     }
 
     onActiveViewChange = (jimuMapView: JimuMapView) => {
@@ -1859,9 +1933,7 @@ export default class EnhancedMeasurement extends React.PureComponent<WidgetProps
                     },
                     tool: 'reshape'
                 },
-                tooltipOptions: {
-                    enabled: this.state.showTooltips
-                },
+                tooltipOptions: this.getTooltipOptions(),
                 snappingOptions: snappingOptions
             });
 
@@ -1900,6 +1972,11 @@ export default class EnhancedMeasurement extends React.PureComponent<WidgetProps
 
             // Keep segment labels the same distance off their line after zooming or panning
             const watchedView = this.state.jimuMapView.view;
+
+            // Lat/long cursor readout for maps whose own coordinates are not lat/long (State Plane)
+            const moveHandle = watchedView.on('pointer-move', (evt: any) => this.updateCoordinateReadout(evt));
+            const leaveHandle = watchedView.on('pointer-leave', () => this.hideCoordinateReadout());
+            this.sketchHandlers.push(moveHandle, leaveHandle);
             loadArcGISJSAPIModules(['esri/core/reactiveUtils']).then(([reactiveUtils]) => {
                 if (this.state.jimuMapView?.view !== watchedView) return;
                 const stationaryHandle = reactiveUtils.watch(
@@ -4607,12 +4684,9 @@ export default class EnhancedMeasurement extends React.PureComponent<WidgetProps
         const newShowTooltips = !this.state.showTooltips;
 
         this.setState({ showTooltips: newShowTooltips }, () => {
-            if (this.state.sketchWidget) {
-                // Update the sketch widget's tooltip options
-                this.state.sketchWidget.tooltipOptions = {
-                    enabled: newShowTooltips
-                };
-            }
+            // Update the sketch widget's tooltip options
+            this.applyTooltipOptions();
+            if (!newShowTooltips) this.hideCoordinateReadout();
         });
     }
 
@@ -6797,6 +6871,8 @@ export default class EnhancedMeasurement extends React.PureComponent<WidgetProps
                                                         onChange={(e) => {
                                                             this.setState({ coordinateDisplayMode: e.target.value as 'webmercator' | 'input' }, () => {
                                                                 this.refreshPointLabels();
+                                                                this.applyTooltipOptions();
+                                                                this.hideCoordinateReadout();
                                                             });
                                                         }}
                                                     >

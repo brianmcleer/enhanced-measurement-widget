@@ -2,6 +2,11 @@
 
 Newest first. Every release bumps `manifest.json` and `package.json` together.
 
+## 1.4.2 (2026-11-09)
+
+### Fixed
+- On a map that is not Web Mercator or WGS84 (State Plane, for example), the Esri drawing tooltip kept showing State Plane coordinates even with Coordinate Display set to lat/long. The tooltip's coordinates are now hidden in that case, and a small lat/long readout follows the cursor while a draw tool is active, in the chosen Coordinate Format. It needs the browser's projection engine; if that cannot load, the Esri tooltip keeps its coordinates. Switching Coordinate Display to the map's spatial reference, or turning Show Tooltips off, behaves as before.
+
 ## 1.4.1 (2026-11-06)
 
 ### Added
