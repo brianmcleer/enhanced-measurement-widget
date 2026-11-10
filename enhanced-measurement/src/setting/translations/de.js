@@ -71,7 +71,7 @@ System.register([], function (e) {
         uiDefaultLinearUnit: "Standard-Lineareinheit",
         uiDefaultAreaUnit: "Ausfallgebietseinheit",
         uiDecimalPrecision: "Dezimalpräzision",
-        uiFixedDecimalPlaces: "Fixed decimal places (show exactly this many decimals on every value; off shows fewer on larger numbers)",
+        uiFixedDecimalPlaces: "Feste Dezimalstellen (zeigen Sie genau diese vielen Dezimalstellen auf jedem Wert; off zeigt weniger auf größeren Zahlen)",
         uiCustomUnits: "Zollstellen",
         uiDefineCustomLinearAndAreaUnits: "Definieren Sie benutzerdefinierte Linear- und Flächeneinheiten mit Umrechnungsfaktoren. Einheiten, die für Dropdown markiert sind, werden in den Runtime Unit-Selektoren angezeigt.",
         uiCustomLinearUnits: "Custom Lineareinheiten",

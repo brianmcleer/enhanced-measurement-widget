@@ -19,6 +19,7 @@ import { beacon } from '../shared/beacon';
 import type { BeaconHandle } from '../shared/beacon';
 import './style.css';
 import { __locale, __setIntl, __t, __tc } from './i18n-t'
+import { projectedToLonLat, canProjectToLonLat } from './pureProjection'
 
 // Dropdown Menu Components (shadcn/ui style) - WCAG 2.1 AA Accessible
 const DropdownMenuSeparator = () => (
@@ -1490,13 +1491,20 @@ export default class EnhancedMeasurement extends React.PureComponent<WidgetProps
                 return this.webMercatorUtils.xyToLngLat(x, y)
             }
 
-            // JSAPI projection engine (works for any SR on deployed Portal)
+            // JSAPI projection engine (any SR, but it is WebAssembly and cannot always load)
             if (this.projection) {
-                const point = new this.Point({ x, y, spatialReference })
-                const wgs84SR = new this.SpatialReference({ wkid: 4326 })
-                const projected = this.projection.project(point, wgs84SR)
-                if (projected) return [projected.x, projected.y]
+                try {
+                    const point = new this.Point({ x, y, spatialReference })
+                    const wgs84SR = new this.SpatialReference({ wkid: 4326 })
+                    const projected = this.projection.project(point, wgs84SR)
+                    if (projected && isFinite(projected.x) && isFinite(projected.y)) return [projected.x, projected.y]
+                } catch (_) { /* fall through to the built-in math */ }
             }
+
+            // Built-in math for State Plane and other Lambert, Transverse Mercator and Albers systems.
+            // Needs no engine, so lat/long works in the Developer Edition client too.
+            const pure = projectedToLonLat(spatialReference, x, y)
+            if (pure) return pure
 
             // Pure JS UTM → WGS84 fallback (works in local dev without WASM)
             // Handles WGS84 UTM (326xx/327xx) and NAD83 UTM (269xx) zones
@@ -1591,6 +1599,28 @@ export default class EnhancedMeasurement extends React.PureComponent<WidgetProps
         }
     }
 
+    /**
+     * Lat/long for a stored point. Uses the stored values when they are real lat/long; otherwise
+     * (the point was saved before any conversion was available) converts its X/Y again now.
+     * Returns null when no conversion is possible, and the caller then shows X/Y.
+     */
+    resolveLatLon(point: { x: number; y: number; lat: number; lon: number; spatialReference?: any }): { lat: number, lon: number } | null {
+        const valid = (lat: number, lon: number) => isFinite(lat) && isFinite(lon) && lat >= -90 && lat <= 90 && lon >= -180 && lon <= 180;
+        if (!point) return null;
+        const view = this.state.jimuMapView && this.state.jimuMapView.view;
+        const sr = point.spatialReference || (view && view.spatialReference);
+        const projected = !!sr && !sr.isGeographic && Number(sr.wkid) !== 4326;
+        // On a projected map small X/Y values can pass as lat/long, so only trust stored values that differ from X/Y
+        const storedIsRaw = projected && point.lat === point.y && point.lon === point.x;
+        if (valid(point.lat, point.lon) && !storedIsRaw) return { lat: point.lat, lon: point.lon };
+        if (sr && isFinite(point.x) && isFinite(point.y)) {
+            const ll = this.convertToGeographic(point.x, point.y, sr);
+            const converted = !(ll[0] === point.x && ll[1] === point.y) || !projected;
+            if (converted && valid(ll[1], ll[0])) return { lat: ll[1], lon: ll[0] };
+        }
+        return null;
+    }
+
     // Format point coordinates based on coordinate display mode
     getPointLabelText(coordinates: { x: number; y: number; lat: number; lon: number; spatialReference?: any }): string {
         if (this.state.coordinateDisplayMode === 'input' && coordinates.spatialReference) {
@@ -1598,15 +1628,12 @@ export default class EnhancedMeasurement extends React.PureComponent<WidgetProps
         } else {
             // Detect if lat/lon are actually raw projected coordinates (projection unavailable).
             // Valid geographic coordinates: lat -90..90, lon -180..180.
-            const looksGeographic = coordinates.lat >= -90 && coordinates.lat <= 90
-                && coordinates.lon >= -180 && coordinates.lon <= 180;
-            if (!looksGeographic) {
-                // Projection engine not yet loaded (local dev only).
-                // Coordinate conversion unavailable — show native SR coordinates.
-                // On deployed Portal servers this displays correctly in the selected format.
+            const ll = this.resolveLatLon(coordinates);
+            if (!ll) {
+                // No conversion available for this spatial reference: show the map's own coordinates.
                 return `X: ${coordinates.x.toFixed(2)}\nY: ${coordinates.y.toFixed(2)}`;
             }
-            const formatted = this.formatCoordinate(coordinates.lat, coordinates.lon, this.state.coordinateFormat);
+            const formatted = this.formatCoordinate(ll.lat, ll.lon, this.state.coordinateFormat);
             return __t("latLatLonLon", { lat: formatted.lat, lon: formatted.lon });
         }
     }
@@ -1624,12 +1651,11 @@ export default class EnhancedMeasurement extends React.PureComponent<WidgetProps
         if (this.state.coordinateDisplayMode === 'input') {
             return `(${point.x.toFixed(2)}, ${point.y.toFixed(2)})`;
         } else {
-            const looksGeographic = point.lat >= -90 && point.lat <= 90
-                && point.lon >= -180 && point.lon <= 180;
-            if (!looksGeographic) {
+            const ll = this.resolveLatLon(point);
+            if (!ll) {
                 return `(${point.x.toFixed(2)}, ${point.y.toFixed(2)})`;
             }
-            const formatted = this.formatCoordinate(point.lat, point.lon, this.state.coordinateFormat);
+            const formatted = this.formatCoordinate(ll.lat, ll.lon, this.state.coordinateFormat);
             return `(${formatted.lon}, ${formatted.lat})`;
         }
     }
@@ -1639,6 +1665,8 @@ export default class EnhancedMeasurement extends React.PureComponent<WidgetProps
         if (this.state.coordinateDisplayMode === 'input') {
             return axis === 'x' ? point.x : point.y;
         } else {
+            const ll = this.resolveLatLon(point);
+            if (ll) return axis === 'x' ? ll.lon : ll.lat;
             return axis === 'x' ? point.lon : point.lat;
         }
     }
@@ -1763,21 +1791,32 @@ export default class EnhancedMeasurement extends React.PureComponent<WidgetProps
             if (console.log === filterLog) console.log = origLog;
         };
 
+        const engineReady = (engine: any) => {
+            this.projection = engine;
+            this.applyTooltipOptions();
+            if (this.labelLayer) this.refreshPointLabels();
+        };
+
         loadArcGISJSAPIModules(['esri/geometry/projection']).then(([proj]) => {
-            return proj.load().then(() => {
-                this.projection = proj;
-                this.applyTooltipOptions();
+            return proj.load().then(() => engineReady(proj));
+        }).catch(() => {
+            // Older projection module unavailable: try its replacement, the project operator
+            return loadArcGISJSAPIModules(['esri/geometry/operators/projectOperator']).then(([op]) => {
+                const ready = op.isLoaded && op.isLoaded() ? Promise.resolve() : op.load();
+                return ready.then(() => engineReady({ project: (geometry: any, sr: any) => op.execute(geometry, sr) }));
             });
         }).catch(() => {
-            // WASM blocked in local dev - coordinate display falls back to raw XY
+            // No engine (WebAssembly blocked, as in the Developer Edition client).
+            // pureProjection.ts still converts State Plane and similar systems; others show X/Y.
         }).finally(restore);
     }
 
     /**
      * True when the Esri drawing tooltip would show the map's own coordinates (State Plane, for
      * example) but the user chose lat/long. In that case the tooltip's coordinates are hidden and
-     * updateCoordinateReadout shows lat/long at the cursor instead. Needs the projection engine;
-     * without it the Esri tooltip keeps its coordinates so nothing is lost.
+     * updateCoordinateReadout shows lat/long at the cursor instead. Uses the projection engine or the
+     * built-in math (pureProjection.ts); if neither can convert this spatial reference, the Esri
+     * tooltip keeps its coordinates so nothing is lost.
      */
     shouldUseOwnCoordinateReadout(): boolean {
         const view = this.state.jimuMapView && this.state.jimuMapView.view;
@@ -1785,7 +1824,7 @@ export default class EnhancedMeasurement extends React.PureComponent<WidgetProps
         if (!sr || !this.state.showTooltips) return false;
         if (this.state.coordinateDisplayMode !== 'webmercator') return false;
         if (sr.isWebMercator || sr.isGeographic) return false;
-        return !!this.projection;
+        return !!this.projection || canProjectToLonLat(sr);
     }
 
     getTooltipOptions(): any {

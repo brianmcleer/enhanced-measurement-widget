@@ -71,7 +71,7 @@ System.register([], function (e) {
         uiDefaultLinearUnit: "默认线性单位",
         uiDefaultAreaUnit: "默认区域单位",
         uiDecimalPrecision: "十进制精度",
-        uiFixedDecimalPlaces: "Fixed decimal places (show exactly this many decimals on every value; off shows fewer on larger numbers)",
+        uiFixedDecimalPlaces: "固定小数位数(在每个数值上显示精确的这个小数位数;在较大数字上显示的更少)",
         uiCustomUnits: "自定义单位",
         uiDefineCustomLinearAndAreaUnits: "定义带有换算系数的自定义线性和区域单位。 标记为下拉的单位会出现在运行时单元选择器中.",
         uiCustomLinearUnits: "自定义线性单位",

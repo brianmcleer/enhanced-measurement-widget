@@ -71,7 +71,7 @@ System.register([], function (e) {
         uiDefaultLinearUnit: "Alapértelmezett lineáris egység",
         uiDefaultAreaUnit: "Alapértelmezett terület egység",
         uiDecimalPrecision: "Decimális pontosság",
-        uiFixedDecimalPlaces: "Fixed decimal places (show exactly this many decimals on every value; off shows fewer on larger numbers)",
+        uiFixedDecimalPlaces: "Rögzített tizedesjegyek (minden értéknél pontosan ennyi tizedesvesszőt kell feltüntetni; az off nagyobb számoknál kevesebbet mutat)",
         uiCustomUnits: "Egyedi egységek",
         uiDefineCustomLinearAndAreaUnits: "Határozza meg az egyedi lineáris és területi egységeket konverziós tényezőkkel. A leeresztésre kijelölt egységek megjelennek a futási idő egység kiválasztóiban.",
         uiCustomLinearUnits: "Egyedi lineáris egységek",

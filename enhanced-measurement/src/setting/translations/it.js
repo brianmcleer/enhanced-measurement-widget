@@ -71,7 +71,7 @@ System.register([], function (e) {
         uiDefaultLinearUnit: "Unità lineare predefinita",
         uiDefaultAreaUnit: "Unità di area predefinita",
         uiDecimalPrecision: "Precisione decimale",
-        uiFixedDecimalPlaces: "Fixed decimal places (show exactly this many decimals on every value; off shows fewer on larger numbers)",
+        uiFixedDecimalPlaces: "Punti decimali fissi (mostrare esattamente questo molti decimali su ogni valore; off mostra meno su numeri più grandi)",
         uiCustomUnits: "Unità personalizzate",
         uiDefineCustomLinearAndAreaUnits: "Definire unità lineari e di area personalizzate con fattori di conversione. Le unità segnate per la discesa verranno visualizzate nei selettori delle unità di runtime.",
         uiCustomLinearUnits: "Unità lineari personalizzate",

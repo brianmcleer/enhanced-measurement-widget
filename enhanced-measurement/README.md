@@ -23,6 +23,7 @@ https://community.esri.com/t5/experience-builder-custom-widgets/enhanced-measure
 - Search/filter for the measurement list
 - Inline rename (double-click), recolor after creation, and duplicate for any measurement
 - Coordinate display in Decimal Degrees, DMS, or DDM, in Web Mercator or the map's spatial reference
+- Lat/long on State Plane and other projected maps without the ArcGIS projection engine (built-in math for 4,527 coordinate systems)
 - Edit vertices on existing measurements
 - Delete a segment from a drawn line or shape (trash button on each segment row in the details, with Undo)
 - Point at or click a segment in the details list to highlight it on the map

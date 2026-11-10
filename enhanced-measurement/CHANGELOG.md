@@ -2,6 +2,16 @@
 
 Newest first. Every release bumps `manifest.json` and `package.json` together.
 
+## 1.4.3 (2026-11-10)
+
+### Fixed
+- Lat/long now works on State Plane maps when the ArcGIS projection engine cannot load, which is the case in the Experience Builder Developer Edition client. Before this, Coordinate Display set to lat/long still showed State Plane X/Y on the point label, in the measurement details and exports, and in the drawing tooltip. The widget now has its own conversion math (`pureProjection.ts`) for 4,527 projected coordinate systems that use Lambert Conformal Conic, Transverse Mercator or Albers Equal Area on GRS 1980 or WGS 1984: every US State Plane zone (NAD83 and its HARN, NSRS2007 and 2011 versions, metres and feet, EPSG and Esri codes), UTM, and most modern national grids. Each one was checked against PROJ to better than a millimetre. No datum shift is applied, so results match WGS 1984 to about two metres.
+- Points measured before a conversion was available are converted when they are labelled or exported, instead of staying as X/Y.
+- If the older ArcGIS projection module fails to load, the widget now tries its replacement (the project operator) before giving up.
+
+### Notes
+- Spatial references outside that list (older datums such as NAD27, or other projection types) still need the ArcGIS projection engine. If it cannot load, they show X/Y as before.
+
 ## 1.4.2 (2026-11-09)
 
 ### Fixed

@@ -46921,16 +46921,16 @@
       },
       "locales": {
         "ar": {
-          "file": "6104ca7ca921",
+          "file": "db777b19508e",
           "counts": {
             "esri": 58,
             "esri-check": 4,
             "community": 0,
             "manual": 0,
             "existing": 0,
-            "machine": 223,
+            "machine": 224,
             "stale": 0,
-            "missing": 1
+            "missing": 0
           },
           "entries": {
             "uiAreYouSureYouWantTo": {
@@ -47187,6 +47187,11 @@
               "t": "الدقة المزمنة",
               "src": "machine",
               "h": "76e989f5f56a"
+            },
+            "uiFixedDecimalPlaces": {
+              "t": "أماكن عشرية ثابتة (يعرض بالضبط هذه العشرات الكثيرة على كل قيمة؛ ويظهر عدد أقل من ذلك بأعداد أكبر)",
+              "src": "machine",
+              "h": "367e037d7891"
             },
             "uiCustomUnits": {
               "t": "الوحدات العرفية",
@@ -48051,16 +48056,16 @@
           }
         },
         "bg": {
-          "file": "e3e122288dd5",
+          "file": "d274ddf36ff1",
           "counts": {
             "esri": 58,
             "esri-check": 5,
             "community": 0,
             "manual": 0,
             "existing": 0,
-            "machine": 222,
+            "machine": 223,
             "stale": 0,
-            "missing": 1
+            "missing": 0
           },
           "entries": {
             "uiAreYouSureYouWantTo": {
@@ -48312,6 +48317,11 @@
               "t": "Десетична точност",
               "src": "machine",
               "h": "76e989f5f56a"
+            },
+            "uiFixedDecimalPlaces": {
+              "t": "Фиксиран знак след десетичната запетая (покажи точно толкова десетични знака на всяка стойност; off показва по-малко на по-големи числа)",
+              "src": "machine",
+              "h": "367e037d7891"
             },
             "uiCustomUnits": {
               "t": "Потребителски единици",
@@ -49176,16 +49186,16 @@
           }
         },
         "bs": {
-          "file": "f37bb89af817",
+          "file": "44abaef10522",
           "counts": {
             "esri": 63,
             "esri-check": 0,
             "community": 0,
             "manual": 0,
             "existing": 0,
-            "machine": 221,
+            "machine": 222,
             "stale": 0,
-            "missing": 2
+            "missing": 1
           },
           "entries": {
             "uiAreYouSureYouWantTo": {
@@ -49437,6 +49447,11 @@
               "t": "Decimalna preciznost",
               "src": "machine",
               "h": "76e989f5f56a"
+            },
+            "uiFixedDecimalPlaces": {
+              "t": "Fiksna decimalna mjesta (pokaži tačno ovoliko decimala na svakoj vrijednosti; off pokazuje manje na većim brojevima)",
+              "src": "machine",
+              "h": "367e037d7891"
             },
             "uiCustomUnits": {
               "t": "Osobne jedinice",
@@ -50296,16 +50311,16 @@
           }
         },
         "ca": {
-          "file": "4e426b0c04e6",
+          "file": "5290446fd1b9",
           "counts": {
             "esri": 57,
             "esri-check": 2,
             "community": 0,
             "manual": 0,
             "existing": 0,
-            "machine": 226,
+            "machine": 227,
             "stale": 0,
-            "missing": 1
+            "missing": 0
           },
           "entries": {
             "uiAreYouSureYouWantTo": {
@@ -50567,6 +50582,11 @@
               "t": "Precisió decimal",
               "src": "machine",
               "h": "76e989f5f56a"
+            },
+            "uiFixedDecimalPlaces": {
+              "t": "Llocs decimals fix (mostra exactament aquest nombre de decimals en cada valor; desactivat mostra menys en nombres més grans)",
+              "src": "machine",
+              "h": "367e037d7891"
             },
             "uiCustomUnits": {
               "t": "Unitats personalitzades",
@@ -51441,16 +51461,16 @@
           }
         },
         "cs": {
-          "file": "36d916f49b85",
+          "file": "0d135e45749d",
           "counts": {
             "esri": 61,
             "esri-check": 2,
             "community": 0,
             "manual": 0,
             "existing": 0,
-            "machine": 222,
+            "machine": 223,
             "stale": 0,
-            "missing": 1
+            "missing": 0
           },
           "entries": {
             "uiAreYouSureYouWantTo": {
@@ -51702,6 +51722,11 @@
               "t": "Decimální přesnost",
               "src": "machine",
               "h": "76e989f5f56a"
+            },
+            "uiFixedDecimalPlaces": {
+              "t": "Pevná desetinná místa (zobrazit přesně tento počet desetinných míst na každé hodnotě; off ukazuje méně na větších čísel)",
+              "src": "machine",
+              "h": "367e037d7891"
             },
             "uiCustomUnits": {
               "t": "Vlastní jednotky",
@@ -52566,16 +52591,16 @@
           }
         },
         "da": {
-          "file": "4b4d9e34fae5",
+          "file": "d5167401924c",
           "counts": {
             "esri": 59,
             "esri-check": 0,
             "community": 0,
             "manual": 0,
             "existing": 0,
-            "machine": 226,
+            "machine": 227,
             "stale": 0,
-            "missing": 1
+            "missing": 0
           },
           "entries": {
             "uiAreYouSureYouWantTo": {
@@ -52832,6 +52857,11 @@
               "t": "Decimal præcision",
               "src": "machine",
               "h": "76e989f5f56a"
+            },
+            "uiFixedDecimalPlaces": {
+              "t": "Faste decimaler (viser præcis så mange decimaler på hver værdi; off viser færre på større tal)",
+              "src": "machine",
+              "h": "367e037d7891"
             },
             "uiCustomUnits": {
               "t": "Brugerdefinerede enheder",
@@ -53711,16 +53741,16 @@
           }
         },
         "de": {
-          "file": "6316fdbcce57",
+          "file": "66b281c5fa0b",
           "counts": {
             "esri": 57,
             "esri-check": 2,
             "community": 0,
             "manual": 0,
             "existing": 0,
-            "machine": 226,
+            "machine": 227,
             "stale": 0,
-            "missing": 1
+            "missing": 0
           },
           "entries": {
             "uiAreYouSureYouWantTo": {
@@ -53972,6 +54002,11 @@
               "t": "Dezimalpräzision",
               "src": "machine",
               "h": "76e989f5f56a"
+            },
+            "uiFixedDecimalPlaces": {
+              "t": "Feste Dezimalstellen (zeigen Sie genau diese vielen Dezimalstellen auf jedem Wert; off zeigt weniger auf größeren Zahlen)",
+              "src": "machine",
+              "h": "367e037d7891"
             },
             "uiCustomUnits": {
               "t": "Zollstellen",
@@ -54856,16 +54891,16 @@
           }
         },
         "el": {
-          "file": "59857cf37573",
+          "file": "7388cd5cb343",
           "counts": {
             "esri": 61,
             "esri-check": 2,
             "community": 0,
             "manual": 0,
             "existing": 0,
-            "machine": 222,
+            "machine": 223,
             "stale": 0,
-            "missing": 1
+            "missing": 0
           },
           "entries": {
             "uiAreYouSureYouWantTo": {
@@ -55117,6 +55152,11 @@
               "t": "Δεκαδική ακρίβεια",
               "src": "machine",
               "h": "76e989f5f56a"
+            },
+            "uiFixedDecimalPlaces": {
+              "t": "Σταθερά δεκαδικά ψηφία (δείτε ακριβώς αυτά τα πολλά δεκαδικά σε κάθε τιμή; off εμφανίζει λιγότερα σε μεγαλύτερους αριθμούς)",
+              "src": "machine",
+              "h": "367e037d7891"
             },
             "uiCustomUnits": {
               "t": "Προσαρμοσμένες μονάδες",
@@ -55981,16 +56021,16 @@
           }
         },
         "es": {
-          "file": "a55cae4e3dc5",
+          "file": "7f402172e751",
           "counts": {
             "esri": 59,
             "esri-check": 2,
             "community": 0,
             "manual": 0,
             "existing": 0,
-            "machine": 224,
+            "machine": 225,
             "stale": 0,
-            "missing": 1
+            "missing": 0
           },
           "entries": {
             "uiAreYouSureYouWantTo": {
@@ -56242,6 +56282,11 @@
               "t": "Precisión decimal",
               "src": "machine",
               "h": "76e989f5f56a"
+            },
+            "uiFixedDecimalPlaces": {
+              "t": "Lugares decimales fijos (Mostrar exactamente estos muchos decimales en cada valor; off muestra menos en números más grandes)",
+              "src": "machine",
+              "h": "367e037d7891"
             },
             "uiCustomUnits": {
               "t": "Unidades aduaneras",
@@ -57116,16 +57161,16 @@
           }
         },
         "et": {
-          "file": "b3f406e38fe3",
+          "file": "ee6ae2a719f3",
           "counts": {
             "esri": 54,
             "esri-check": 9,
             "community": 0,
             "manual": 0,
             "existing": 0,
-            "machine": 222,
+            "machine": 223,
             "stale": 0,
-            "missing": 1
+            "missing": 0
           },
           "entries": {
             "uiAreYouSureYouWantTo": {
@@ -57377,6 +57422,11 @@
               "t": "Kümnendtäpsus",
               "src": "machine",
               "h": "76e989f5f56a"
+            },
+            "uiFixedDecimalPlaces": {
+              "t": "Kindlaksmääratud kümnendkohad (näita täpselt nii palju kümnendkohti igal väärtusel; väljas näitab vähem suurematel arvudel)",
+              "src": "machine",
+              "h": "367e037d7891"
             },
             "uiCustomUnits": {
               "t": "Kohandatud ühikud",
@@ -58241,16 +58291,16 @@
           }
         },
         "fi": {
-          "file": "d61e8465ca7a",
+          "file": "563ed9e85420",
           "counts": {
             "esri": 61,
             "esri-check": 2,
             "community": 0,
             "manual": 0,
             "existing": 0,
-            "machine": 222,
+            "machine": 223,
             "stale": 0,
-            "missing": 1
+            "missing": 0
           },
           "entries": {
             "uiAreYouSureYouWantTo": {
@@ -58502,6 +58552,11 @@
               "t": "Desimaalitarkkuus",
               "src": "machine",
               "h": "76e989f5f56a"
+            },
+            "uiFixedDecimalPlaces": {
+              "t": "Kiinteä desimaali paikat (Näytä täsmälleen tämä monta desimaalia jokaisen arvon; off osoittaa vähemmän suurempien numeroiden)",
+              "src": "machine",
+              "h": "367e037d7891"
             },
             "uiCustomUnits": {
               "t": "Omat yksiköt",
@@ -59366,16 +59421,16 @@
           }
         },
         "fr": {
-          "file": "88a32c730ce9",
+          "file": "cc8ff1a3729b",
           "counts": {
             "esri": 55,
             "esri-check": 1,
             "community": 0,
             "manual": 0,
             "existing": 0,
-            "machine": 229,
+            "machine": 230,
             "stale": 0,
-            "missing": 1
+            "missing": 0
           },
           "entries": {
             "uiAreYouSureYouWantTo": {
@@ -59642,6 +59697,11 @@
               "t": "Précision décimale",
               "src": "machine",
               "h": "76e989f5f56a"
+            },
+            "uiFixedDecimalPlaces": {
+              "t": "Places décimales fixes (montrer exactement ces nombreuses décimales sur chaque valeur; désactiver affiche moins sur les nombres plus grands)",
+              "src": "machine",
+              "h": "367e037d7891"
             },
             "uiCustomUnits": {
               "t": "Unités personnalisées",
@@ -60526,16 +60586,16 @@
           }
         },
         "he": {
-          "file": "41b29c57f64f",
+          "file": "35976236ab03",
           "counts": {
             "esri": 57,
             "esri-check": 6,
             "community": 0,
             "manual": 0,
             "existing": 0,
-            "machine": 222,
+            "machine": 223,
             "stale": 0,
-            "missing": 1
+            "missing": 0
           },
           "entries": {
             "uiAreYouSureYouWantTo": {
@@ -60787,6 +60847,11 @@
               "t": "שיקול דעת",
               "src": "machine",
               "h": "76e989f5f56a"
+            },
+            "uiFixedDecimalPlaces": {
+              "t": "מקומות decimal קבועים (הראו בדיוק את כל הפחתות הרבות האלה על כל ערך; מהופעות פחות על מספרים גדולים יותר)",
+              "src": "machine",
+              "h": "367e037d7891"
             },
             "uiCustomUnits": {
               "t": "יחידות מכס",
@@ -61651,16 +61716,16 @@
           }
         },
         "hr": {
-          "file": "3ce03744bb24",
+          "file": "14f92a2152e4",
           "counts": {
             "esri": 63,
             "esri-check": 0,
             "community": 0,
             "manual": 0,
             "existing": 0,
-            "machine": 221,
+            "machine": 222,
             "stale": 0,
-            "missing": 2
+            "missing": 1
           },
           "entries": {
             "uiAreYouSureYouWantTo": {
@@ -61912,6 +61977,11 @@
               "t": "Decimalna preciznost",
               "src": "machine",
               "h": "76e989f5f56a"
+            },
+            "uiFixedDecimalPlaces": {
+              "t": "Fiksna decimalna mjesta (pokazuju točno toliko decimala na svakoj vrijednosti; off pokazuje manje na većim brojevima)",
+              "src": "machine",
+              "h": "367e037d7891"
             },
             "uiCustomUnits": {
               "t": "Prilagođene jedinice",
@@ -62771,16 +62841,16 @@
           }
         },
         "hu": {
-          "file": "c9692ac53d63",
+          "file": "2d19c891bd50",
           "counts": {
             "esri": 62,
             "esri-check": 1,
             "community": 0,
             "manual": 0,
             "existing": 0,
-            "machine": 222,
+            "machine": 223,
             "stale": 0,
-            "missing": 1
+            "missing": 0
           },
           "entries": {
             "uiAreYouSureYouWantTo": {
@@ -63032,6 +63102,11 @@
               "t": "Decimális pontosság",
               "src": "machine",
               "h": "76e989f5f56a"
+            },
+            "uiFixedDecimalPlaces": {
+              "t": "Rögzített tizedesjegyek (minden értéknél pontosan ennyi tizedesvesszőt kell feltüntetni; az off nagyobb számoknál kevesebbet mutat)",
+              "src": "machine",
+              "h": "367e037d7891"
             },
             "uiCustomUnits": {
               "t": "Egyedi egységek",
@@ -63896,16 +63971,16 @@
           }
         },
         "id": {
-          "file": "a87085405a68",
+          "file": "5cfdf6f611df",
           "counts": {
             "esri": 60,
             "esri-check": 1,
             "community": 0,
             "manual": 0,
             "existing": 0,
-            "machine": 224,
+            "machine": 225,
             "stale": 0,
-            "missing": 1
+            "missing": 0
           },
           "entries": {
             "uiAreYouSureYouWantTo": {
@@ -64157,6 +64232,11 @@
               "t": "Presisi Desimal",
               "src": "machine",
               "h": "76e989f5f56a"
+            },
+            "uiFixedDecimalPlaces": {
+              "t": "Posisi desimal tetap (menampilkan desimal sebanyak ini pada setiap nilai; tidak menunjukkan lebih sedikit pada angka yang lebih besar)",
+              "src": "machine",
+              "h": "367e037d7891"
             },
             "uiCustomUnits": {
               "t": "Satuan Gubahan",
@@ -65031,16 +65111,16 @@
           }
         },
         "it": {
-          "file": "086b2a86c9df",
+          "file": "2c46f41b8e85",
           "counts": {
             "esri": 58,
             "esri-check": 3,
             "community": 0,
             "manual": 0,
             "existing": 0,
-            "machine": 224,
+            "machine": 225,
             "stale": 0,
-            "missing": 1
+            "missing": 0
           },
           "entries": {
             "uiAreYouSureYouWantTo": {
@@ -65297,6 +65377,11 @@
               "t": "Precisione decimale",
               "src": "machine",
               "h": "76e989f5f56a"
+            },
+            "uiFixedDecimalPlaces": {
+              "t": "Punti decimali fissi (mostrare esattamente questo molti decimali su ogni valore; off mostra meno su numeri più grandi)",
+              "src": "machine",
+              "h": "367e037d7891"
             },
             "uiCustomUnits": {
               "t": "Unità personalizzate",
@@ -66166,16 +66251,16 @@
           }
         },
         "ja": {
-          "file": "a113abf82b65",
+          "file": "bc060e564137",
           "counts": {
             "esri": 61,
             "esri-check": 2,
             "community": 0,
             "manual": 0,
             "existing": 0,
-            "machine": 222,
+            "machine": 223,
             "stale": 0,
-            "missing": 1
+            "missing": 0
           },
           "entries": {
             "uiAreYouSureYouWantTo": {
@@ -66427,6 +66512,11 @@
               "t": "精密加工",
               "src": "machine",
               "h": "76e989f5f56a"
+            },
+            "uiFixedDecimalPlaces": {
+              "t": "固定小数の場所(この多くの小数を正確に表示する; オフは、より大きな数字で少ない表示)",
+              "src": "machine",
+              "h": "367e037d7891"
             },
             "uiCustomUnits": {
               "t": "カスタムユニット",
@@ -67291,16 +67381,16 @@
           }
         },
         "ko": {
-          "file": "f395d9b66859",
+          "file": "839a45740d50",
           "counts": {
             "esri": 61,
             "esri-check": 2,
             "community": 0,
             "manual": 0,
             "existing": 0,
-            "machine": 222,
+            "machine": 223,
             "stale": 0,
-            "missing": 1
+            "missing": 0
           },
           "entries": {
             "uiAreYouSureYouWantTo": {
@@ -67552,6 +67642,11 @@
               "t": "Decimal 정밀도",
               "src": "machine",
               "h": "76e989f5f56a"
+            },
+            "uiFixedDecimalPlaces": {
+              "t": "고정 소수점 장소 (모든 값에 정확히이 많은 소수점을 보여줍니다; 더 큰 숫자에서 더 적은을 보여줍니다)",
+              "src": "machine",
+              "h": "367e037d7891"
             },
             "uiCustomUnits": {
               "t": "주문 단위",
@@ -68416,16 +68511,16 @@
           }
         },
         "lt": {
-          "file": "b5d554c389c9",
+          "file": "897f1628063c",
           "counts": {
             "esri": 61,
             "esri-check": 2,
             "community": 0,
             "manual": 0,
             "existing": 0,
-            "machine": 222,
+            "machine": 223,
             "stale": 0,
-            "missing": 1
+            "missing": 0
           },
           "entries": {
             "uiAreYouSureYouWantTo": {
@@ -68677,6 +68772,11 @@
               "t": "Dešimtainis preciziškumas",
               "src": "machine",
               "h": "76e989f5f56a"
+            },
+            "uiFixedDecimalPlaces": {
+              "t": "Fiksuotas skaičius po kablelio (nurodyti būtent šį skaičių po kablelio kiekvienai reikšmei; atjungtas skaičius rodo mažiau didesnių skaičių)",
+              "src": "machine",
+              "h": "367e037d7891"
             },
             "uiCustomUnits": {
               "t": "Renkami vienetai",
@@ -69541,16 +69641,16 @@
           }
         },
         "lv": {
-          "file": "de9f4c44f99c",
+          "file": "975eacc6b1a9",
           "counts": {
             "esri": 60,
             "esri-check": 3,
             "community": 0,
             "manual": 0,
             "existing": 0,
-            "machine": 222,
+            "machine": 223,
             "stale": 0,
-            "missing": 1
+            "missing": 0
           },
           "entries": {
             "uiAreYouSureYouWantTo": {
@@ -69802,6 +69902,11 @@
               "t": "Decimālā precizitāte",
               "src": "machine",
               "h": "76e989f5f56a"
+            },
+            "uiFixedDecimalPlaces": {
+              "t": "Fiksētas decimālzīmes (precīzi rādīt šo daudz decimāldaļu uz katras vērtības; izslēgt rāda mazāk uz lielākiem skaitļiem)",
+              "src": "machine",
+              "h": "367e037d7891"
             },
             "uiCustomUnits": {
               "t": "Pielāgotas vienības",
@@ -70666,16 +70771,16 @@
           }
         },
         "no": {
-          "file": "d831f43adea0",
+          "file": "aff55c8959b8",
           "counts": {
             "esri": 59,
             "esri-check": 2,
             "community": 0,
             "manual": 0,
             "existing": 0,
-            "machine": 224,
+            "machine": 225,
             "stale": 0,
-            "missing": 1
+            "missing": 0
           },
           "entries": {
             "uiAreYouSureYouWantTo": {
@@ -70927,6 +71032,11 @@
               "t": "Desimal presisjon",
               "src": "machine",
               "h": "76e989f5f56a"
+            },
+            "uiFixedDecimalPlaces": {
+              "t": "Faste desimalsteder (vis nøyaktig så mange desimaler på hver verdi; av viser færre på større tall)",
+              "src": "machine",
+              "h": "367e037d7891"
             },
             "uiCustomUnits": {
               "t": "Tilpassede enheter",
@@ -71801,16 +71911,16 @@
           }
         },
         "nl": {
-          "file": "917f757272ef",
+          "file": "a1702ab0e3c2",
           "counts": {
             "esri": 62,
             "esri-check": 1,
             "community": 0,
             "manual": 0,
             "existing": 0,
-            "machine": 222,
+            "machine": 223,
             "stale": 0,
-            "missing": 1
+            "missing": 0
           },
           "entries": {
             "uiAreYouSureYouWantTo": {
@@ -72062,6 +72172,11 @@
               "t": "Decimale precisie",
               "src": "machine",
               "h": "76e989f5f56a"
+            },
+            "uiFixedDecimalPlaces": {
+              "t": "Vaste decimalen (laat precies zoveel decimalen zien op elke waarde; off toont minder op grotere getallen)",
+              "src": "machine",
+              "h": "367e037d7891"
             },
             "uiCustomUnits": {
               "t": "Aangepaste eenheden",
@@ -72926,16 +73041,16 @@
           }
         },
         "pl": {
-          "file": "06c67c72a38b",
+          "file": "1a77ae7e95a5",
           "counts": {
             "esri": 60,
             "esri-check": 3,
             "community": 0,
             "manual": 0,
             "existing": 0,
-            "machine": 222,
+            "machine": 223,
             "stale": 0,
-            "missing": 1
+            "missing": 0
           },
           "entries": {
             "uiAreYouSureYouWantTo": {
@@ -73187,6 +73302,11 @@
               "t": "Dokładność dziesiętna",
               "src": "machine",
               "h": "76e989f5f56a"
+            },
+            "uiFixedDecimalPlaces": {
+              "t": "Poprawione miejsca po przecinku (pokaż dokładnie tyle miejsc po przecinku na każdej wartości; off pokazuje mniej na większych liczbach)",
+              "src": "machine",
+              "h": "367e037d7891"
             },
             "uiCustomUnits": {
               "t": "Jednostki niestandardowe",
@@ -74051,16 +74171,16 @@
           }
         },
         "pt-br": {
-          "file": "eee60e1c3997",
+          "file": "38fa3f9103a2",
           "counts": {
             "esri": 58,
             "esri-check": 0,
             "community": 0,
             "manual": 0,
             "existing": 0,
-            "machine": 227,
+            "machine": 228,
             "stale": 0,
-            "missing": 1
+            "missing": 0
           },
           "entries": {
             "uiAreYouSureYouWantTo": {
@@ -74317,6 +74437,11 @@
               "t": "Precisão Decimal",
               "src": "machine",
               "h": "76e989f5f56a"
+            },
+            "uiFixedDecimalPlaces": {
+              "t": "As casas decimais fixas (mostram exatamente essas muitas casas decimais em cada valor; off mostra menos em números maiores)",
+              "src": "machine",
+              "h": "367e037d7891"
             },
             "uiCustomUnits": {
               "t": "Unidades personalizadas",
@@ -75201,16 +75326,16 @@
           }
         },
         "pt-pt": {
-          "file": "340a319808d3",
+          "file": "a271017d7a80",
           "counts": {
             "esri": 57,
             "esri-check": 2,
             "community": 0,
             "manual": 0,
             "existing": 0,
-            "machine": 226,
+            "machine": 227,
             "stale": 0,
-            "missing": 1
+            "missing": 0
           },
           "entries": {
             "uiAreYouSureYouWantTo": {
@@ -75462,6 +75587,11 @@
               "t": "Precisão Decimal",
               "src": "machine",
               "h": "76e989f5f56a"
+            },
+            "uiFixedDecimalPlaces": {
+              "t": "As casas decimais fixas (mostram exatamente estas muitas casas decimais em cada valor; off mostra menos em números maiores)",
+              "src": "machine",
+              "h": "367e037d7891"
             },
             "uiCustomUnits": {
               "t": "Unidades Personalizadas",
@@ -76346,16 +76476,16 @@
           }
         },
         "ro": {
-          "file": "a65224783ea5",
+          "file": "165c137586a4",
           "counts": {
             "esri": 62,
             "esri-check": 0,
             "community": 0,
             "manual": 0,
             "existing": 0,
-            "machine": 223,
+            "machine": 224,
             "stale": 0,
-            "missing": 1
+            "missing": 0
           },
           "entries": {
             "uiAreYouSureYouWantTo": {
@@ -76607,6 +76737,11 @@
               "t": "Precizie decimală",
               "src": "machine",
               "h": "76e989f5f56a"
+            },
+            "uiFixedDecimalPlaces": {
+              "t": "(a se vedea exact această zecimală pentru fiecare valoare; off arată mai puține numere mai mari)",
+              "src": "machine",
+              "h": "367e037d7891"
             },
             "uiCustomUnits": {
               "t": "Unități personalizate",
@@ -77476,16 +77611,16 @@
           }
         },
         "ru": {
-          "file": "03020337cca3",
+          "file": "627dda04a08a",
           "counts": {
             "esri": 59,
             "esri-check": 4,
             "community": 0,
             "manual": 0,
             "existing": 0,
-            "machine": 222,
+            "machine": 223,
             "stale": 0,
-            "missing": 1
+            "missing": 0
           },
           "entries": {
             "uiAreYouSureYouWantTo": {
@@ -77737,6 +77872,11 @@
               "t": "Десятичная точность",
               "src": "machine",
               "h": "76e989f5f56a"
+            },
+            "uiFixedDecimalPlaces": {
+              "t": "Фиксированные десятичные числа (показать именно это количество десятичных знаков на каждое значение; выключает показывает меньше на больших числах)",
+              "src": "machine",
+              "h": "367e037d7891"
             },
             "uiCustomUnits": {
               "t": "Пользовательские единицы",
@@ -78601,16 +78741,16 @@
           }
         },
         "sk": {
-          "file": "c5bee3032711",
+          "file": "999745b36a6c",
           "counts": {
             "esri": 60,
             "esri-check": 3,
             "community": 0,
             "manual": 0,
             "existing": 0,
-            "machine": 222,
+            "machine": 223,
             "stale": 0,
-            "missing": 1
+            "missing": 0
           },
           "entries": {
             "uiAreYouSureYouWantTo": {
@@ -78862,6 +79002,11 @@
               "t": "Desatinná presnosť",
               "src": "machine",
               "h": "76e989f5f56a"
+            },
+            "uiFixedDecimalPlaces": {
+              "t": "Pevné desatinné miesta (ukáže presne toto množstvo desatinných miest na každej hodnote; off ukazuje menej na väčších číslach)",
+              "src": "machine",
+              "h": "367e037d7891"
             },
             "uiCustomUnits": {
               "t": "Vlastné jednotky",
@@ -79726,16 +79871,16 @@
           }
         },
         "sl": {
-          "file": "6a3cc0f3af32",
+          "file": "164010addaf7",
           "counts": {
             "esri": 62,
             "esri-check": 1,
             "community": 0,
             "manual": 0,
             "existing": 0,
-            "machine": 222,
+            "machine": 223,
             "stale": 0,
-            "missing": 1
+            "missing": 0
           },
           "entries": {
             "uiAreYouSureYouWantTo": {
@@ -79987,6 +80132,11 @@
               "t": "Decimalna natančnost",
               "src": "machine",
               "h": "76e989f5f56a"
+            },
+            "uiFixedDecimalPlaces": {
+              "t": "Fiksna decimalna mesta (na vsako vrednost natančno prikažite to število decimalk; pri večjih številkah jih je manj);",
+              "src": "machine",
+              "h": "367e037d7891"
             },
             "uiCustomUnits": {
               "t": "Lastne enote",
@@ -80851,16 +81001,16 @@
           }
         },
         "sr": {
-          "file": "4c3e027706b9",
+          "file": "02918bd510e4",
           "counts": {
             "esri": 62,
             "esri-check": 1,
             "community": 0,
             "manual": 0,
             "existing": 0,
-            "machine": 222,
+            "machine": 223,
             "stale": 0,
-            "missing": 1
+            "missing": 0
           },
           "entries": {
             "uiAreYouSureYouWantTo": {
@@ -81112,6 +81262,11 @@
               "t": "Decimalna preciznost",
               "src": "machine",
               "h": "76e989f5f56a"
+            },
+            "uiFixedDecimalPlaces": {
+              "t": "Fiksna decimalna mesta (pokazuju tačno ovoliko decimala na svakoj vrednosti; off pokazuje manje na većim brojevima)",
+              "src": "machine",
+              "h": "367e037d7891"
             },
             "uiCustomUnits": {
               "t": "Prilagođene jedinice",
@@ -81976,16 +82131,16 @@
           }
         },
         "sv": {
-          "file": "fa2eb6edec3e",
+          "file": "0bd1c59a80e8",
           "counts": {
             "esri": 60,
             "esri-check": 1,
             "community": 0,
             "manual": 0,
             "existing": 0,
-            "machine": 224,
+            "machine": 225,
             "stale": 0,
-            "missing": 1
+            "missing": 0
           },
           "entries": {
             "uiAreYouSureYouWantTo": {
@@ -82242,6 +82397,11 @@
               "t": "Decimal Precision",
               "src": "machine",
               "h": "76e989f5f56a"
+            },
+            "uiFixedDecimalPlaces": {
+              "t": "Fasta decimaler (visa exakt detta många decimaler på varje värde; av visar färre på större antal)",
+              "src": "machine",
+              "h": "367e037d7891"
             },
             "uiCustomUnits": {
               "t": "Anpassade enheter",
@@ -83111,16 +83271,16 @@
           }
         },
         "th": {
-          "file": "1ab7b97d760d",
+          "file": "c7e65680fa93",
           "counts": {
             "esri": 62,
             "esri-check": 1,
             "community": 0,
             "manual": 0,
             "existing": 0,
-            "machine": 222,
+            "machine": 223,
             "stale": 0,
-            "missing": 1
+            "missing": 0
           },
           "entries": {
             "uiAreYouSureYouWantTo": {
@@ -83372,6 +83532,11 @@
               "t": "ทศนิยม",
               "src": "machine",
               "h": "76e989f5f56a"
+            },
+            "uiFixedDecimalPlaces": {
+              "t": "ทศนิยมความกว้างคงที่ (แสดงทศนิยมตรงนี้ทุกค่า; ปิด แสดงจํานวนที่มากกว่าน้อยกว่า)",
+              "src": "machine",
+              "h": "367e037d7891"
             },
             "uiCustomUnits": {
               "t": "ตัวหน่วยกําหนดเอง",
@@ -84236,16 +84401,16 @@
           }
         },
         "tr": {
-          "file": "87d17e47f9c7",
+          "file": "6be03660a0f0",
           "counts": {
             "esri": 59,
             "esri-check": 2,
             "community": 0,
             "manual": 0,
             "existing": 0,
-            "machine": 224,
+            "machine": 225,
             "stale": 0,
-            "missing": 1
+            "missing": 0
           },
           "entries": {
             "uiAreYouSureYouWantTo": {
@@ -84497,6 +84662,11 @@
               "t": "Decimal Precision",
               "src": "machine",
               "h": "76e989f5f56a"
+            },
+            "uiFixedDecimalPlaces": {
+              "t": "Sabit dekimal yerler (her değerdeki bu birçok dekimali gösterir; daha büyük sayılarda daha az gösterir)",
+              "src": "machine",
+              "h": "367e037d7891"
             },
             "uiCustomUnits": {
               "t": "Özel Birimler",
@@ -85371,16 +85541,16 @@
           }
         },
         "zh-cn": {
-          "file": "722100983f54",
+          "file": "11fdb9335c1d",
           "counts": {
             "esri": 62,
             "esri-check": 1,
             "community": 0,
             "manual": 0,
             "existing": 0,
-            "machine": 222,
+            "machine": 223,
             "stale": 0,
-            "missing": 1
+            "missing": 0
           },
           "entries": {
             "uiAreYouSureYouWantTo": {
@@ -85632,6 +85802,11 @@
               "t": "十进制精度",
               "src": "machine",
               "h": "76e989f5f56a"
+            },
+            "uiFixedDecimalPlaces": {
+              "t": "固定小数位数(在每个数值上显示精确的这个小数位数;在较大数字上显示的更少)",
+              "src": "machine",
+              "h": "367e037d7891"
             },
             "uiCustomUnits": {
               "t": "自定义单位",
@@ -86496,16 +86671,16 @@
           }
         },
         "uk": {
-          "file": "4ee1c144f98e",
+          "file": "e57ed6377c35",
           "counts": {
             "esri": 61,
             "esri-check": 2,
             "community": 0,
             "manual": 0,
             "existing": 0,
-            "machine": 222,
+            "machine": 223,
             "stale": 0,
-            "missing": 1
+            "missing": 0
           },
           "entries": {
             "uiAreYouSureYouWantTo": {
@@ -86757,6 +86932,11 @@
               "t": "Декілька Точність",
               "src": "machine",
               "h": "76e989f5f56a"
+            },
+            "uiFixedDecimalPlaces": {
+              "t": "Виправлені десяткові місця (показати точно це багато десятків на кожній вартості; від шоу менше на більших числах)",
+              "src": "machine",
+              "h": "367e037d7891"
             },
             "uiCustomUnits": {
               "t": "Призначені для користувача одиниці",
@@ -87621,16 +87801,16 @@
           }
         },
         "vi": {
-          "file": "8997b26efb7d",
+          "file": "6e7df7d7f524",
           "counts": {
             "esri": 63,
             "esri-check": 0,
             "community": 0,
             "manual": 0,
             "existing": 0,
-            "machine": 222,
+            "machine": 223,
             "stale": 0,
-            "missing": 1
+            "missing": 0
           },
           "entries": {
             "uiAreYouSureYouWantTo": {
@@ -87882,6 +88062,11 @@
               "t": "Độ chính xác thập phân",
               "src": "machine",
               "h": "76e989f5f56a"
+            },
+            "uiFixedDecimalPlaces": {
+              "t": "Số thập phân cố định (hiện chính xác nhiều số thập phân trên mỗi giá trị; tắt cho thấy ít hơn trên số lớn hơn)",
+              "src": "machine",
+              "h": "367e037d7891"
             },
             "uiCustomUnits": {
               "t": "Đơn vị tự chọn",
@@ -88746,16 +88931,16 @@
           }
         },
         "zh-hk": {
-          "file": "62b7cfd7fb15",
+          "file": "3c47ed4c06fd",
           "counts": {
             "esri": 61,
             "esri-check": 2,
             "community": 0,
             "manual": 0,
             "existing": 0,
-            "machine": 222,
+            "machine": 223,
             "stale": 0,
-            "missing": 1
+            "missing": 0
           },
           "entries": {
             "uiAreYouSureYouWantTo": {
@@ -89007,6 +89192,11 @@
               "t": "小數精度",
               "src": "machine",
               "h": "76e989f5f56a"
+            },
+            "uiFixedDecimalPlaces": {
+              "t": "固定小數位數( 在每個值上顯示如此多的小數位數; 在大數字上顯示得更少)",
+              "src": "machine",
+              "h": "367e037d7891"
             },
             "uiCustomUnits": {
               "t": "自訂單位",
@@ -89871,16 +90061,16 @@
           }
         },
         "zh-tw": {
-          "file": "62b7cfd7fb15",
+          "file": "3c47ed4c06fd",
           "counts": {
             "esri": 61,
             "esri-check": 2,
             "community": 0,
             "manual": 0,
             "existing": 0,
-            "machine": 222,
+            "machine": 223,
             "stale": 0,
-            "missing": 1
+            "missing": 0
           },
           "entries": {
             "uiAreYouSureYouWantTo": {
@@ -90132,6 +90322,11 @@
               "t": "小數精度",
               "src": "machine",
               "h": "76e989f5f56a"
+            },
+            "uiFixedDecimalPlaces": {
+              "t": "固定小數位數( 在每個值上顯示如此多的小數位數; 在大數字上顯示得更少)",
+              "src": "machine",
+              "h": "367e037d7891"
             },
             "uiCustomUnits": {
               "t": "自訂單位",

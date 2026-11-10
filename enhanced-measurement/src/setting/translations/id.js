@@ -71,7 +71,7 @@ System.register([], function (e) {
         uiDefaultLinearUnit: "Unit Linear Baku",
         uiDefaultAreaUnit: "Unit Area Baku",
         uiDecimalPrecision: "Presisi Desimal",
-        uiFixedDecimalPlaces: "Fixed decimal places (show exactly this many decimals on every value; off shows fewer on larger numbers)",
+        uiFixedDecimalPlaces: "Posisi desimal tetap (menampilkan desimal sebanyak ini pada setiap nilai; tidak menunjukkan lebih sedikit pada angka yang lebih besar)",
         uiCustomUnits: "Satuan Gubahan",
         uiDefineCustomLinearAndAreaUnits: "Definisikan satuan linear dan area ubahan dengan faktor konversi. Satuan yang ditandai untuk dropdown akan muncul dalam pemilih unit runtime.",
         uiCustomLinearUnits: "Satuan Linear Gubahan",

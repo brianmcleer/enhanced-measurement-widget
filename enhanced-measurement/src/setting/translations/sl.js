@@ -71,7 +71,7 @@ System.register([], function (e) {
         uiDefaultLinearUnit: "Privzeta linearna enota",
         uiDefaultAreaUnit: "Privzeta enota območja",
         uiDecimalPrecision: "Decimalna natančnost",
-        uiFixedDecimalPlaces: "Fixed decimal places (show exactly this many decimals on every value; off shows fewer on larger numbers)",
+        uiFixedDecimalPlaces: "Fiksna decimalna mesta (na vsako vrednost natančno prikažite to število decimalk; pri večjih številkah jih je manj);",
         uiCustomUnits: "Lastne enote",
         uiDefineCustomLinearAndAreaUnits: "Določite linearne in območne enote po meri s pretvorbenimi faktorji. Enote, označene za spust, se prikažejo v izbirnikih runtime enote.",
         uiCustomLinearUnits: "Lastne linearne enote",

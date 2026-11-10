@@ -71,7 +71,7 @@ System.register([], function (e) {
         uiDefaultLinearUnit: "Προκαθορισμένη γραμμική μονάδα",
         uiDefaultAreaUnit: "Προκαθορισμένη μονάδα περιοχής",
         uiDecimalPrecision: "Δεκαδική ακρίβεια",
-        uiFixedDecimalPlaces: "Fixed decimal places (show exactly this many decimals on every value; off shows fewer on larger numbers)",
+        uiFixedDecimalPlaces: "Σταθερά δεκαδικά ψηφία (δείτε ακριβώς αυτά τα πολλά δεκαδικά σε κάθε τιμή; off εμφανίζει λιγότερα σε μεγαλύτερους αριθμούς)",
         uiCustomUnits: "Προσαρμοσμένες μονάδες",
         uiDefineCustomLinearAndAreaUnits: "Προσδιορίστε προσαρμοσμένες γραμμικές μονάδες και μονάδες περιοχής με συντελεστές μετατροπής. Οι μονάδες που σημειώνονται για πτώση θα εμφανίζονται στους επιλογείς μονάδων.",
         uiCustomLinearUnits: "Προσαρμοσμένες γραμμικές μονάδες",

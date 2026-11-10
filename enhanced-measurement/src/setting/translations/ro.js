@@ -71,7 +71,7 @@ System.register([], function (e) {
         uiDefaultLinearUnit: "Unitate liniară implicită",
         uiDefaultAreaUnit: "Unitatea de zonă implicită",
         uiDecimalPrecision: "Precizie decimală",
-        uiFixedDecimalPlaces: "Fixed decimal places (show exactly this many decimals on every value; off shows fewer on larger numbers)",
+        uiFixedDecimalPlaces: "(a se vedea exact această zecimală pentru fiecare valoare; off arată mai puține numere mai mari)",
         uiCustomUnits: "Unități personalizate",
         uiDefineCustomLinearAndAreaUnits: "Defineşte unităţile liniare personalizate cu factori de conversie. Unitățile marcate pentru dropdown vor apărea în selectorii de unități runtime.",
         uiCustomLinearUnits: "Unități liniare personalizate",

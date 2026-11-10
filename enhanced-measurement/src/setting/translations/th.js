@@ -71,7 +71,7 @@ System.register([], function (e) {
         uiDefaultLinearUnit: "หน่วย Linear ปริยาย",
         uiDefaultAreaUnit: "หน่วยของพื้นที่ปริยาย",
         uiDecimalPrecision: "ทศนิยม",
-        uiFixedDecimalPlaces: "Fixed decimal places (show exactly this many decimals on every value; off shows fewer on larger numbers)",
+        uiFixedDecimalPlaces: "ทศนิยมความกว้างคงที่ (แสดงทศนิยมตรงนี้ทุกค่า; ปิด แสดงจํานวนที่มากกว่าน้อยกว่า)",
         uiCustomUnits: "ตัวหน่วยกําหนดเอง",
         uiDefineCustomLinearAndAreaUnits: "นิยามหน่วยเชิงเส้นและพื้นที่ที่กําหนดเองด้วยตัวประกอบการแปลง หน่วยที่ถูกกําหนดให้หย่อนลง จะปรากฏในการเลือกหน่วยทํางาน",
         uiCustomLinearUnits: "ตั้งค่าหน่วย Linear",

@@ -71,7 +71,7 @@ System.register([], function (e) {
         uiDefaultLinearUnit: "Štandardná lineárna jednotka",
         uiDefaultAreaUnit: "Štandardná jednotka plochy",
         uiDecimalPrecision: "Desatinná presnosť",
-        uiFixedDecimalPlaces: "Fixed decimal places (show exactly this many decimals on every value; off shows fewer on larger numbers)",
+        uiFixedDecimalPlaces: "Pevné desatinné miesta (ukáže presne toto množstvo desatinných miest na každej hodnote; off ukazuje menej na väčších číslach)",
         uiCustomUnits: "Vlastné jednotky",
         uiDefineCustomLinearAndAreaUnits: "Definovať vlastné lineárne a plošné jednotky s konverznými faktormi. Jednotky označené pre rozpad sa objavia v voličoch výkonovej jednotky.",
         uiCustomLinearUnits: "Vlastné lineárne jednotky",

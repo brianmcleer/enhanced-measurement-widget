@@ -71,7 +71,7 @@ System.register([], function (e) {
         uiDefaultLinearUnit: "Vaikimisi lineaarne ühik",
         uiDefaultAreaUnit: "Vaikimisi pindalaühik",
         uiDecimalPrecision: "Kümnendtäpsus",
-        uiFixedDecimalPlaces: "Fixed decimal places (show exactly this many decimals on every value; off shows fewer on larger numbers)",
+        uiFixedDecimalPlaces: "Kindlaksmääratud kümnendkohad (näita täpselt nii palju kümnendkohti igal väärtusel; väljas näitab vähem suurematel arvudel)",
         uiCustomUnits: "Kohandatud ühikud",
         uiDefineCustomLinearAndAreaUnits: "Määrake kohandatud lineaar- ja pindalaühikud teisendusteguritega. Tühistamiseks märgitud ühikud ilmuvad käitusajaühiku valijates.",
         uiCustomLinearUnits: "Kohandatud lineaarsed ühikud",

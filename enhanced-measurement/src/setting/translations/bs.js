@@ -71,7 +71,7 @@ System.register([], function (e) {
         uiDefaultLinearUnit: "Uobičajena linijarna jedinica",
         uiDefaultAreaUnit: "Uobičajena jedinica za područje",
         uiDecimalPrecision: "Decimalna preciznost",
-        uiFixedDecimalPlaces: "Fixed decimal places (show exactly this many decimals on every value; off shows fewer on larger numbers)",
+        uiFixedDecimalPlaces: "Fiksna decimalna mjesta (pokaži tačno ovoliko decimala na svakoj vrijednosti; off pokazuje manje na većim brojevima)",
         uiCustomUnits: "Osobne jedinice",
         uiDefineCustomLinearAndAreaUnits: "Definiši korisničke linearne i područne jedinice sa faktorima konverzije. Jedinice označene za pad će se pojaviti u biračima runtime jedinica.",
         uiCustomLinearUnits: "Vlastite Linearne Jedinice",

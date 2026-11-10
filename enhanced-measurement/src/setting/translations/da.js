@@ -71,7 +71,7 @@ System.register([], function (e) {
         uiDefaultLinearUnit: "Standard lineær enhed",
         uiDefaultAreaUnit: "Standardområdeenhed",
         uiDecimalPrecision: "Decimal præcision",
-        uiFixedDecimalPlaces: "Fixed decimal places (show exactly this many decimals on every value; off shows fewer on larger numbers)",
+        uiFixedDecimalPlaces: "Faste decimaler (viser præcis så mange decimaler på hver værdi; off viser færre på større tal)",
         uiCustomUnits: "Brugerdefinerede enheder",
         uiDefineCustomLinearAndAreaUnits: "Definer brugerdefinerede lineære og område enheder med omregningsfaktorer. Enheder markeret til dropdown vil blive vist i runtime enhedsvælger.",
         uiCustomLinearUnits: "Brugerdefinerede lineære enheder",
