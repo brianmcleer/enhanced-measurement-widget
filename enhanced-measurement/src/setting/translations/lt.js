@@ -139,6 +139,7 @@ System.register([], function (e) {
         uiSortOptionsInMeasurementList: "Rikiavimo parinktys matavimo sąraše",
         uiHighlightASegmentOnTheMap: "Paryškinti segmentą žemėlapyje, kai jis yra nurodytas sąraše",
         uiDeleteSegmentsFromDrawnLinesAnd: "Trinti segmentus iš temptų linijų ir formų",
+        uiSetAsNearMeLocation: "Use a measurement as the Near Me location (shown only when the app has a Near Me widget)",
         uiDefaultPanelExpansion: "NAME OF TRANSLATORS",
         uiChooseWhichCollapsiblePanelsStart: "@ info: whatsthis",
         uiExpanded: "Išskleistas",

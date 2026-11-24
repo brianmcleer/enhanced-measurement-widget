@@ -139,6 +139,7 @@ System.register([], function (e) {
         uiSortOptionsInMeasurementList: "Sortera alternativ i mätlista",
         uiHighlightASegmentOnTheMap: "Markera ett segment på kartan när det pekas på eller klickas i listan",
         uiDeleteSegmentsFromDrawnLinesAnd: "Radera segment från dragna linjer och former",
+        uiSetAsNearMeLocation: "Use a measurement as the Near Me location (shown only when the app has a Near Me widget)",
         uiDefaultPanelExpansion: "Standardpanel expansion",
         uiChooseWhichCollapsiblePanelsStart: "Välj vilka fallbara paneler som börjar",
         uiExpanded: "Expanderade",

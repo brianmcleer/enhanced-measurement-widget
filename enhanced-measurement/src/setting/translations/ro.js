@@ -139,6 +139,7 @@ System.register([], function (e) {
         uiSortOptionsInMeasurementList: "Sortează opțiunile din lista de măsurători",
         uiHighlightASegmentOnTheMap: "Afișați un segment pe hartă atunci când este indicat sau faceți clic în listă",
         uiDeleteSegmentsFromDrawnLinesAnd: "Șterge segmentele din liniile și formele trase",
+        uiSetAsNearMeLocation: "Use a measurement as the Near Me location (shown only when the app has a Near Me widget)",
         uiDefaultPanelExpansion: "Extinderea implicită a panoului",
         uiChooseWhichCollapsiblePanelsStart: "Alegeţi care panouri pliabile începe",
         uiExpanded: "Extins",

@@ -139,6 +139,7 @@ System.register([], function (e) {
         uiSortOptionsInMeasurementList: "Sắp xếp tùy chọn trong danh sách đo lường",
         uiHighlightASegmentOnTheMap: "Tô sáng một đoạn trên bản đồ khi nó được chỉ vào hoặc nhấp vào danh sách",
         uiDeleteSegmentsFromDrawnLinesAnd: "Xóa đoạn khỏi các đường vẽ và hình",
+        uiSetAsNearMeLocation: "Use a measurement as the Near Me location (shown only when the app has a Near Me widget)",
         uiDefaultPanelExpansion: "Mở rộng bảng mặc định",
         uiChooseWhichCollapsiblePanelsStart: "Chọn những tấm có khả năng collap",
         uiExpanded: "Đã mở rộng",

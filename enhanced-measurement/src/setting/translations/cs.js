@@ -139,6 +139,7 @@ System.register([], function (e) {
         uiSortOptionsInMeasurementList: "Třídit volby v seznamu měření",
         uiHighlightASegmentOnTheMap: "Zvýraznit segment na mapě, když je namířen nebo klikl v seznamu",
         uiDeleteSegmentsFromDrawnLinesAnd: "Smazat segmenty z nakreslených čar a tvarů",
+        uiSetAsNearMeLocation: "Use a measurement as the Near Me location (shown only when the app has a Near Me widget)",
         uiDefaultPanelExpansion: "Výchozí rozšíření obrazu",
         uiChooseWhichCollapsiblePanelsStart: "Vyberte, které skládací panely začnou",
         uiExpanded: "Rozbalená",

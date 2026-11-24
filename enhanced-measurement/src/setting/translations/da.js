@@ -139,6 +139,7 @@ System.register([], function (e) {
         uiSortOptionsInMeasurementList: "Sortér indstillinger i målelisten",
         uiHighlightASegmentOnTheMap: "Fremhæv et segment på kortet når det peger på eller klikkes på listen",
         uiDeleteSegmentsFromDrawnLinesAnd: "Slet segmenter fra trukne linjer og figurer",
+        uiSetAsNearMeLocation: "Use a measurement as the Near Me location (shown only when the app has a Near Me widget)",
         uiDefaultPanelExpansion: "Standardpaneludvidelse",
         uiChooseWhichCollapsiblePanelsStart: "Vælg hvilke sammenklappelige paneler der starter",
         uiExpanded: "Udvidet",

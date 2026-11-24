@@ -139,6 +139,7 @@ System.register([], function (e) {
         uiSortOptionsInMeasurementList: "אפשרויות מיון ברשימת המדידה",
         uiHighlightASegmentOnTheMap: "תאורה גבוהה קטע על המפה כאשר הוא מכוון או לוחץ ברשימה",
         uiDeleteSegmentsFromDrawnLinesAnd: "מחיקת קטעים מקווים וצורות",
+        uiSetAsNearMeLocation: "Use a measurement as the Near Me location (shown only when the app has a Near Me widget)",
         uiDefaultPanelExpansion: "Default Panel",
         uiChooseWhichCollapsiblePanelsStart: "בחרו אילו לוחות אפשריים מתחילים",
         uiExpanded: "מורחב",

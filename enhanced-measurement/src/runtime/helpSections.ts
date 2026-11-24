@@ -36,6 +36,7 @@ export interface HelpFeatures {
   sortOptions: boolean
   segmentHighlight: boolean
   segmentDelete: boolean
+  nearMeLocation: boolean
   offsetSegmentLabels: boolean
   offsetLabelsToggle: boolean
   persistence: boolean
@@ -130,7 +131,8 @@ export function buildHelpSections (t: T, f: HelpFeatures): HelpSection[] {
     body: [
       t('helpCards1'), t('helpCards2'), t('helpCards3'), t('helpCards4'), t('helpCardsCopy'), t('helpCardsSegments'),
       ...when(f.segmentHighlight, 'helpCardsSegmentMap'),
-      ...when(f.segmentDelete, 'helpCardsSegmentDelete1', 'helpCardsSegmentDelete2')
+      ...when(f.segmentDelete, 'helpCardsSegmentDelete1', 'helpCardsSegmentDelete2'),
+      ...when(f.nearMeLocation, 'helpCardsNearMe')
     ]
   })
 
@@ -224,6 +226,7 @@ export function buildHelpSections (t: T, f: HelpFeatures): HelpSection[] {
       ...when(f.distance || f.area || f.freehandLine || f.freehandArea, 'helpTroubleDouble'),
       ...(f.unitToggle ? [t('helpTroubleUnits', { units: L.units })] : []),
       ...when(f.segmentDelete, 'helpTroubleSegmentDelete'),
+      ...when(f.nearMeLocation, 'helpTroubleNearMe'),
       ...when(f.exportButton, 'helpTroubleExport'),
       ...when(f.importButton, 'helpTroubleImport'),
       ...when(f.persistence, 'helpTroubleGone'),

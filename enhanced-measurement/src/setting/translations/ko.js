@@ -139,6 +139,7 @@ System.register([], function (e) {
         uiSortOptionsInMeasurementList: "측정 목록의 종류",
         uiHighlightASegmentOnTheMap: "지도의 세그먼트를 강조 표시하거나 목록에서 클릭",
         uiDeleteSegmentsFromDrawnLinesAnd: "그려진 선과 모양에서 세그먼트 삭제",
+        uiSetAsNearMeLocation: "Use a measurement as the Near Me location (shown only when the app has a Near Me widget)",
         uiDefaultPanelExpansion: "기본 패널 확장",
         uiChooseWhichCollapsiblePanelsStart: "어떤 접을 수 있는 패널 시작을 선택하십시오",
         uiExpanded: "확장됨",

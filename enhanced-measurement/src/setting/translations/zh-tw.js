@@ -139,6 +139,7 @@ System.register([], function (e) {
         uiSortOptionsInMeasurementList: "在測量清單中排序選取選項",
         uiHighlightASegmentOnTheMap: "在地圖上被指向或被點擊時突顯出一段",
         uiDeleteSegmentsFromDrawnLinesAnd: "从所畫行和外形去除區段",
+        uiSetAsNearMeLocation: "Use a measurement as the Near Me location (shown only when the app has a Near Me widget)",
         uiDefaultPanelExpansion: "預設面板擴展",
         uiChooseWhichCollapsiblePanelsStart: "選擇相撞面板開始",
         uiExpanded: "已展開",

@@ -139,6 +139,7 @@ System.register([], function (e) {
         uiSortOptionsInMeasurementList: "Kārtošanas opcijas mērījumu sarakstā",
         uiHighlightASegmentOnTheMap: "Izcelt segmentu kartē, kad tas ir norādīts vai noklikšķināts sarakstā",
         uiDeleteSegmentsFromDrawnLinesAnd: "Dzēst segmentus no zīmētām līnijām un formām",
+        uiSetAsNearMeLocation: "Use a measurement as the Near Me location (shown only when the app has a Near Me widget)",
         uiDefaultPanelExpansion: "Noklusētā paneļa paplašināšana",
         uiChooseWhichCollapsiblePanelsStart: "Izvēlieties kurus saliekamos paneļus sākt",
         uiExpanded: "Izvērsts",

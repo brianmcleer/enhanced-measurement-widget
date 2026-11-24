@@ -139,6 +139,7 @@ System.register([], function (e) {
         uiSortOptionsInMeasurementList: "Ordena les opcions a la llista de mesures",
         uiHighlightASegmentOnTheMap: "Marqueu un segment del mapa quan s' apunta o clica a la llista",
         uiDeleteSegmentsFromDrawnLinesAnd: "Esborra els segments de línies dibuixades i formes",
+        uiSetAsNearMeLocation: "Use a measurement as the Near Me location (shown only when the app has a Near Me widget)",
         uiDefaultPanelExpansion: "expansió del plafó per omissió",
         uiChooseWhichCollapsiblePanelsStart: "Escolliu quins plafons col· lipsibles comencen",
         uiExpanded: "Ampliat",

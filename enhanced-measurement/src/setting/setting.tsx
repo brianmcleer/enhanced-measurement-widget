@@ -2620,6 +2620,18 @@ export default class Setting extends React.PureComponent<SettingProps, SettingSt
                             }}
                         />
                     </SettingRow>
+
+                    <SettingRow flow="wrap" label={__t("uiSetAsNearMeLocation")}>
+                        <Switch
+                            checked={config.enableNearMeLocation !== false}
+                            onChange={(evt) => {
+                                this.props.onSettingChange({
+                                    id: this.props.id,
+                                    config: this.props.config.set('enableNearMeLocation', evt.target.checked)
+                                });
+                            }}
+                        />
+                    </SettingRow>
                 </SettingSection>
 
                 <SettingSection title={__t("uiDefaultPanelExpansion")}>

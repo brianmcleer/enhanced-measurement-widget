@@ -139,6 +139,7 @@ System.register([], function (e) {
         uiSortOptionsInMeasurementList: "Επιλογές ταξινόμησης στη λίστα μετρήσεων",
         uiHighlightASegmentOnTheMap: "Επισήμανση ενός τμήματος στο χάρτη, όταν δείχνει ή κάνει κλικ στη λίστα",
         uiDeleteSegmentsFromDrawnLinesAnd: "Διαγραφή τμημάτων από γραμμές και σχήματα",
+        uiSetAsNearMeLocation: "Use a measurement as the Near Me location (shown only when the app has a Near Me widget)",
         uiDefaultPanelExpansion: "Προκαθορισμένη επέκταση πίνακα",
         uiChooseWhichCollapsiblePanelsStart: "Επιλέξτε ποιος πίνακας θα καταρρεύσει.",
         uiExpanded: "Επιτυχής ανάπτυξη",

@@ -2,7 +2,7 @@
 /* eslint-disable */
 /** @jsx jsx */
 /** @jsxFrag React.Fragment */
-import { React, jsx, WidgetState as JimuWidgetState } from 'jimu-core';
+import { React, jsx, WidgetState as JimuWidgetState, DataSourceManager, DataActionManager, DataLevel, DataSourceTypes, Immutable, getAppStore } from 'jimu-core';
 import type { AllWidgetProps } from 'jimu-core';
 import { JimuMapViewComponent, loadArcGISJSAPIModules } from 'jimu-arcgis';
 import type { JimuMapView } from 'jimu-arcgis';
@@ -301,6 +301,8 @@ interface WidgetState {
     colorPickerForId: string | null;
     /** Transient toast for undoable actions (delete) */
     undoToast: { message: string; action: HistoryAction | null; bulkCount?: number } | null;
+    /** Short status message (for example after sending a measurement to Near Me) */
+    noticeToast: string | null;
     /** Filter text typed in the measurements list */
     measurementFilter: string;
     /** How many measurements to render (paged list for perf with large counts) */
@@ -437,6 +439,7 @@ export default class EnhancedMeasurement extends React.PureComponent<WidgetProps
     private _statsCache: { token: any; value: any } | null = null;
     /** Pending undo-delete toast timer so it can be cancelled if a new delete happens or the user clicks Undo. */
     private deleteToastTimer: any = null;
+    private noticeToastTimer: any = null;
     /** Ref to the scrollable list container so we can capture/restore scrollTop when drilling in/out of detail view. */
     private listScrollRef: HTMLDivElement | null = null;
     /** Debounce timer for localStorage persistence. */
@@ -491,6 +494,7 @@ export default class EnhancedMeasurement extends React.PureComponent<WidgetProps
             renamingValue: '',
             colorPickerForId: null,
             undoToast: null,
+            noticeToast: null,
             measurementFilter: '',
             visibleMeasurementCount: 50,
             showShortcutsHelp: false,
@@ -670,6 +674,120 @@ export default class EnhancedMeasurement extends React.PureComponent<WidgetProps
         return text;
     };
 
+    // ==================== Near Me: use a measurement as the search location ====================
+
+    /** Ids of the Near Me widgets in this app. Empty when the app has none. */
+    getNearMeWidgetIds(): string[] {
+        try {
+            const widgets = getAppStore().getState()?.appConfig?.widgets || {};
+            return Object.keys(widgets).filter((id) => {
+                const w = widgets[id];
+                return !!w && (w.manifest?.name === 'near-me' || String(w.uri || '').indexOf('/near-me/') >= 0);
+            });
+        } catch (_) {
+            return [];
+        }
+    }
+
+    /** True when the "Set as Near Me location" menu item should be offered. */
+    canSendToNearMe(): boolean {
+        if ((this.props.config || {}).enableNearMeLocation === false) return false;
+        return this.getNearMeWidgetIds().length > 0;
+    }
+
+    showNotice(message: string) {
+        if (this.noticeToastTimer) clearTimeout(this.noticeToastTimer);
+        this.safeSetState({ noticeToast: message });
+        this.noticeToastTimer = setTimeout(() => {
+            this.noticeToastTimer = null;
+            this.safeSetState({ noticeToast: null });
+        }, 6000);
+    }
+
+    /**
+     * Near Me's "Set location" data action only takes records that belong to a feature layer data
+     * source with a geometry type (it looks the data source up by id to read that type). Measurement
+     * graphics have no data source, so this creates one small in-memory data source per geometry type,
+     * the first time it is needed. They are not saved in the app config.
+     */
+    async getMeasurementDataSource(kind: 'point' | 'polyline' | 'polygon'): Promise<any> {
+        const id = `${this.props.id}-measurement-${kind}`;
+        const manager = DataSourceManager.getInstance();
+        const existing = manager.getDataSource(id);
+        if (existing) return existing;
+        const geometryType = kind === 'point' ? 'esriGeometryPoint' : kind === 'polyline' ? 'esriGeometryPolyline' : 'esriGeometryPolygon';
+        const dataSourceJson = Immutable({
+            id,
+            type: (DataSourceTypes && DataSourceTypes.FeatureLayer) || 'FEATURE_LAYER',
+            label: this.t('nearMeDataSourceLabel'),
+            geometryType,
+            isDataInDataSourceInstance: true,
+            schema: {
+                idField: 'OBJECTID',
+                fields: {
+                    OBJECTID: { jimuName: 'OBJECTID', name: 'OBJECTID', alias: 'OBJECTID', type: 'NUMBER', esriType: 'esriFieldTypeOID' },
+                    name: { jimuName: 'name', name: 'name', alias: 'Name', type: 'STRING', esriType: 'esriFieldTypeString' }
+                }
+            }
+        });
+        return manager.createDataSource({ id, dataSourceJson });
+    }
+
+    /**
+     * Hands one measurement to the Near Me widget as its search location, through Near Me's own
+     * "Set location" data action. Going through the data action manager means the builder's data
+     * action settings are respected and Near Me opens itself if it sits in a widget controller.
+     */
+    async sendMeasurementToNearMe(measurementId: string) {
+        const measurement = this.state.measurements.find(m => m.id === measurementId);
+        const geometry = measurement && ((measurement.graphic && measurement.graphic.geometry) || measurement.geometry);
+        if (!measurement || !geometry || !this.Graphic) return;
+        try {
+            const kind: 'point' | 'polyline' | 'polygon' = geometry.type === 'point' ? 'point' : geometry.type === 'polyline' ? 'polyline' : 'polygon';
+            const dataSource = await this.getMeasurementDataSource(kind);
+            if (!dataSource) throw new Error('No data source');
+
+            // A copy, so the record never touches the graphic that is drawn on the map
+            const feature = new this.Graphic({
+                geometry: typeof geometry.clone === 'function' ? geometry.clone() : geometry,
+                attributes: { OBJECTID: 1, name: measurement.label }
+            });
+            const record = dataSource.buildRecord(feature);
+            dataSource.setSourceRecords([record]);
+
+            const dataSets = [{ dataSource, records: [record], name: measurement.label, label: measurement.label, type: 'selected' }];
+            const level = (DataLevel && DataLevel.Records) || 'RECORDS';
+            const actionManager = DataActionManager.getInstance();
+            const nearMeIds = this.getNearMeWidgetIds();
+            const findActions = async (): Promise<any[]> => {
+                const supported = await actionManager.getSupportedActions(this.props.id, dataSets, level);
+                return ((supported && supported.locate) || []).filter((a: any) => a && nearMeIds.indexOf(a.widgetId) >= 0);
+            };
+            let actions = await findActions();
+            if (actions.length === 0) {
+                // Near Me's action may not be registered yet if Near Me has never been loaded; register it and look again
+                const registered = actionManager.getActions() || [];
+                const missing = nearMeIds.filter(id => !registered.some((a: any) => a && a.widgetId === id));
+                if (missing.length > 0) {
+                    const widgets = getAppStore().getState()?.appConfig?.widgets || {};
+                    await Promise.all(missing.map(id => Promise.resolve(actionManager.registerWidgetActions(widgets[id])).catch((): any => null)));
+                    actions = await findActions();
+                }
+            }
+            if (actions.length === 0) {
+                this.showNotice(this.t('nearMeNotReady'));
+                return;
+            }
+            await actionManager.executeDataAction(actions[0], dataSets, level, this.props.id);
+            this.showNotice(this.t('nearMeSent', { name: measurement.label }));
+            this.beacon?.action('near-me-location');
+        } catch (error) {
+            this.beacon?.error(error, 'near-me-location');
+            console.error('Error sending measurement to Near Me:', error);
+            this.showNotice(this.t('nearMeFailed'));
+        }
+    }
+
     /** Storage key for the first-run hint dismissal, namespaced by widget id so two copies in one app do not share it. */
     private get firstRunHintKey(): string {
         return `enhancedMeasurement.helpHintDismissed.${this.props.id}`;
@@ -734,6 +852,7 @@ export default class EnhancedMeasurement extends React.PureComponent<WidgetProps
             sortOptions: config.enableSortOptions !== false,
             segmentHighlight: config.enableSegmentHighlight !== false,
             segmentDelete: config.enableSegmentDelete !== false,
+            nearMeLocation: this.canSendToNearMe(),
             offsetLabelsToggle: config.showOffsetLabelsToggle !== false,
             offsetSegmentLabels: config.offsetSegmentLabels !== false,
             persistence: config.enablePersistence === true,
@@ -762,6 +881,7 @@ export default class EnhancedMeasurement extends React.PureComponent<WidgetProps
     componentWillUnmount() {
         this._isMounted = false;
         if (this.deleteToastTimer) { clearTimeout(this.deleteToastTimer); this.deleteToastTimer = null; }
+        if (this.noticeToastTimer) { clearTimeout(this.noticeToastTimer); this.noticeToastTimer = null; }
         if (this.persistTimer) {
             // Flush the pending save synchronously so a fast page close never loses data
             clearTimeout(this.persistTimer);
@@ -5967,6 +6087,12 @@ export default class EnhancedMeasurement extends React.PureComponent<WidgetProps
                                             {this.state.editingMeasurementId === m.id ? this.t('stopEditing') : this.t('editVertices')}
                                         </DropdownMenuItem>
                                     )}
+                                    {this.canSendToNearMe() && (
+                                        <DropdownMenuItem onClick={() => { this.closeAllDropdowns(); this.sendMeasurementToNearMe(m.id); }}>
+                                            <svg className="menu-icon" fill="none" stroke="currentColor" viewBox="0 0 24 24" width="14" height="14" aria-hidden="true"><path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M17.657 16.657L13.414 20.9a2 2 0 01-2.828 0l-4.243-4.243a8 8 0 1111.314 0z" /><path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M15 11a3 3 0 11-6 0 3 3 0 016 0z" /></svg>
+                                            {this.t('setAsNearMeLocation')}
+                                        </DropdownMenuItem>
+                                    )}
                                     <DropdownMenuSeparator />
                                     <DropdownMenuItem onClick={() => { this.deleteMeasurement(m.id); this.closeAllDropdowns(); }}>
                                         <svg className="menu-icon" fill="none" stroke="#dc2626" viewBox="0 0 24 24" width="14" height="14" aria-hidden="true"><path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M19 7l-.867 12.142A2 2 0 0116.138 21H7.862a2 2 0 01-1.995-1.858L5 7m5 4v6m4-6v6m1-10V4a1 1 0 00-1-1h-4a1 1 0 00-1 1v3M4 7h16" /></svg>
@@ -7456,6 +7582,7 @@ export default class EnhancedMeasurement extends React.PureComponent<WidgetProps
                                     const sorted = this.sortMeasurements(filtered);
                                     const visible = sorted.slice(0, this.state.visibleMeasurementCount);
                                     const hidden = sorted.length - visible.length;
+                                    const nearMeAvailable = this.canSendToNearMe();
                                     const visibleIds = visible.map(m => m.id);
                                     const allVisibleSelected = this.state.selectMode && visibleIds.length > 0 && visibleIds.every(id => this.state.selectedIds.has(id));
                                     return (
@@ -7753,6 +7880,20 @@ export default class EnhancedMeasurement extends React.PureComponent<WidgetProps
                                                                                         {this.state.editingMeasurementId === measurement.id ? this.t('stopEditing') : this.t('editVertices')}
                                                                                     </DropdownMenuItem>
                                                                                 )}
+                                                                                {nearMeAvailable && (
+                                                                                    <DropdownMenuItem
+                                                                                        onClick={() => {
+                                                                                            this.closeAllDropdowns();
+                                                                                            this.sendMeasurementToNearMe(measurement.id);
+                                                                                        }}
+                                                                                    >
+                                                                                        <svg className="menu-icon" fill="none" stroke="currentColor" viewBox="0 0 24 24" width="14" height="14" aria-hidden="true">
+                                                                                            <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M17.657 16.657L13.414 20.9a2 2 0 01-2.828 0l-4.243-4.243a8 8 0 1111.314 0z" />
+                                                                                            <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M15 11a3 3 0 11-6 0 3 3 0 016 0z" />
+                                                                                        </svg>
+                                                                                        {this.t('setAsNearMeLocation')}
+                                                                                    </DropdownMenuItem>
+                                                                                )}
                                                                                 <DropdownMenuSeparator />
                                                                                 <DropdownMenuItem
                                                                                     onClick={() => {
@@ -8024,6 +8165,30 @@ export default class EnhancedMeasurement extends React.PureComponent<WidgetProps
                             onClick={() => {
                                 if (this.deleteToastTimer) { clearTimeout(this.deleteToastTimer); this.deleteToastTimer = null; }
                                 this.setState({ undoToast: null });
+                            }}
+                            aria-label={this.t('dismissNotification')}
+                            title={this.t('firstRunDismiss')}
+                        >
+                            <svg fill="none" stroke="currentColor" viewBox="0 0 24 24" width="14" height="14" aria-hidden="true">
+                                <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M6 18L18 6M6 6l12 12" />
+                            </svg>
+                        </button>
+                    </div>
+                )}
+
+                {/* ============== Notice toast (plain status message) ============== */}
+                {this.state.noticeToast && !this.state.undoToast && (
+                    <div role="status" aria-live="polite" className="undo-toast">
+                        <svg fill="none" stroke="currentColor" viewBox="0 0 24 24" width="16" height="16" aria-hidden="true">
+                            <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M13 16h-1v-4h-1m1-4h.01M21 12a9 9 0 11-18 0 9 9 0 0118 0z" />
+                        </svg>
+                        <span className="undo-toast-message">{this.state.noticeToast}</span>
+                        <button
+                            type="button"
+                            className="undo-toast-close"
+                            onClick={() => {
+                                if (this.noticeToastTimer) { clearTimeout(this.noticeToastTimer); this.noticeToastTimer = null; }
+                                this.setState({ noticeToast: null });
                             }}
                             aria-label={this.t('dismissNotification')}
                             title={this.t('firstRunDismiss')}

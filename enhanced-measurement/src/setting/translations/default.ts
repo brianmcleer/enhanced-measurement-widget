@@ -135,6 +135,7 @@ export default {
   uiSortOptionsInMeasurementList: 'Sort options in measurement list',
   uiHighlightASegmentOnTheMap: 'Highlight a segment on the map when it is pointed at or clicked in the list',
   uiDeleteSegmentsFromDrawnLinesAnd: 'Delete segments from drawn lines and shapes',
+  uiSetAsNearMeLocation: 'Use a measurement as the Near Me location (shown only when the app has a Near Me widget)',
   uiDefaultPanelExpansion: 'Default Panel Expansion',
   uiChooseWhichCollapsiblePanelsStart: 'Choose which collapsible panels start',
   uiExpanded: 'expanded',

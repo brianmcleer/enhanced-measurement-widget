@@ -139,6 +139,7 @@ System.register([], function (e) {
         uiSortOptionsInMeasurementList: "A mérési lista beállításai",
         uiHighlightASegmentOnTheMap: "A térképen egy szegmens kiemelése, amikor a listára mutat vagy rákattint",
         uiDeleteSegmentsFromDrawnLinesAnd: "A vontatott vonalak és formák szegmenseinek törlése",
+        uiSetAsNearMeLocation: "Use a measurement as the Near Me location (shown only when the app has a Near Me widget)",
         uiDefaultPanelExpansion: "Alapértelmezett panel kiterjesztés",
         uiChooseWhichCollapsiblePanelsStart: "Válassza ki, melyik összecsukható panelek indulnak",
         uiExpanded: "Kibontott",

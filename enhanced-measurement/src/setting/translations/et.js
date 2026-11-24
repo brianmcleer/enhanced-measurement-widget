@@ -139,6 +139,7 @@ System.register([], function (e) {
         uiSortOptionsInMeasurementList: "Sorteerimisvalikud mõõtmisnimekirjas",
         uiHighlightASegmentOnTheMap: "Segmendi esiletõstmine kaardil, kui see on nimekirjas suunatud või klõpsatud",
         uiDeleteSegmentsFromDrawnLinesAnd: "Joonistatud joontest ja kujunditest segmentide kustutamine",
+        uiSetAsNearMeLocation: "Use a measurement as the Near Me location (shown only when the app has a Near Me widget)",
         uiDefaultPanelExpansion: "Vaikimisi paneeli laiendamine",
         uiChooseWhichCollapsiblePanelsStart: "Vali, millised kokkupandavad paneelid käivituvad",
         uiExpanded: "Laiendatud",

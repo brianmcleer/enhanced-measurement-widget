@@ -139,6 +139,7 @@ System.register([], function (e) {
         uiSortOptionsInMeasurementList: "Sortiraj opcije u merenju liste",
         uiHighlightASegmentOnTheMap: "Istakni segment na mapi kada je uperen ili kliknut u listu",
         uiDeleteSegmentsFromDrawnLinesAnd: "Obriši segmente iz nacrtanih linija i oblika",
+        uiSetAsNearMeLocation: "Use a measurement as the Near Me location (shown only when the app has a Near Me widget)",
         uiDefaultPanelExpansion: "Подразум ијевана експанзија плоче",
         uiChooseWhichCollapsiblePanelsStart: "Izaberite koji se sklopivi paneli pokreću",
         uiExpanded: "Prošireno",

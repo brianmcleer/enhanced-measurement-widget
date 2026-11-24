@@ -139,6 +139,7 @@ System.register([], function (e) {
         uiSortOptionsInMeasurementList: "Urutkan opsi dalam daftar pengukuran",
         uiHighlightASegmentOnTheMap: "Tandai suatu segmen pada peta ketika menunjuk atau klik dalam daftar",
         uiDeleteSegmentsFromDrawnLinesAnd: "Hapus segmen dari baris dan bentuk yang digambar",
+        uiSetAsNearMeLocation: "Use a measurement as the Near Me location (shown only when the app has a Near Me widget)",
         uiDefaultPanelExpansion: "Ekspansi Panel Baku",
         uiChooseWhichCollapsiblePanelsStart: "Pilih panel yang dapat diisi mulai",
         uiExpanded: "Dibentangkan",

@@ -2,6 +2,17 @@
 
 Newest first. Every release bumps `manifest.json` and `package.json` together.
 
+## 1.5.0 (2026-11-24)
+
+### Added
+- Use a measurement as the location for the Near Me widget. Each measurement's three-dot menu (on its card and in its details) has **Set as Near Me location**. Near Me then buffers and searches around that point, line or shape, the same as if a feature had been picked from a popup. The menu item only shows when the app has a Near Me widget.
+- It goes through Near Me's own Set location data action, so Near Me opens itself when it sits in a widget controller, and the builder's data action settings for this widget are respected. Near Me still has to be set up to take a location: at least one analysis layer, a search by location (not by current map area), and on the same page as this widget. If it is not, a short message says so.
+- Settings, Power Features: **Use a measurement as the Near Me location**. On by default; it carries through the settings XML export and import.
+- Help guide: one line in the measurements section and one troubleshooting line, both shown only when the feature is available.
+
+### Notes
+- Near Me only accepts features that belong to a data source, so the widget creates a small in-memory data source per geometry type (point, line, shape) the first time a measurement is sent. They are not saved in the app.
+
 ## 1.4.3 (2026-11-10)
 
 ### Fixed
