@@ -440,6 +440,11 @@ export default class EnhancedMeasurement extends React.PureComponent<WidgetProps
     /** Pending undo-delete toast timer so it can be cancelled if a new delete happens or the user clicks Undo. */
     private deleteToastTimer: any = null;
     private noticeToastTimer: any = null;
+    /** Measurement whose vertex edit was started from its menu; editing ends when that edit is finished. */
+    private editMenuTargetId: string | null = null;
+    /** Measurement last sent to Near Me; Near Me is updated when this measurement changes. */
+    private nearMeLinkedId: string | null = null;
+    private nearMeLinkedShape: string = '';
     /** Ref to the scrollable list container so we can capture/restore scrollTop when drilling in/out of detail view. */
     private listScrollRef: HTMLDivElement | null = null;
     /** Debounce timer for localStorage persistence. */
@@ -738,11 +743,19 @@ export default class EnhancedMeasurement extends React.PureComponent<WidgetProps
      * "Set location" data action. Going through the data action manager means the builder's data
      * action settings are respected and Near Me opens itself if it sits in a widget controller.
      */
-    async sendMeasurementToNearMe(measurementId: string) {
+    async sendMeasurementToNearMe(measurementId: string, auto: boolean = false) {
         const measurement = this.state.measurements.find(m => m.id === measurementId);
         const geometry = measurement && ((measurement.graphic && measurement.graphic.geometry) || measurement.geometry);
-        if (!measurement || !geometry || !this.Graphic) return;
+        if (!measurement || !geometry || !this.Graphic) {
+            if (auto && !measurement) this.nearMeLinkedId = null;
+            return;
+        }
         try {
+            let shape = '';
+            try { shape = JSON.stringify(typeof geometry.toJSON === 'function' ? geometry.toJSON() : geometry); } catch (_) { shape = ''; }
+            // An edit that ended without changing the shape does not need to run Near Me again
+            if (auto && shape && shape === this.nearMeLinkedShape) return;
+
             const kind: 'point' | 'polyline' | 'polygon' = geometry.type === 'point' ? 'point' : geometry.type === 'polyline' ? 'polyline' : 'polygon';
             const dataSource = await this.getMeasurementDataSource(kind);
             if (!dataSource) throw new Error('No data source');
@@ -775,17 +788,35 @@ export default class EnhancedMeasurement extends React.PureComponent<WidgetProps
                 }
             }
             if (actions.length === 0) {
-                this.showNotice(this.t('nearMeNotReady'));
+                if (!auto) this.showNotice(this.t('nearMeNotReady'));
                 return;
             }
-            await actionManager.executeDataAction(actions[0], dataSets, level, this.props.id);
-            this.showNotice(this.t('nearMeSent', { name: measurement.label }));
-            this.beacon?.action('near-me-location');
+            if (auto) {
+                // Follow-up after the shape changed: update Near Me without forcing it open again
+                await actions[0].onExecute(dataSets, level, this.props.id);
+                this.showNotice(this.t('nearMeUpdated', { name: measurement.label }));
+            } else {
+                await actionManager.executeDataAction(actions[0], dataSets, level, this.props.id);
+                this.showNotice(this.t('nearMeSent', { name: measurement.label }));
+                this.beacon?.action('near-me-location');
+            }
+            this.nearMeLinkedId = measurementId;
+            this.nearMeLinkedShape = shape;
         } catch (error) {
             this.beacon?.error(error, 'near-me-location');
             console.error('Error sending measurement to Near Me:', error);
-            this.showNotice(this.t('nearMeFailed'));
+            if (!auto) this.showNotice(this.t('nearMeFailed'));
         }
+    }
+
+    /**
+     * Called after a measurement's shape changes (vertex edit, segment delete, undo, redo).
+     * If that measurement is the one Near Me is using, Near Me gets the new shape.
+     */
+    refreshNearMeLocation(measurementId: string) {
+        if (!this.nearMeLinkedId || this.nearMeLinkedId !== measurementId) return;
+        if (!this.canSendToNearMe()) return;
+        this.sendMeasurementToNearMe(measurementId, true);
     }
 
     /** Storage key for the first-run hint dismissal, namespaced by widget id so two copies in one app do not share it. */
@@ -1074,7 +1105,7 @@ export default class EnhancedMeasurement extends React.PureComponent<WidgetProps
                     ),
                     undoStack: prevState.undoStack.slice(0, -1),
                     redoStack: [...prevState.redoStack, action]
-                }));
+                }), () => this.refreshNearMeLocation(action.measurement.id));
             }
         }
     }
@@ -1145,7 +1176,7 @@ export default class EnhancedMeasurement extends React.PureComponent<WidgetProps
                     ),
                     undoStack: [...prevState.undoStack, action],
                     redoStack: prevState.redoStack.slice(0, -1)
-                }));
+                }), () => this.refreshNearMeLocation(action.measurement.id));
             }
         }
     }
@@ -2459,8 +2490,22 @@ export default class EnhancedMeasurement extends React.PureComponent<WidgetProps
 
         if (!measurement) return;
 
-        // Clear live measurement display and live label
-        this.setState({ liveMeasurement: null, editingMeasurementId: null });
+        // Clear live measurement display and live label.
+        // An edit started from this measurement's menu also leaves edit mode here (clicking off the
+        // shape finishes it), so the banner and the menu do not keep saying it is still being edited.
+        if (this.editMenuTargetId === measurementId) {
+            this.editMenuTargetId = null;
+            this.setState(prev => ({
+                liveMeasurement: null,
+                editingMeasurementId: null,
+                currentTool: prev.currentTool === 'edit' ? null : prev.currentTool
+            }));
+        } else {
+            this.setState(prev => ({
+                liveMeasurement: null,
+                editingMeasurementId: prev.editingMeasurementId === measurementId ? null : prev.editingMeasurementId
+            }));
+        }
         this.clearLiveLabel();
 
         // Recalculate measurements based on new geometry
@@ -2479,7 +2524,7 @@ export default class EnhancedMeasurement extends React.PureComponent<WidgetProps
                 measurements: prevState.measurements.map(m =>
                     m.id === measurementId ? updatedMeasurement : m
                 )
-            }));
+            }), () => this.refreshNearMeLocation(measurementId));
 
             // Update all labels for this measurement
             this.refreshSingleMeasurementLabels(updatedMeasurement);
@@ -2736,6 +2781,7 @@ export default class EnhancedMeasurement extends React.PureComponent<WidgetProps
                 undoToast: { message: `Removed "${segment.label}" from "${m.label}"`, action }
             }), () => {
                 this.refreshSingleMeasurementLabels(updated);
+                this.refreshNearMeLocation(measurementId);
             });
 
             if (this.deleteToastTimer) clearTimeout(this.deleteToastTimer);
@@ -4108,6 +4154,10 @@ export default class EnhancedMeasurement extends React.PureComponent<WidgetProps
         if (!this.state.sketchWidget) return;
 
         if (this.state.currentTool === tool) {
+            if (tool === 'edit') {
+                this.stopEditingVertices();
+                return;
+            }
             this.setState({ currentTool: null, liveMeasurement: null, editingMeasurementId: null });
             this.state.sketchWidget.cancel();
             this.clearLiveLabel();
@@ -4118,6 +4168,7 @@ export default class EnhancedMeasurement extends React.PureComponent<WidgetProps
         }
 
         // Cancel any existing sketch operation
+        this.editMenuTargetId = null;
         this.state.sketchWidget.cancel();
         this.clearLiveLabel();
         if (typeof this.cleanupTriangleHandlers === 'function') {
@@ -4188,7 +4239,33 @@ export default class EnhancedMeasurement extends React.PureComponent<WidgetProps
         }
     }
 
+    /**
+     * Ends vertex editing and keeps the changes. Used by Stop editing in the measurement menu,
+     * the Done button in the banner, and the Esc key.
+     */
+    stopEditingVertices() {
+        this.editMenuTargetId = null;
+        const sketch = this.state.sketchWidget;
+        if (sketch) {
+            try {
+                // complete() keeps the edit and fires the normal update-complete event, which recalculates the measurement
+                if (sketch.state === 'active' && typeof sketch.complete === 'function') sketch.complete();
+                else sketch.cancel();
+            } catch (_) {
+                try { sketch.cancel(); } catch (__) { /* nothing left to stop */ }
+            }
+        }
+        this.clearLiveLabel();
+        this.setState({ currentTool: null, liveMeasurement: null, editingMeasurementId: null });
+    }
+
     editMeasurementVertices(measurementId: string) {
+        // The same menu item reads "Stop editing" while this measurement is being edited
+        if (this.state.editingMeasurementId === measurementId) {
+            this.stopEditingVertices();
+            return;
+        }
+
         const measurement = this.state.measurements.find(m => m.id === measurementId);
         if (!measurement || !measurement.graphic || !this.state.sketchWidget) return;
 
@@ -4205,14 +4282,21 @@ export default class EnhancedMeasurement extends React.PureComponent<WidgetProps
             return;
         }
 
-        // Cancel any current drawing operation
-        this.state.sketchWidget.cancel();
+        // Finish an edit already in progress (keeping its changes), or cancel a drawing in progress
+        const activeSketch = this.state.sketchWidget;
+        try {
+            if (this.state.currentTool === 'edit' && activeSketch.state === 'active' && typeof activeSketch.complete === 'function') activeSketch.complete();
+            else activeSketch.cancel();
+        } catch (_) {
+            try { activeSketch.cancel(); } catch (__) { /* nothing to stop */ }
+        }
         this.clearLiveLabel();
         if (typeof this.cleanupTriangleHandlers === 'function') {
             this.cleanupTriangleHandlers();
         }
 
         // Set to edit mode
+        this.editMenuTargetId = measurementId;
         this.setState({
             currentTool: 'edit',
             liveMeasurement: null,
@@ -4235,6 +4319,8 @@ export default class EnhancedMeasurement extends React.PureComponent<WidgetProps
     deleteMeasurement(id: string, opts: { showToast?: boolean } = { showToast: true }) {
         const measurement = this.state.measurements.find(m => m.id === id);
         if (!measurement) return;
+        if (this.nearMeLinkedId === id) this.nearMeLinkedId = null;
+        if (this.editMenuTargetId === id) this.editMenuTargetId = null;
 
         const action: HistoryAction = { type: 'DELETE', measurement: measurement };
 
@@ -5915,6 +6001,87 @@ export default class EnhancedMeasurement extends React.PureComponent<WidgetProps
      * Layout: sticky header with back + title row + actions, then scrollable body
      * with info grid and segments list.
      */
+    /**
+     * The blue banner that names the active tool, with its hint, live readout and the button that
+     * ends it. Drawing tools show it at the top by the tool buttons; vertex editing shows it just
+     * above the measurements, next to the measurement being edited.
+     */
+    renderDrawModeBanner(currentTool: string, config: any) {
+        return (
+                        <div
+                            className="draw-mode-banner"
+                            role="status"
+                            aria-live="polite"
+                            style={{
+                                display: 'flex',
+                                alignItems: 'center',
+                                gap: '8px',
+                                padding: '7px 10px',
+                                fontSize: '12px',
+                                fontWeight: 500,
+                                color: '#1e40af',
+                                backgroundColor: '#eff6ff',
+                                border: '1px solid #bfdbfe',
+                                borderRadius: '6px',
+                                margin: '0 0 4px 0',
+                                flexShrink: 0
+                            }}
+                        >
+                            <span
+                                aria-hidden="true"
+                                style={{
+                                    display: 'inline-flex',
+                                    alignItems: 'center',
+                                    justifyContent: 'center',
+                                    width: '20px',
+                                    height: '20px',
+                                    borderRadius: '50%',
+                                    backgroundColor: '#3b82f6',
+                                    color: '#ffffff',
+                                    flexShrink: 0,
+                                    animation: 'draw-mode-pulse 2s ease-in-out infinite'
+                                }}
+                            >
+                                <svg fill="none" stroke="currentColor" viewBox="0 0 24 24" width="12" height="12">
+                                    <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2.5} d="M15.232 5.232l3.536 3.536m-2.036-5.036a2.5 2.5 0 113.536 3.536L6.5 21.036H3v-3.572L16.732 3.732z" />
+                                </svg>
+                            </span>
+                            <div style={{ flex: 1, minWidth: 0, lineHeight: 1.3 }}>
+                                <div style={{ fontWeight: 600, color: '#1e3a8a' }}>
+                                    {this.t('drawingCurrentTool', { currentTool: String(this.getToolLabel(currentTool)) })}
+                                </div>
+                                <div style={{ fontSize: '11px', color: '#3b82f6', opacity: 0.9 }}>
+                                    {this.getToolHint(currentTool)}
+                                </div>
+                                {config.showLiveMeasurement !== false && this.state.liveMeasurement && (
+                                    <div className="live-readout" aria-live="polite">
+                                        {this.state.liveMeasurement.value}
+                                    </div>
+                                )}
+                            </div>
+                            <button
+                                type="button"
+                                onClick={() => this.activateTool(currentTool as any)}
+                                title={currentTool === 'edit' ? this.t('stopEditingEsc') : this.t('cancelDrawingEsc')}
+                                aria-label={currentTool === 'edit' ? this.t('stopEditing') : this.t('cancelDrawing')}
+                                style={{
+                                    background: 'transparent',
+                                    border: '1px solid #93c5fd',
+                                    color: '#1e40af',
+                                    padding: '3px 8px',
+                                    borderRadius: '4px',
+                                    cursor: 'pointer',
+                                    fontSize: '11px',
+                                    fontWeight: 600,
+                                    flexShrink: 0
+                                }}
+                            >
+                                {currentTool === 'edit' ? this.t('doneEditing') : this.t('esc')}
+                            </button>
+                        </div>
+        );
+    }
+
     renderDetailView(m: MeasurementRecord, config: any) {
         const isRenaming = this.state.renamingMeasurementId === m.id;
         const canEditVertices = (config.enableVertexEditTool !== false) && m.type !== 'point' && m.type !== 'circle';
@@ -6518,79 +6685,8 @@ export default class EnhancedMeasurement extends React.PureComponent<WidgetProps
                         </div>
                     )}
 
-                    {currentTool && (
-                        <div
-                            className="draw-mode-banner"
-                            role="status"
-                            aria-live="polite"
-                            style={{
-                                display: 'flex',
-                                alignItems: 'center',
-                                gap: '8px',
-                                padding: '7px 10px',
-                                fontSize: '12px',
-                                fontWeight: 500,
-                                color: '#1e40af',
-                                backgroundColor: '#eff6ff',
-                                border: '1px solid #bfdbfe',
-                                borderRadius: '6px',
-                                margin: '0 0 4px 0',
-                                flexShrink: 0
-                            }}
-                        >
-                            <span
-                                aria-hidden="true"
-                                style={{
-                                    display: 'inline-flex',
-                                    alignItems: 'center',
-                                    justifyContent: 'center',
-                                    width: '20px',
-                                    height: '20px',
-                                    borderRadius: '50%',
-                                    backgroundColor: '#3b82f6',
-                                    color: '#ffffff',
-                                    flexShrink: 0,
-                                    animation: 'draw-mode-pulse 2s ease-in-out infinite'
-                                }}
-                            >
-                                <svg fill="none" stroke="currentColor" viewBox="0 0 24 24" width="12" height="12">
-                                    <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2.5} d="M15.232 5.232l3.536 3.536m-2.036-5.036a2.5 2.5 0 113.536 3.536L6.5 21.036H3v-3.572L16.732 3.732z" />
-                                </svg>
-                            </span>
-                            <div style={{ flex: 1, minWidth: 0, lineHeight: 1.3 }}>
-                                <div style={{ fontWeight: 600, color: '#1e3a8a' }}>
-                                    {this.t('drawingCurrentTool', { currentTool: String(this.getToolLabel(currentTool)) })}
-                                </div>
-                                <div style={{ fontSize: '11px', color: '#3b82f6', opacity: 0.9 }}>
-                                    {this.getToolHint(currentTool)}
-                                </div>
-                                {config.showLiveMeasurement !== false && this.state.liveMeasurement && (
-                                    <div className="live-readout" aria-live="polite">
-                                        {this.state.liveMeasurement.value}
-                                    </div>
-                                )}
-                            </div>
-                            <button
-                                type="button"
-                                onClick={() => this.activateTool(currentTool as any)}
-                                title={this.t('cancelDrawingEsc')}
-                                aria-label={this.t('cancelDrawing')}
-                                style={{
-                                    background: 'transparent',
-                                    border: '1px solid #93c5fd',
-                                    color: '#1e40af',
-                                    padding: '3px 8px',
-                                    borderRadius: '4px',
-                                    cursor: 'pointer',
-                                    fontSize: '11px',
-                                    fontWeight: 600,
-                                    flexShrink: 0
-                                }}
-                            >
-                                {this.t('esc')}
-                            </button>
-                        </div>
-                    )}
+                    {/* Drawing tools show the banner here, next to the tool buttons. Vertex editing shows it just above the measurements instead. */}
+                    {currentTool && currentTool !== 'edit' && this.renderDrawModeBanner(currentTool, config)}
 
                     <div className="control-section" style={{
                         flexShrink: 0
@@ -7277,6 +7373,8 @@ export default class EnhancedMeasurement extends React.PureComponent<WidgetProps
                             </button>
                         </div>
                     )}
+
+                    {currentTool === 'edit' && this.renderDrawModeBanner(currentTool, config)}
 
                     <div className="measurements-section">
                         {(() => {

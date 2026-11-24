@@ -2,6 +2,18 @@
 
 Newest first. Every release bumps `manifest.json` and `package.json` together.
 
+## 1.5.1 (2026-11-24)
+
+### Fixed
+- **Stop editing** in a measurement's three-dot menu did not stop vertex editing. It restarted the edit on the same shape, so the menu kept saying Stop editing and the blue banner stayed up until Esc was pressed. It now ends the edit and keeps the changes.
+- An edit started from a measurement's menu also ends when you click off the shape. Before, the shape was released but the blue "Edit Vertices" banner stayed.
+- Ending a vertex edit (Stop editing, the banner button, or Esc) now always keeps the changes.
+
+### Changed
+- While editing vertices the banner button reads **Done** instead of Esc, and the hint says how to finish.
+- While editing vertices the blue banner now sits just above the Measurements section, next to the measurement being edited, instead of at the top of the widget. Drawing tools still show it at the top by the tool buttons.
+- Near Me follows the measurement it was given. After **Set as Near Me location**, reshaping that measurement (vertex edit, segment delete, undo or redo) updates the Near Me location on its own. Choosing Set as Near Me location on another measurement switches to that one.
+
 ## 1.5.0 (2026-11-24)
 
 ### Added

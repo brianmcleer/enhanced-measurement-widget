@@ -3,8 +3,8 @@
   "generator": "exb-i18n-kit",
   "parts": {
     "runtime": {
-      "en": "96a00500e696",
-      "keys": 300,
+      "en": "03784e9057d3",
+      "keys": 303,
       "hashes": {
         "_widgetLabel": "302ebaf90be8",
         "helpTitle": "c47ae15370cf",
@@ -42,7 +42,7 @@
         "helpCardsCopy": "1e8a8241b487",
         "helpCardsSegments": "4fe9407e5152",
         "helpCardsSegmentMap": "558a75739481",
-        "helpCardsNearMe": "b6b05e37757a",
+        "helpCardsNearMe": "4ecc105516b0",
         "helpCardsSegmentDelete1": "6727a585fdae",
         "helpCardsSegmentDelete2": "935be918ec5d",
         "helpMenuTitle": "82a8c5086cab",
@@ -122,10 +122,13 @@
         "duplicate": "972d57379db3",
         "setAsNearMeLocation": "e1e431471d2f",
         "nearMeSent": "7ca7324b12bf",
+        "nearMeUpdated": "e0609c91bb86",
         "nearMeNotReady": "efb994b01ef4",
         "nearMeFailed": "28cc0b3708d7",
         "nearMeDataSourceLabel": "737bc96abf36",
         "stopEditing": "70a7cc48b22c",
+        "stopEditingEsc": "70fdcd980946",
+        "doneEditing": "e9b450d14bc2",
         "editVertices": "db278dbcc13f",
         "delete": "f6fdbe48dc54",
         "idLat": "62b9f5acdf36",
@@ -298,7 +301,7 @@
         "clickAndDragToDrawA": "1e7620473d74",
         "clickCenterDragForRadiusEsc": "e7332f3d614b",
         "click3PointsHoldShiftFor": "13a9e6c1c15f",
-        "dragVerticesToReshapeEscWhen": "c52887258939",
+        "dragVerticesToReshapeEscWhen": "25365ba0c39f",
         "importedMeasurementType": "f3949a7c95c5",
         "unknownError": "af6321ca7a8b",
         "unserializableError": "76e73551597a",
@@ -309,16 +312,16 @@
       },
       "locales": {
         "ar": {
-          "file": "6b85382f07df",
+          "file": "60d0220aa3ff",
           "counts": {
-            "esri": 56,
+            "esri": 57,
             "esri-check": 4,
             "community": 0,
             "manual": 0,
             "existing": 0,
-            "machine": 234,
-            "stale": 0,
-            "missing": 6
+            "machine": 233,
+            "stale": 1,
+            "missing": 8
           },
           "entries": {
             "_widgetLabel": {
@@ -1467,9 +1470,9 @@
               "h": "13a9e6c1c15f"
             },
             "dragVerticesToReshapeEscWhen": {
-              "t": "حشرات حشرية لإعادة تشكيل حرف / /",
-              "src": "machine",
-              "h": "c52887258939"
+              "src": "stale",
+              "h": "25365ba0c39f",
+              "old": "حشرات حشرية لإعادة تشكيل حرف / /"
             },
             "importedMeasurementType": {
               "t": "المستوردة {measurementType}",
@@ -1494,16 +1497,16 @@
           }
         },
         "bg": {
-          "file": "e62dd708b962",
+          "file": "b7083989d410",
           "counts": {
-            "esri": 56,
+            "esri": 57,
             "esri-check": 4,
             "community": 0,
             "manual": 0,
             "existing": 0,
-            "machine": 234,
-            "stale": 0,
-            "missing": 6
+            "machine": 233,
+            "stale": 1,
+            "missing": 8
           },
           "entries": {
             "_widgetLabel": {
@@ -2652,9 +2655,9 @@
               "h": "13a9e6c1c15f"
             },
             "dragVerticesToReshapeEscWhen": {
-              "t": "Влачете върховете за промяна · Esc, когато сте готови",
-              "src": "machine",
-              "h": "c52887258939"
+              "src": "stale",
+              "h": "25365ba0c39f",
+              "old": "Влачете върховете за промяна · Esc, когато сте готови"
             },
             "importedMeasurementType": {
               "t": "Внос {measurementType}",
@@ -2679,16 +2682,16 @@
           }
         },
         "bs": {
-          "file": "745b36104f8a",
+          "file": "c869f0e97963",
           "counts": {
-            "esri": 59,
+            "esri": 60,
             "esri-check": 1,
             "community": 0,
             "manual": 0,
             "existing": 0,
-            "machine": 220,
-            "stale": 0,
-            "missing": 20
+            "machine": 219,
+            "stale": 1,
+            "missing": 22
           },
           "entries": {
             "_widgetLabel": {
@@ -3772,9 +3775,9 @@
               "h": "13a9e6c1c15f"
             },
             "dragVerticesToReshapeEscWhen": {
-              "t": "Povucite rubove za preoblikovanje · Esc kada je učinjeno",
-              "src": "machine",
-              "h": "c52887258939"
+              "src": "stale",
+              "h": "25365ba0c39f",
+              "old": "Povucite rubove za preoblikovanje · Esc kada je učinjeno"
             },
             "radiusFormatValueCurrentLinearUnitCircumferenceFormatValue2CurrentLinearUnit2": {
               "t": "Radius: {formatValue} {currentLinearUnit} Cirkumferencija: {formatValue2} {currentLinearUnit2} Površina: {formatValue3} {currentAreaUnit}",
@@ -3794,16 +3797,16 @@
           }
         },
         "ca": {
-          "file": "52708ddd7e75",
+          "file": "50d0ff379ad9",
           "counts": {
-            "esri": 57,
+            "esri": 58,
             "esri-check": 1,
             "community": 0,
             "manual": 0,
             "existing": 0,
-            "machine": 236,
-            "stale": 0,
-            "missing": 6
+            "machine": 235,
+            "stale": 1,
+            "missing": 8
           },
           "entries": {
             "_widgetLabel": {
@@ -4962,9 +4965,9 @@
               "h": "13a9e6c1c15f"
             },
             "dragVerticesToReshapeEscWhen": {
-              "t": "Arrossega els vèrtexs per tornar a fer les formes",
-              "src": "machine",
-              "h": "c52887258939"
+              "src": "stale",
+              "h": "25365ba0c39f",
+              "old": "Arrossega els vèrtexs per tornar a fer les formes"
             },
             "importedMeasurementType": {
               "t": "Importat {measurementType}",
@@ -4989,16 +4992,16 @@
           }
         },
         "cs": {
-          "file": "432901d3071f",
+          "file": "fd2dd2c43191",
           "counts": {
-            "esri": 58,
+            "esri": 59,
             "esri-check": 1,
             "community": 0,
             "manual": 0,
             "existing": 0,
-            "machine": 235,
-            "stale": 0,
-            "missing": 6
+            "machine": 234,
+            "stale": 1,
+            "missing": 8
           },
           "entries": {
             "_widgetLabel": {
@@ -6152,9 +6155,9 @@
               "h": "13a9e6c1c15f"
             },
             "dragVerticesToReshapeEscWhen": {
-              "t": "Přetáhněte vrcholy k přetvoření · Esc po dokončení",
-              "src": "machine",
-              "h": "c52887258939"
+              "src": "stale",
+              "h": "25365ba0c39f",
+              "old": "Přetáhněte vrcholy k přetvoření · Esc po dokončení"
             },
             "importedMeasurementType": {
               "t": "Dovezené {measurementType}",
@@ -6179,16 +6182,16 @@
           }
         },
         "da": {
-          "file": "bde0d11a9608",
+          "file": "ee98c525f867",
           "counts": {
-            "esri": 54,
+            "esri": 55,
             "esri-check": 2,
             "community": 0,
             "manual": 0,
             "existing": 0,
-            "machine": 238,
-            "stale": 0,
-            "missing": 6
+            "machine": 237,
+            "stale": 1,
+            "missing": 8
           },
           "entries": {
             "_widgetLabel": {
@@ -7352,9 +7355,9 @@
               "h": "13a9e6c1c15f"
             },
             "dragVerticesToReshapeEscWhen": {
-              "t": "Træk kanter til at omforme · Esc når gjort",
-              "src": "machine",
-              "h": "c52887258939"
+              "src": "stale",
+              "h": "25365ba0c39f",
+              "old": "Træk kanter til at omforme · Esc når gjort"
             },
             "importedMeasurementType": {
               "t": "Importeret {measurementType}",
@@ -7384,16 +7387,16 @@
           }
         },
         "de": {
-          "file": "c322d9f8774c",
+          "file": "672fced11c47",
           "counts": {
-            "esri": 57,
+            "esri": 58,
             "esri-check": 0,
             "community": 0,
             "manual": 0,
             "existing": 0,
-            "machine": 237,
-            "stale": 0,
-            "missing": 6
+            "machine": 236,
+            "stale": 1,
+            "missing": 8
           },
           "entries": {
             "_widgetLabel": {
@@ -8557,9 +8560,9 @@
               "h": "13a9e6c1c15f"
             },
             "dragVerticesToReshapeEscWhen": {
-              "t": "Ziehen Sie Eckpunkte, um neu zu formen · Esc, wenn Sie fertig sind",
-              "src": "machine",
-              "h": "c52887258939"
+              "src": "stale",
+              "h": "25365ba0c39f",
+              "old": "Ziehen Sie Eckpunkte, um neu zu formen · Esc, wenn Sie fertig sind"
             },
             "importedMeasurementType": {
               "t": "Eingeführt {measurementType}",
@@ -8584,16 +8587,16 @@
           }
         },
         "el": {
-          "file": "ab2091aaf5ee",
+          "file": "40c139531f28",
           "counts": {
-            "esri": 57,
+            "esri": 58,
             "esri-check": 3,
             "community": 0,
             "manual": 0,
             "existing": 0,
-            "machine": 234,
-            "stale": 0,
-            "missing": 6
+            "machine": 233,
+            "stale": 1,
+            "missing": 8
           },
           "entries": {
             "_widgetLabel": {
@@ -9742,9 +9745,9 @@
               "h": "13a9e6c1c15f"
             },
             "dragVerticesToReshapeEscWhen": {
-              "t": "Σύρετε κορυφές για να αναδιαμορφώσετε · Esc όταν γίνει",
-              "src": "machine",
-              "h": "c52887258939"
+              "src": "stale",
+              "h": "25365ba0c39f",
+              "old": "Σύρετε κορυφές για να αναδιαμορφώσετε · Esc όταν γίνει"
             },
             "importedMeasurementType": {
               "t": "Εισαγωγή {measurementType}",
@@ -9769,16 +9772,16 @@
           }
         },
         "es": {
-          "file": "5b5ddc60bc94",
+          "file": "268d417e3556",
           "counts": {
-            "esri": 58,
+            "esri": 59,
             "esri-check": 1,
             "community": 0,
             "manual": 0,
             "existing": 0,
-            "machine": 235,
-            "stale": 0,
-            "missing": 6
+            "machine": 234,
+            "stale": 1,
+            "missing": 8
           },
           "entries": {
             "_widgetLabel": {
@@ -10932,9 +10935,9 @@
               "h": "13a9e6c1c15f"
             },
             "dragVerticesToReshapeEscWhen": {
-              "t": "Arrastre los vértices para remodelar · Esc cuando se hace",
-              "src": "machine",
-              "h": "c52887258939"
+              "src": "stale",
+              "h": "25365ba0c39f",
+              "old": "Arrastre los vértices para remodelar · Esc cuando se hace"
             },
             "importedMeasurementType": {
               "t": "Importados {measurementType}",
@@ -10959,16 +10962,16 @@
           }
         },
         "et": {
-          "file": "f2f5f13e73e7",
+          "file": "dbf3d7cdabac",
           "counts": {
-            "esri": 54,
+            "esri": 55,
             "esri-check": 6,
             "community": 0,
             "manual": 0,
             "existing": 0,
-            "machine": 234,
-            "stale": 0,
-            "missing": 6
+            "machine": 233,
+            "stale": 1,
+            "missing": 8
           },
           "entries": {
             "_widgetLabel": {
@@ -12117,9 +12120,9 @@
               "h": "13a9e6c1c15f"
             },
             "dragVerticesToReshapeEscWhen": {
-              "t": "Lohista tipud ümberkujundamiseks · Esc, kui see on tehtud",
-              "src": "machine",
-              "h": "c52887258939"
+              "src": "stale",
+              "h": "25365ba0c39f",
+              "old": "Lohista tipud ümberkujundamiseks · Esc, kui see on tehtud"
             },
             "importedMeasurementType": {
               "t": "Imporditud {measurementType}",
@@ -12144,16 +12147,16 @@
           }
         },
         "fi": {
-          "file": "504856a34d8e",
+          "file": "2d42882f47ba",
           "counts": {
-            "esri": 59,
+            "esri": 60,
             "esri-check": 1,
             "community": 0,
             "manual": 0,
             "existing": 0,
-            "machine": 234,
-            "stale": 0,
-            "missing": 6
+            "machine": 233,
+            "stale": 1,
+            "missing": 8
           },
           "entries": {
             "_widgetLabel": {
@@ -13302,9 +13305,9 @@
               "h": "13a9e6c1c15f"
             },
             "dragVerticesToReshapeEscWhen": {
-              "t": "Vedä vertices muokata · Esc kun tehty",
-              "src": "machine",
-              "h": "c52887258939"
+              "src": "stale",
+              "h": "25365ba0c39f",
+              "old": "Vedä vertices muokata · Esc kun tehty"
             },
             "importedMeasurementType": {
               "t": "Tuotu {measurementType}",
@@ -13329,16 +13332,16 @@
           }
         },
         "fr": {
-          "file": "879ca3f639ec",
+          "file": "b3f2d017601a",
           "counts": {
-            "esri": 50,
+            "esri": 51,
             "esri-check": 1,
             "community": 0,
             "manual": 0,
             "existing": 0,
-            "machine": 243,
-            "stale": 0,
-            "missing": 6
+            "machine": 242,
+            "stale": 1,
+            "missing": 8
           },
           "entries": {
             "_widgetLabel": {
@@ -14532,9 +14535,9 @@
               "h": "13a9e6c1c15f"
             },
             "dragVerticesToReshapeEscWhen": {
-              "t": "Faites glisser les sommets pour remodeler · Esc quand c'est fait",
-              "src": "machine",
-              "h": "c52887258939"
+              "src": "stale",
+              "h": "25365ba0c39f",
+              "old": "Faites glisser les sommets pour remodeler · Esc quand c'est fait"
             },
             "importedMeasurementType": {
               "t": "Importé {measurementType}",
@@ -14559,16 +14562,16 @@
           }
         },
         "he": {
-          "file": "88da0218d8be",
+          "file": "80366b383457",
           "counts": {
             "esri": 54,
-            "esri-check": 6,
+            "esri-check": 7,
             "community": 0,
             "manual": 0,
             "existing": 0,
-            "machine": 234,
-            "stale": 0,
-            "missing": 6
+            "machine": 233,
+            "stale": 1,
+            "missing": 8
           },
           "entries": {
             "_widgetLabel": {
@@ -15717,9 +15720,9 @@
               "h": "13a9e6c1c15f"
             },
             "dragVerticesToReshapeEscWhen": {
-              "t": "תגיות: reshape - Esc בעת ביצוע",
-              "src": "machine",
-              "h": "c52887258939"
+              "src": "stale",
+              "h": "25365ba0c39f",
+              "old": "תגיות: reshape - Esc בעת ביצוע"
             },
             "importedMeasurementType": {
               "t": "יבוא {measurementType}",
@@ -15744,16 +15747,16 @@
           }
         },
         "hr": {
-          "file": "4b5d1673ba69",
+          "file": "0a5b48e9c340",
           "counts": {
-            "esri": 59,
+            "esri": 60,
             "esri-check": 1,
             "community": 0,
             "manual": 0,
             "existing": 0,
-            "machine": 229,
-            "stale": 0,
-            "missing": 11
+            "machine": 228,
+            "stale": 1,
+            "missing": 13
           },
           "entries": {
             "_widgetLabel": {
@@ -16877,9 +16880,9 @@
               "h": "13a9e6c1c15f"
             },
             "dragVerticesToReshapeEscWhen": {
-              "t": "Odvucite vertices za preoblikovanje · Esc kada je učinjeno",
-              "src": "machine",
-              "h": "c52887258939"
+              "src": "stale",
+              "h": "25365ba0c39f",
+              "old": "Odvucite vertices za preoblikovanje · Esc kada je učinjeno"
             },
             "importedMeasurementType": {
               "t": "Uvezeno {measurementType}",
@@ -16904,16 +16907,16 @@
           }
         },
         "hu": {
-          "file": "c8148e64c4a9",
+          "file": "acf76ea5848e",
           "counts": {
-            "esri": 58,
+            "esri": 59,
             "esri-check": 2,
             "community": 0,
             "manual": 0,
             "existing": 0,
-            "machine": 234,
-            "stale": 0,
-            "missing": 6
+            "machine": 233,
+            "stale": 1,
+            "missing": 8
           },
           "entries": {
             "_widgetLabel": {
@@ -18062,9 +18065,9 @@
               "h": "13a9e6c1c15f"
             },
             "dragVerticesToReshapeEscWhen": {
-              "t": "Húzza a vertikákat, hogy újraalakítsák, ha kész",
-              "src": "machine",
-              "h": "c52887258939"
+              "src": "stale",
+              "h": "25365ba0c39f",
+              "old": "Húzza a vertikákat, hogy újraalakítsák, ha kész"
             },
             "importedMeasurementType": {
               "t": "Importált {measurementType}",
@@ -18089,16 +18092,16 @@
           }
         },
         "id": {
-          "file": "24e78c25c949",
+          "file": "7b0de749cd07",
           "counts": {
-            "esri": 56,
+            "esri": 57,
             "esri-check": 1,
             "community": 0,
             "manual": 0,
             "existing": 0,
-            "machine": 237,
-            "stale": 0,
-            "missing": 6
+            "machine": 236,
+            "stale": 1,
+            "missing": 8
           },
           "entries": {
             "_widgetLabel": {
@@ -19257,9 +19260,9 @@
               "h": "13a9e6c1c15f"
             },
             "dragVerticesToReshapeEscWhen": {
-              "t": "Seret tanda untuk membentuk ulang",
-              "src": "machine",
-              "h": "c52887258939"
+              "src": "stale",
+              "h": "25365ba0c39f",
+              "old": "Seret tanda untuk membentuk ulang"
             },
             "importedMeasurementType": {
               "t": "Diimpor {measurementType}",
@@ -19289,16 +19292,16 @@
           }
         },
         "it": {
-          "file": "55e883cf81de",
+          "file": "f297f63b66ad",
           "counts": {
             "esri": 57,
-            "esri-check": 1,
+            "esri-check": 2,
             "community": 0,
             "manual": 0,
             "existing": 0,
-            "machine": 236,
-            "stale": 0,
-            "missing": 6
+            "machine": 235,
+            "stale": 1,
+            "missing": 8
           },
           "entries": {
             "_widgetLabel": {
@@ -20452,9 +20455,9 @@
               "h": "13a9e6c1c15f"
             },
             "dragVerticesToReshapeEscWhen": {
-              "t": "Trascina i vertici per rimodellare · Esc quando fatto",
-              "src": "machine",
-              "h": "c52887258939"
+              "src": "stale",
+              "h": "25365ba0c39f",
+              "old": "Trascina i vertici per rimodellare · Esc quando fatto"
             },
             "importedMeasurementType": {
               "t": "Importato {measurementType}",
@@ -20484,16 +20487,16 @@
           }
         },
         "ja": {
-          "file": "e05bbc34a5af",
+          "file": "5f6ff4a390e8",
           "counts": {
             "esri": 59,
-            "esri-check": 1,
+            "esri-check": 2,
             "community": 0,
             "manual": 0,
             "existing": 0,
-            "machine": 234,
-            "stale": 0,
-            "missing": 6
+            "machine": 233,
+            "stale": 1,
+            "missing": 8
           },
           "entries": {
             "_widgetLabel": {
@@ -21642,9 +21645,9 @@
               "h": "13a9e6c1c15f"
             },
             "dragVerticesToReshapeEscWhen": {
-              "t": "再シェイプ・Escをドラッグする",
-              "src": "machine",
-              "h": "c52887258939"
+              "src": "stale",
+              "h": "25365ba0c39f",
+              "old": "再シェイプ・Escをドラッグする"
             },
             "importedMeasurementType": {
               "t": "インポート {measurementType}",
@@ -21669,16 +21672,16 @@
           }
         },
         "ko": {
-          "file": "55cbf03b0b81",
+          "file": "93e4ed7b4b26",
           "counts": {
-            "esri": 59,
+            "esri": 60,
             "esri-check": 1,
             "community": 0,
             "manual": 0,
             "existing": 0,
-            "machine": 234,
-            "stale": 0,
-            "missing": 6
+            "machine": 233,
+            "stale": 1,
+            "missing": 8
           },
           "entries": {
             "_widgetLabel": {
@@ -22827,9 +22830,9 @@
               "h": "13a9e6c1c15f"
             },
             "dragVerticesToReshapeEscWhen": {
-              "t": "reshape에 드래그 vertices · 수행 할 때",
-              "src": "machine",
-              "h": "c52887258939"
+              "src": "stale",
+              "h": "25365ba0c39f",
+              "old": "reshape에 드래그 vertices · 수행 할 때"
             },
             "importedMeasurementType": {
               "t": "관련 상품 {measurementType}",
@@ -22854,16 +22857,16 @@
           }
         },
         "lt": {
-          "file": "c05ed0f91a5c",
+          "file": "dee485e24cd6",
           "counts": {
-            "esri": 58,
+            "esri": 59,
             "esri-check": 2,
             "community": 0,
             "manual": 0,
             "existing": 0,
-            "machine": 234,
-            "stale": 0,
-            "missing": 6
+            "machine": 233,
+            "stale": 1,
+            "missing": 8
           },
           "entries": {
             "_widgetLabel": {
@@ -24012,9 +24015,9 @@
               "h": "13a9e6c1c15f"
             },
             "dragVerticesToReshapeEscWhen": {
-              "t": "Vilkite verpalams performuoti · Esc kai padaryta",
-              "src": "machine",
-              "h": "c52887258939"
+              "src": "stale",
+              "h": "25365ba0c39f",
+              "old": "Vilkite verpalams performuoti · Esc kai padaryta"
             },
             "importedMeasurementType": {
               "t": "Importuoti {measurementType}",
@@ -24039,16 +24042,16 @@
           }
         },
         "lv": {
-          "file": "58da6920dd24",
+          "file": "e3b987a5b33b",
           "counts": {
-            "esri": 58,
+            "esri": 59,
             "esri-check": 2,
             "community": 0,
             "manual": 0,
             "existing": 0,
-            "machine": 234,
-            "stale": 0,
-            "missing": 6
+            "machine": 233,
+            "stale": 1,
+            "missing": 8
           },
           "entries": {
             "_widgetLabel": {
@@ -25197,9 +25200,9 @@
               "h": "13a9e6c1c15f"
             },
             "dragVerticesToReshapeEscWhen": {
-              "t": "Velciet vertiku, lai pārveidotu · Esc, kad tas izdarīts",
-              "src": "machine",
-              "h": "c52887258939"
+              "src": "stale",
+              "h": "25365ba0c39f",
+              "old": "Velciet vertiku, lai pārveidotu · Esc, kad tas izdarīts"
             },
             "importedMeasurementType": {
               "t": "Importēts {measurementType}",
@@ -25224,16 +25227,16 @@
           }
         },
         "no": {
-          "file": "6060895c7904",
+          "file": "b3368692b2ff",
           "counts": {
-            "esri": 55,
+            "esri": 56,
             "esri-check": 2,
             "community": 0,
             "manual": 0,
             "existing": 0,
-            "machine": 237,
-            "stale": 0,
-            "missing": 6
+            "machine": 236,
+            "stale": 1,
+            "missing": 8
           },
           "entries": {
             "_widgetLabel": {
@@ -26397,9 +26400,9 @@
               "h": "13a9e6c1c15f"
             },
             "dragVerticesToReshapeEscWhen": {
-              "t": "Dra hjørner til reshape · Esc når gjort",
-              "src": "machine",
-              "h": "c52887258939"
+              "src": "stale",
+              "h": "25365ba0c39f",
+              "old": "Dra hjørner til reshape · Esc når gjort"
             },
             "importedMeasurementType": {
               "t": "Importert {measurementType}",
@@ -26424,16 +26427,16 @@
           }
         },
         "nl": {
-          "file": "be54e3756532",
+          "file": "6379283f35e2",
           "counts": {
-            "esri": 58,
+            "esri": 59,
             "esri-check": 0,
             "community": 0,
             "manual": 0,
             "existing": 0,
-            "machine": 236,
-            "stale": 0,
-            "missing": 6
+            "machine": 235,
+            "stale": 1,
+            "missing": 8
           },
           "entries": {
             "_widgetLabel": {
@@ -27592,9 +27595,9 @@
               "h": "13a9e6c1c15f"
             },
             "dragVerticesToReshapeEscWhen": {
-              "t": "Sleep hoekpunten om · Esc te veranderen wanneer gedaan",
-              "src": "machine",
-              "h": "c52887258939"
+              "src": "stale",
+              "h": "25365ba0c39f",
+              "old": "Sleep hoekpunten om · Esc te veranderen wanneer gedaan"
             },
             "importedMeasurementType": {
               "t": "Geïmporteerd {measurementType}",
@@ -27619,16 +27622,16 @@
           }
         },
         "pl": {
-          "file": "46125abb780a",
+          "file": "ee1ef27d35cd",
           "counts": {
             "esri": 58,
-            "esri-check": 2,
+            "esri-check": 3,
             "community": 0,
             "manual": 0,
             "existing": 0,
-            "machine": 234,
-            "stale": 0,
-            "missing": 6
+            "machine": 233,
+            "stale": 1,
+            "missing": 8
           },
           "entries": {
             "_widgetLabel": {
@@ -28777,9 +28780,9 @@
               "h": "13a9e6c1c15f"
             },
             "dragVerticesToReshapeEscWhen": {
-              "t": "Przeciągnij wierzchołki, aby zmienić kształt · Esc po wykonaniu",
-              "src": "machine",
-              "h": "c52887258939"
+              "src": "stale",
+              "h": "25365ba0c39f",
+              "old": "Przeciągnij wierzchołki, aby zmienić kształt · Esc po wykonaniu"
             },
             "importedMeasurementType": {
               "t": "Przywożone {measurementType}",
@@ -28804,16 +28807,16 @@
           }
         },
         "pt-br": {
-          "file": "29582ae543ae",
+          "file": "523125bf89ce",
           "counts": {
             "esri": 54,
-            "esri-check": 2,
+            "esri-check": 3,
             "community": 0,
             "manual": 0,
             "existing": 0,
-            "machine": 238,
-            "stale": 0,
-            "missing": 6
+            "machine": 237,
+            "stale": 1,
+            "missing": 8
           },
           "entries": {
             "_widgetLabel": {
@@ -29982,9 +29985,9 @@
               "h": "13a9e6c1c15f"
             },
             "dragVerticesToReshapeEscWhen": {
-              "t": "Arraste vértices para remodelar",
-              "src": "machine",
-              "h": "c52887258939"
+              "src": "stale",
+              "h": "25365ba0c39f",
+              "old": "Arraste vértices para remodelar"
             },
             "importedMeasurementType": {
               "t": "Importado {measurementType}",
@@ -30009,16 +30012,16 @@
           }
         },
         "pt-pt": {
-          "file": "d0f01ab8a965",
+          "file": "03cabed650f7",
           "counts": {
             "esri": 55,
-            "esri-check": 1,
+            "esri-check": 2,
             "community": 0,
             "manual": 0,
             "existing": 0,
-            "machine": 238,
-            "stale": 0,
-            "missing": 6
+            "machine": 237,
+            "stale": 1,
+            "missing": 8
           },
           "entries": {
             "_widgetLabel": {
@@ -31187,9 +31190,9 @@
               "h": "13a9e6c1c15f"
             },
             "dragVerticesToReshapeEscWhen": {
-              "t": "Arraste vértices para remodelar · Esc quando feito",
-              "src": "machine",
-              "h": "c52887258939"
+              "src": "stale",
+              "h": "25365ba0c39f",
+              "old": "Arraste vértices para remodelar · Esc quando feito"
             },
             "importedMeasurementType": {
               "t": "Importado {measurementType}",
@@ -31214,16 +31217,16 @@
           }
         },
         "ro": {
-          "file": "09292f194779",
+          "file": "daf59a8cd026",
           "counts": {
-            "esri": 56,
+            "esri": 57,
             "esri-check": 1,
             "community": 0,
             "manual": 0,
             "existing": 0,
-            "machine": 237,
-            "stale": 0,
-            "missing": 6
+            "machine": 236,
+            "stale": 1,
+            "missing": 8
           },
           "entries": {
             "_widgetLabel": {
@@ -32387,9 +32390,9 @@
               "h": "13a9e6c1c15f"
             },
             "dragVerticesToReshapeEscWhen": {
-              "t": "Trageți verticele pentru a remodela · Esc atunci când se face",
-              "src": "machine",
-              "h": "c52887258939"
+              "src": "stale",
+              "h": "25365ba0c39f",
+              "old": "Trageți verticele pentru a remodela · Esc atunci când se face"
             },
             "importedMeasurementType": {
               "t": "Importat {measurementType}",
@@ -32414,16 +32417,16 @@
           }
         },
         "ru": {
-          "file": "9ee8ccda9238",
+          "file": "a10d8cbcc355",
           "counts": {
-            "esri": 59,
+            "esri": 60,
             "esri-check": 1,
             "community": 0,
             "manual": 0,
             "existing": 0,
-            "machine": 234,
-            "stale": 0,
-            "missing": 6
+            "machine": 233,
+            "stale": 1,
+            "missing": 8
           },
           "entries": {
             "_widgetLabel": {
@@ -33572,9 +33575,9 @@
               "h": "13a9e6c1c15f"
             },
             "dragVerticesToReshapeEscWhen": {
-              "t": "Перетащите вершины, чтобы изменить · Esc, когда сделано",
-              "src": "machine",
-              "h": "c52887258939"
+              "src": "stale",
+              "h": "25365ba0c39f",
+              "old": "Перетащите вершины, чтобы изменить · Esc, когда сделано"
             },
             "importedMeasurementType": {
               "t": "импортный {measurementType}",
@@ -33599,16 +33602,16 @@
           }
         },
         "sk": {
-          "file": "415804e54a96",
+          "file": "843cc827f864",
           "counts": {
-            "esri": 58,
+            "esri": 59,
             "esri-check": 1,
             "community": 0,
             "manual": 0,
             "existing": 0,
-            "machine": 235,
-            "stale": 0,
-            "missing": 6
+            "machine": 234,
+            "stale": 1,
+            "missing": 8
           },
           "entries": {
             "_widgetLabel": {
@@ -34762,9 +34765,9 @@
               "h": "13a9e6c1c15f"
             },
             "dragVerticesToReshapeEscWhen": {
-              "t": "Presuňte vrcholy na reshape · Esc, keď sa urobí",
-              "src": "machine",
-              "h": "c52887258939"
+              "src": "stale",
+              "h": "25365ba0c39f",
+              "old": "Presuňte vrcholy na reshape · Esc, keď sa urobí"
             },
             "importedMeasurementType": {
               "t": "Dovoz {measurementType}",
@@ -34789,16 +34792,16 @@
           }
         },
         "sl": {
-          "file": "d25180b8c988",
+          "file": "e1855864ea64",
           "counts": {
             "esri": 59,
-            "esri-check": 1,
+            "esri-check": 2,
             "community": 0,
             "manual": 0,
             "existing": 0,
-            "machine": 234,
-            "stale": 0,
-            "missing": 6
+            "machine": 233,
+            "stale": 1,
+            "missing": 8
           },
           "entries": {
             "_widgetLabel": {
@@ -35947,9 +35950,9 @@
               "h": "13a9e6c1c15f"
             },
             "dragVerticesToReshapeEscWhen": {
-              "t": "Povlecite vertice za preoblikovanje · Esc, ko je to storjeno",
-              "src": "machine",
-              "h": "c52887258939"
+              "src": "stale",
+              "h": "25365ba0c39f",
+              "old": "Povlecite vertice za preoblikovanje · Esc, ko je to storjeno"
             },
             "importedMeasurementType": {
               "t": "Uvoženo {measurementType}",
@@ -35974,16 +35977,16 @@
           }
         },
         "sr": {
-          "file": "cb4486656ea6",
+          "file": "6c5093cb7bfd",
           "counts": {
-            "esri": 57,
+            "esri": 58,
             "esri-check": 3,
             "community": 0,
             "manual": 0,
             "existing": 0,
-            "machine": 232,
-            "stale": 0,
-            "missing": 8
+            "machine": 231,
+            "stale": 1,
+            "missing": 10
           },
           "entries": {
             "_widgetLabel": {
@@ -37127,9 +37130,9 @@
               "h": "13a9e6c1c15f"
             },
             "dragVerticesToReshapeEscWhen": {
-              "t": "Odvucite vertices da preoblikujete · Esc kada završite",
-              "src": "machine",
-              "h": "c52887258939"
+              "src": "stale",
+              "h": "25365ba0c39f",
+              "old": "Odvucite vertices da preoblikujete · Esc kada završite"
             },
             "importedMeasurementType": {
               "t": "Увезено {measurementType}",
@@ -37149,16 +37152,16 @@
           }
         },
         "sv": {
-          "file": "fe6a31d3f10c",
+          "file": "c57ba03437f3",
           "counts": {
-            "esri": 57,
+            "esri": 58,
             "esri-check": 2,
             "community": 0,
             "manual": 0,
             "existing": 0,
-            "machine": 235,
-            "stale": 0,
-            "missing": 6
+            "machine": 234,
+            "stale": 1,
+            "missing": 8
           },
           "entries": {
             "_widgetLabel": {
@@ -38312,9 +38315,9 @@
               "h": "13a9e6c1c15f"
             },
             "dragVerticesToReshapeEscWhen": {
-              "t": "Drag vertices för att omforma · Esc när det är gjort",
-              "src": "machine",
-              "h": "c52887258939"
+              "src": "stale",
+              "h": "25365ba0c39f",
+              "old": "Drag vertices för att omforma · Esc när det är gjort"
             },
             "importedMeasurementType": {
               "t": "Importerad {measurementType}",
@@ -38339,16 +38342,16 @@
           }
         },
         "th": {
-          "file": "4d7e4be93fb7",
+          "file": "664f7139c6ed",
           "counts": {
-            "esri": 59,
+            "esri": 60,
             "esri-check": 1,
             "community": 0,
             "manual": 0,
             "existing": 0,
-            "machine": 234,
-            "stale": 0,
-            "missing": 6
+            "machine": 233,
+            "stale": 1,
+            "missing": 8
           },
           "entries": {
             "_widgetLabel": {
@@ -39497,9 +39500,9 @@
               "h": "13a9e6c1c15f"
             },
             "dragVerticesToReshapeEscWhen": {
-              "t": "ลาก verticles ไปยัง reshpe ES เมื่อเสร็จแล้ว",
-              "src": "machine",
-              "h": "c52887258939"
+              "src": "stale",
+              "h": "25365ba0c39f",
+              "old": "ลาก verticles ไปยัง reshpe ES เมื่อเสร็จแล้ว"
             },
             "importedMeasurementType": {
               "t": "นําเข้า {measurementType}",
@@ -39524,16 +39527,16 @@
           }
         },
         "tr": {
-          "file": "717f035f92e6",
+          "file": "4add2bc6fd20",
           "counts": {
-            "esri": 59,
+            "esri": 60,
             "esri-check": 1,
             "community": 0,
             "manual": 0,
             "existing": 0,
-            "machine": 234,
-            "stale": 0,
-            "missing": 6
+            "machine": 233,
+            "stale": 1,
+            "missing": 8
           },
           "entries": {
             "_widgetLabel": {
@@ -40682,9 +40685,9 @@
               "h": "13a9e6c1c15f"
             },
             "dragVerticesToReshapeEscWhen": {
-              "t": "Drag vertices to reshape · Esc when done",
-              "src": "machine",
-              "h": "c52887258939"
+              "src": "stale",
+              "h": "25365ba0c39f",
+              "old": "Drag vertices to reshape · Esc when done"
             },
             "importedMeasurementType": {
               "t": "İthalat {measurementType}",
@@ -40709,16 +40712,16 @@
           }
         },
         "zh-cn": {
-          "file": "d7d13648d395",
+          "file": "331676daae03",
           "counts": {
-            "esri": 59,
+            "esri": 60,
             "esri-check": 1,
             "community": 0,
             "manual": 0,
             "existing": 0,
-            "machine": 234,
-            "stale": 0,
-            "missing": 6
+            "machine": 233,
+            "stale": 1,
+            "missing": 8
           },
           "entries": {
             "_widgetLabel": {
@@ -41867,9 +41870,9 @@
               "h": "13a9e6c1c15f"
             },
             "dragVerticesToReshapeEscWhen": {
-              "t": "拖动顶点重塑 ^ Esc 完成后",
-              "src": "machine",
-              "h": "c52887258939"
+              "src": "stale",
+              "h": "25365ba0c39f",
+              "old": "拖动顶点重塑 ^ Esc 完成后"
             },
             "importedMeasurementType": {
               "t": "已导入 {measurementType}",
@@ -41894,16 +41897,16 @@
           }
         },
         "uk": {
-          "file": "2e18a64b239e",
+          "file": "bdb481085e16",
           "counts": {
-            "esri": 58,
+            "esri": 59,
             "esri-check": 2,
             "community": 0,
             "manual": 0,
             "existing": 0,
-            "machine": 234,
-            "stale": 0,
-            "missing": 6
+            "machine": 233,
+            "stale": 1,
+            "missing": 8
           },
           "entries": {
             "_widgetLabel": {
@@ -43052,9 +43055,9 @@
               "h": "13a9e6c1c15f"
             },
             "dragVerticesToReshapeEscWhen": {
-              "t": "Перетягніть вершини, щоб переробити · Ег при виконанні",
-              "src": "machine",
-              "h": "c52887258939"
+              "src": "stale",
+              "h": "25365ba0c39f",
+              "old": "Перетягніть вершини, щоб переробити · Ег при виконанні"
             },
             "importedMeasurementType": {
               "t": "Імпорт {measurementType}",
@@ -43079,16 +43082,16 @@
           }
         },
         "vi": {
-          "file": "0758995f4ab9",
+          "file": "d106b7d0c0f3",
           "counts": {
-            "esri": 58,
+            "esri": 59,
             "esri-check": 2,
             "community": 0,
             "manual": 0,
             "existing": 0,
-            "machine": 234,
-            "stale": 0,
-            "missing": 6
+            "machine": 233,
+            "stale": 1,
+            "missing": 8
           },
           "entries": {
             "_widgetLabel": {
@@ -44237,9 +44240,9 @@
               "h": "13a9e6c1c15f"
             },
             "dragVerticesToReshapeEscWhen": {
-              "t": "Kéo các đỉnh để lấy lại · Esc khi làm xong",
-              "src": "machine",
-              "h": "c52887258939"
+              "src": "stale",
+              "h": "25365ba0c39f",
+              "old": "Kéo các đỉnh để lấy lại · Esc khi làm xong"
             },
             "importedMeasurementType": {
               "t": "Nhập {measurementType}",
@@ -44264,16 +44267,16 @@
           }
         },
         "zh-hk": {
-          "file": "8026c3298b3e",
+          "file": "893cc6ab3c9c",
           "counts": {
-            "esri": 59,
+            "esri": 60,
             "esri-check": 1,
             "community": 0,
             "manual": 0,
             "existing": 0,
-            "machine": 234,
-            "stale": 0,
-            "missing": 6
+            "machine": 233,
+            "stale": 1,
+            "missing": 8
           },
           "entries": {
             "_widgetLabel": {
@@ -45422,9 +45425,9 @@
               "h": "13a9e6c1c15f"
             },
             "dragVerticesToReshapeEscWhen": {
-              "t": "拖曳頂點重塑 ^ Esc 完成後",
-              "src": "machine",
-              "h": "c52887258939"
+              "src": "stale",
+              "h": "25365ba0c39f",
+              "old": "拖曳頂點重塑 ^ Esc 完成後"
             },
             "importedMeasurementType": {
               "t": "已匯入 {measurementType}",
@@ -45449,16 +45452,16 @@
           }
         },
         "zh-tw": {
-          "file": "8026c3298b3e",
+          "file": "893cc6ab3c9c",
           "counts": {
-            "esri": 59,
+            "esri": 60,
             "esri-check": 1,
             "community": 0,
             "manual": 0,
             "existing": 0,
-            "machine": 234,
-            "stale": 0,
-            "missing": 6
+            "machine": 233,
+            "stale": 1,
+            "missing": 8
           },
           "entries": {
             "_widgetLabel": {
@@ -46607,9 +46610,9 @@
               "h": "13a9e6c1c15f"
             },
             "dragVerticesToReshapeEscWhen": {
-              "t": "拖曳頂點重塑 ^ Esc 完成後",
-              "src": "machine",
-              "h": "c52887258939"
+              "src": "stale",
+              "h": "25365ba0c39f",
+              "old": "拖曳頂點重塑 ^ Esc 完成後"
             },
             "importedMeasurementType": {
               "t": "已匯入 {measurementType}",
